@@ -1,0 +1,34 @@
+<?php
+
+$year = 2026;
+$start = new DateTime("$year-01-01");
+$end = new DateTime("$year-12-31");
+
+$file = fopen("calendar_days.csv", "w");
+
+fputcsv($file, [
+    "date",
+    "feast_name",
+    "saint_name",
+    "fasting_type",
+    "note",
+    "is_red_letter"
+]);
+
+while ($start <= $end) {
+
+    fputcsv($file, [
+        $start->format("Y-m-d"),
+        "Crkveni praznik",
+        "Svetitelj dana",
+        "nema",
+        "",
+        0
+    ]);
+
+    $start->modify("+1 day");
+}
+
+fclose($file);
+
+echo "CSV napravljen!";

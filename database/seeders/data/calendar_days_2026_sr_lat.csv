@@ -1,0 +1,366 @@
+date,day_of_year,day_name,old_date,feast_name,saint_name,fasting_type,note,is_red_letter
+2026-01-01,1,Četvrtak,19.12.2025.,Sveti mučenik Bonifatije,Sveti mučenik Bonifatije,ulje,,0
+2026-01-02,2,Petak,20.12.2025.,"Sveti sveštenomučenik Ignjatije Bogonosac; Sveti Danilo Drugi, Arhiepiskop srpski","Sveti sveštenomučenik Ignjatije Bogonosac; Sveti Danilo Drugi, Arhiepiskop srpski",ulje,,0
+2026-01-03,3,Subota,21.12.2025.,"Sveta mučenica Julijana; Sveti Petar, Mitropolit kijevski","Sveta mučenica Julijana; Sveti Petar, Mitropolit kijevski",ulje,,0
+2026-01-04,4,Nedelja,22.12.2025.,Sveta velikomučenica Anastasija; Sveti Nikifor Leprozni; Nedelja Svetih Otaca – Oci,Sveta velikomučenica Anastasija; Sveti Nikifor Leprozni; Nedelja Svetih Otaca – Oci,ulje,,0
+2026-01-05,5,Ponedeljak,23.12.2025.,Svetih 10 mučenika Kritskih; Prepodobni Naum Ohridski – Tucindan,Svetih 10 mučenika Kritskih; Prepodobni Naum Ohridski – Tucindan,voda,,0
+2026-01-06,6,Utorak,24.12.2025.,Sveta prepodobnomučenica Evgenija – Badnjidan,Sveta prepodobnomučenica Evgenija – Badnjidan,voda,,0
+2026-01-07,7,Sreda,25.12.2025.,Roždestvo Hristovo – Božić,Roždestvo Hristovo – Božić,nema,,0
+2026-01-08,8,Četvrtak,26.12.2025.,Sabor Presvete Bogorodice,Sabor Presvete Bogorodice,nema,,0
+2026-01-09,9,Petak,27.12.2025.,Sveti prvomučenik i arhiđakon Stefan,Sveti prvomučenik i arhiđakon Stefan,nema,,0
+2026-01-10,10,Subota,28.12.2025.,Svetih 20.000 mučenika Nikomidijskih,Svetih 20.000 mučenika Nikomidijskih,nema,,0
+2026-01-11,11,Nedelja,29.12.2025.,Svetih 14.000 mladenaca Vitlejemskih,Svetih 14.000 mladenaca Vitlejemskih,nema,,0
+2026-01-12,12,Ponedeljak,30.12.2025.,Sveta mučenica Anisija; Prepodobna Teodora,Sveta mučenica Anisija; Prepodobna Teodora,nema,,0
+2026-01-13,13,Utorak,31.12.2025.,Prepodobna Melanija; Sveti Dositej Zagrebački Ispovednik,Prepodobna Melanija; Sveti Dositej Zagrebački Ispovednik,nema,,0
+2026-01-14,14,Sreda,1.1.2026.,Obrezanje Gospoda Isusa Hrista; Sveti Vasilije Veliki (Nova godina),Obrezanje Gospoda Isusa Hrista; Sveti Vasilije Veliki (Nova godina),nema,,0
+2026-01-15,15,Četvrtak,2.1.2026.,Prepodobni Serafim Sarovski; Sveti Silvestar,Prepodobni Serafim Sarovski; Sveti Silvestar,nema,,0
+2026-01-16,16,Petak,3.1.2026.,Sveti prorok Malahija; Sveti mučenik Gordije,Sveti prorok Malahija; Sveti mučenik Gordije,nema,,0
+2026-01-17,17,Subota,4.1.2026.,Sabor 70 svetih apostola; Sveti Jevstatije Srpski,Sabor 70 svetih apostola; Sveti Jevstatije Srpski,nema,,0
+2026-01-18,18,Nedelja,5.1.2026.,Sveti Teopemt i Teona – Krstovdan,Sveti Teopemt i Teona – Krstovdan,vino,,0
+2026-01-19,19,Ponedeljak,6.1.2026.,Bogojavljenje,Bogojavljenje,nema,,0
+2026-01-20,20,Utorak,7.1.2026.,Sabor Svetog Jovana Krstitelja – Jovanjdan,Sabor Svetog Jovana Krstitelja – Jovanjdan,nema,,0
+2026-01-21,21,Sreda,8.1.2026.,Sveti mučenici Julijan i Vasilisa; Prepodobni Georgije Hozevit; Sveti Grigorije Ohridski,Sveti mučenici Julijan i Vasilisa; Prepodobni Georgije Hozevit; Sveti Grigorije Ohridski,voda,,0
+2026-01-22,22,Četvrtak,9.1.2026.,"Sveti mučenik Polievkt; Sveti Filip, Mitropolit moskovski","Sveti mučenik Polievkt; Sveti Filip, Mitropolit moskovski",nema,,0
+2026-01-23,23,Petak,10.1.2026.,Sveti Grigorije Niski; Prepodobni Dometijan Mitilinski,Sveti Grigorije Niski; Prepodobni Dometijan Mitilinski,voda,,0
+2026-01-24,24,Subota,11.1.2026.,Prepodobni Teodosije Veliki; Prepodobni Mihailo Klopski,Prepodobni Teodosije Veliki; Prepodobni Mihailo Klopski,nema,,0
+2026-01-25,25,Nedelja,12.1.2026.,Sveta mučenica Tatijana; Ikona Mlekopitateljica,Sveta mučenica Tatijana; Ikona Mlekopitateljica,nema,,0
+2026-01-26,26,Ponedeljak,13.1.2026.,Sveti mučenici Ermil i Stratonik,Sveti mučenici Ermil i Stratonik,nema,,0
+2026-01-27,27,Utorak,14.1.2026.,"Sveti Sava, prvi Arhiepiskop srpski – Savindan","Sveti Sava, prvi Arhiepiskop srpski – Savindan",nema,,0
+2026-01-28,28,Sreda,15.1.2026.,Prepodobni Pavle Tivejski; Prepodobni Gavrilo Lesnovski,Prepodobni Pavle Tivejski; Prepodobni Gavrilo Lesnovski,voda,,0
+2026-01-29,29,Četvrtak,16.1.2026.,Časne verige Svetog apostola Petra; Prepodobni Romilo Ravanički,Časne verige Svetog apostola Petra; Prepodobni Romilo Ravanički,nema,,0
+2026-01-30,30,Petak,17.1.2026.,Prepodobni Antonije Veliki,Prepodobni Antonije Veliki,riba,,0
+2026-01-31,31,Subota,18.1.2026.,"Sveti Atanasije Veliki; Sveti Maksim, Arhiepiskop srpski","Sveti Atanasije Veliki; Sveti Maksim, Arhiepiskop srpski",nema,,0
+2026-02-01,32,Nedelja,19.1.2026.,Prepodobni Makarije Egipatski; Sveti Marko Efeski (Nedelja o Mitaru i Fariseju),Prepodobni Makarije Egipatski; Sveti Marko Efeski (Nedelja o Mitaru i Fariseju),nema,,0
+2026-02-02,33,Ponedeljak,20.1.2026.,Prepodobni Jevtimije Veliki,Prepodobni Jevtimije Veliki,nema,,0
+2026-02-03,34,Utorak,21.1.2026.,Prepodobni Maksim Ispovednik; Sveti mučenik Neofit,Prepodobni Maksim Ispovednik; Sveti mučenik Neofit,nema,,0
+2026-02-04,35,Sreda,22.1.2026.,Sveti apostol Timotej; Sveti prepodobnomučenik Anastasije,Sveti apostol Timotej; Sveti prepodobnomučenik Anastasije,nema,,0
+2026-02-05,36,Četvrtak,23.1.2026.,"Sveti sveštenomučenik Kliment, Episkop ankirski i ostali","Sveti sveštenomučenik Kliment, Episkop ankirski i ostali",nema,,0
+2026-02-06,37,Petak,24.1.2026.,Prepodobna Ksenija Rimljanka; Sveti mučenik Vavila; Blažena Ksenija Petrogradska,Prepodobna Ksenija Rimljanka; Sveti mučenik Vavila; Blažena Ksenija Petrogradska,nema,,0
+2026-02-07,38,Subota,25.1.2026.,Sveti Grigorije Bogoslov; Prepodobni Publije; Sveti prepodobnomučenik Grigorije Pećki (Zadušnice),Sveti Grigorije Bogoslov; Prepodobni Publije; Sveti prepodobnomučenik Grigorije Pećki (Zadušnice),nema,,0
+2026-02-08,39,Nedelja,26.1.2026.,"Prepodobni Ksenofont, Marija i sinovi njihovi (Nedelja o Bludnom Sinu)","Prepodobni Ksenofont, Marija i sinovi njihovi (Nedelja o Bludnom Sinu)",nema,,0
+2026-02-09,40,Ponedeljak,27.1.2026.,Prenos moštiju Svetog Jovana Zlatousta,Prenos moštiju Svetog Jovana Zlatousta,nema,,0
+2026-02-10,41,Utorak,28.1.2026.,Prepodobni Jefrem Sirin; Prepodobni Isak Sirin,Prepodobni Jefrem Sirin; Prepodobni Isak Sirin,nema,,0
+2026-02-11,42,Sreda,29.1.2026.,Prenos moštiju Svetog sveštenomučenika Ignjatija Bogonosca,Prenos moštiju Svetog sveštenomučenika Ignjatija Bogonosca,voda,,0
+2026-02-12,43,Četvrtak,30.1.2026.,Sveta Tri Jerarha; Sveštenomučenik Ipolit; Sveti mučenik Teofil Novi,Sveta Tri Jerarha; Sveštenomučenik Ipolit; Sveti mučenik Teofil Novi,nema,,0
+2026-02-13,44,Petak,31.1.2026.,Sveti besrebrenici Kir i Jovan,Sveti besrebrenici Kir i Jovan,voda,,0
+2026-02-14,45,Subota,1.2.2026.,Sveti mučenik Trifun,Sveti mučenik Trifun,nema,,0
+2026-02-15,46,Nedelja,2.2.2026.,Sretenje Gospodnje; Sveti novomučenik Jordan; Sveti mučenik Agatodor (Mesne poklade),Sretenje Gospodnje; Sveti novomučenik Jordan; Sveti mučenik Agatodor (Mesne poklade),nema,,0
+2026-02-16,47,Ponedeljak,3.2.2026.,"Sveti Simeon i Ana; Sveti Jakov, Arhiepiskop srpski","Sveti Simeon i Ana; Sveti Jakov, Arhiepiskop srpski",razresenje,,0
+2026-02-17,48,Utorak,4.2.2026.,Prepodobni Isidor Pelusiot; Prepodobni Nikolaj Studit,Prepodobni Isidor Pelusiot; Prepodobni Nikolaj Studit,razresenje,,0
+2026-02-18,49,Sreda,5.2.2026.,"Sveta mučenica Agatija; Sveti Polievkt, Patrijarh carigradski","Sveta mučenica Agatija; Sveti Polievkt, Patrijarh carigradski",razresenje,,0
+2026-02-19,50,Četvrtak,6.2.2026.,"Sveti Fotije, Patrijarh carigradski; Sveti Vukol, Episkop smirnski","Sveti Fotije, Patrijarh carigradski; Sveti Vukol, Episkop smirnski",razresenje,,0
+2026-02-20,51,Petak,7.2.2026.,"Sveti Partenije, Episkop lampsakijski","Sveti Partenije, Episkop lampsakijski",razresenje,,0
+2026-02-21,52,Subota,8.2.2026.,"Sveti velikomučenik Teodor Stratilat; Sveti Sava Drugi, Arhiepiskop srpski","Sveti velikomučenik Teodor Stratilat; Sveti Sava Drugi, Arhiepiskop srpski",razresenje,,0
+2026-02-22,53,Nedelja,9.2.2026.,Sveti mučenik Nikifor (Bele poklade),Sveti mučenik Nikifor (Bele poklade),razresenje,,0
+2026-02-23,54,Ponedeljak,10.2.2026.,Sveti sveštenomučenik Haralampije (Početak Časnog posta),Sveti sveštenomučenik Haralampije (Početak Časnog posta),strogi,,0
+2026-02-24,55,Utorak,11.2.2026.,Sveti sveštenomučenik Vlasije; Sveti velikomučenik Đorđe Kratovac,Sveti sveštenomučenik Vlasije; Sveti velikomučenik Đorđe Kratovac,voda,,0
+2026-02-25,56,Sreda,12.2.2026.,"Sveti Meletije, Arhiepiskop antiohijski","Sveti Meletije, Arhiepiskop antiohijski",voda,,0
+2026-02-26,57,Četvrtak,13.2.2026.,Prepodobni Simeon Mirotočivi,Prepodobni Simeon Mirotočivi,voda,,0
+2026-02-27,58,Petak,14.2.2026.,Prepodobni Avksentije; Sveti Kirilo Slovenski,Prepodobni Avksentije; Sveti Kirilo Slovenski,voda,,0
+2026-02-28,59,Subota,15.2.2026.,Sveti apostol Onisim; Prepodobni Jevsevije Pustinjak; Teodorova subota,Sveti apostol Onisim; Prepodobni Jevsevije Pustinjak; Teodorova subota,ulje,,0
+2026-03-01,60,Nedelja,16.2.2026.,"Sveti mučenici Pamfil, Porfirije i ostalih 10 mučenika; Nedelja čista – Pravoslavlja","Sveti mučenici Pamfil, Porfirije i ostalih 10 mučenika; Nedelja čista – Pravoslavlja",ulje,,0
+2026-03-02,61,Ponedeljak,17.2.2026.,Sveti velikomučenik Teodor Tiron,Sveti velikomučenik Teodor Tiron,ulje,,0
+2026-03-03,62,Utorak,18.2.2026.,"Sveti Lav, Episkop rimski; Sveti Flavijan, Patrijarh carigradski","Sveti Lav, Episkop rimski; Sveti Flavijan, Patrijarh carigradski",voda,,0
+2026-03-04,63,Sreda,19.2.2026.,"Sveti apostoli Arhip, Filimon i Apfija","Sveti apostoli Arhip, Filimon i Apfija",voda,,0
+2026-03-05,64,Četvrtak,20.2.2026.,"Sveti Lav, Episkop katanski","Sveti Lav, Episkop katanski",voda,,0
+2026-03-06,65,Petak,21.2.2026.,Prepodobni Timotej; Sveti Evstatije,Prepodobni Timotej; Sveti Evstatije,voda,,0
+2026-03-07,66,Subota,22.2.2026.,Sveti mučenici u Evgeniji,Sveti mučenici u Evgeniji,ulje,,0
+2026-03-08,67,Nedelja,23.2.2026.,"Sveti sveštenomučenik Polikarp, Episkop smirnski (Nedelja Pačista)","Sveti sveštenomučenik Polikarp, Episkop smirnski (Nedelja Pačista)",ulje,,0
+2026-03-09,68,Ponedeljak,24.2.2026.,Prvo i drugo obretenje glave Svetog Jovana Krstitelja; Prepodobni Erazmo pečerski,Prvo i drugo obretenje glave Svetog Jovana Krstitelja; Prepodobni Erazmo pečerski,ulje,,0
+2026-03-10,69,Utorak,25.2.2026.,"Sveti Tarasije, Patrijarh carigradski","Sveti Tarasije, Patrijarh carigradski",voda,,0
+2026-03-11,70,Sreda,26.2.2026.,"Sveti Porfirije, Episkop gaski","Sveti Porfirije, Episkop gaski",voda,,0
+2026-03-12,71,Četvrtak,27.2.2026.,Prepodobni Prokopije Dekapolit; Prepodobni Talalej; Sveti Teodor Komogovinski,Prepodobni Prokopije Dekapolit; Prepodobni Talalej; Sveti Teodor Komogovinski,voda,,0
+2026-03-13,72,Petak,28.2.2026.,Prepodobni Vasilije Ispovednik; Prepodobni Jovan Kasijan,Prepodobni Vasilije Ispovednik; Prepodobni Jovan Kasijan,voda,,0
+2026-03-14,73,Subota,1.3.2026.,Sveta prepodobnomučenica Evdokija,Sveta prepodobnomučenica Evdokija,ulje,,0
+2026-03-15,74,Nedelja,2.3.2026.,"Sveti sveštenomučenik Teodot, Episkop kirinejski (Nedelja Krstopoklona)","Sveti sveštenomučenik Teodot, Episkop kirinejski (Nedelja Krstopoklona)",ulje,,0
+2026-03-16,75,Ponedeljak,3.3.2026.,"Sveti mučenici Evtropije, Kleonik i Vasilisk","Sveti mučenici Evtropije, Kleonik i Vasilisk",voda,,0
+2026-03-17,76,Utorak,4.3.2026.,Prepodobni Gerasim Jordanski,Prepodobni Gerasim Jordanski,voda,,0
+2026-03-18,77,Sreda,5.3.2026.,Sveti mučenik Konon Isavrijski; Prepodobni Marko Podvižnik,Sveti mučenik Konon Isavrijski; Prepodobni Marko Podvižnik,voda,,0
+2026-03-19,78,Četvrtak,6.3.2026.,Sveta 42 mučenika Amorejska,Sveta 42 mučenika Amorejska,voda,,0
+2026-03-20,79,Petak,7.3.2026.,Svetih sedam sveštenomučenika episkopa Hersonskih,Svetih sedam sveštenomučenika episkopa Hersonskih,voda,,0
+2026-03-21,80,Subota,8.3.2026.,"Sveti Teofilakt Ispovednik, Episkop nikomidijski","Sveti Teofilakt Ispovednik, Episkop nikomidijski",ulje,,0
+2026-03-22,81,Nedelja,9.3.2026.,Svetih Četrdeset Mučenika Sevastijskih – Mladenci; Sveti mučenik Urpasijan nikomidijski; Sveti Kesarije; Svetih 42 mučenika Momišićka (Nedelja Sredoposna),Svetih Četrdeset Mučenika Sevastijskih – Mladenci; Sveti mučenik Urpasijan nikomidijski; Sveti Kesarije; Svetih 42 mučenika Momišićka (Nedelja Sredoposna),ulje,,0
+2026-03-23,82,Ponedeljak,10.3.2026.,Sveti mučenik Kodrat Korintski i ostali,Sveti mučenik Kodrat Korintski i ostali,voda,,0
+2026-03-24,83,Utorak,11.3.2026.,"Sveti Sofronije, Patrijarh jerusalimski","Sveti Sofronije, Patrijarh jerusalimski",voda,,0
+2026-03-25,84,Sreda,12.3.2026.,Prepodobni Simeon Novi Bogoslov; Prepodobni Teofan Ispovednik; Sveti Grigorije Dvojeslov (Prvo bdenije),Prepodobni Simeon Novi Bogoslov; Prepodobni Teofan Ispovednik; Sveti Grigorije Dvojeslov (Prvo bdenije),ulje,,0
+2026-03-26,85,Četvrtak,13.3.2026.,"Prenos moštiju Svetog Nikifora, Patrijarha carigradskog","Prenos moštiju Svetog Nikifora, Patrijarha carigradskog",ulje,,0
+2026-03-27,86,Petak,14.3.2026.,Prepodobni Benedikt Nursijski (Drugo bdenije),Prepodobni Benedikt Nursijski (Drugo bdenije),vino,,0
+2026-03-28,87,Subota,15.3.2026.,"Sveti mučenici Agapije, Plisije i drugi","Sveti mučenici Agapije, Plisije i drugi",ulje,,0
+2026-03-29,88,Nedelja,16.3.2026.,Sveti apostol Aristovul; Sveti mučenik Savin Egipćanin (Nedelja Gluvna),Sveti apostol Aristovul; Sveti mučenik Savin Egipćanin (Nedelja Gluvna),ulje,,0
+2026-03-30,89,Ponedeljak,17.3.2026.,Prepodobni Aleksije Čovek Božji,Prepodobni Aleksije Čovek Božji,voda,,0
+2026-03-31,90,Utorak,18.3.2026.,"Sveti Kirilo, Episkop jerusalimski","Sveti Kirilo, Episkop jerusalimski",voda,,0
+2026-04-01,91,Sreda,19.3.2026.,"Sveti mučenici Hrizant, Darija i drugi; Prepodobni Simeon Dajbapski","Sveti mučenici Hrizant, Darija i drugi; Prepodobni Simeon Dajbapski",voda,,0
+2026-04-02,92,Četvrtak,20.3.2026.,Prepodobni Oci ubijeni u manastiru Svetog Save Osvećenog,Prepodobni Oci ubijeni u manastiru Svetog Save Osvećenog,voda,,0
+2026-04-03,93,Petak,21.3.2026.,"Prepodobni Jakov Ispovednik, Episkop katanski","Prepodobni Jakov Ispovednik, Episkop katanski",voda,,0
+2026-04-04,94,Subota,22.3.2026.,Sveti sveštenomučenik Vasilije Ankirski; Lazareva subota – Vrbica,Sveti sveštenomučenik Vasilije Ankirski; Lazareva subota – Vrbica,ulje,,0
+2026-04-05,95,Nedelja,23.3.2026.,Ulazak Gospoda Isusa Hrista u Jerusalim – Cveti,Ulazak Gospoda Isusa Hrista u Jerusalim – Cveti,riba,,0
+2026-04-06,96,Ponedeljak,24.3.2026.,Prepodobni Zaharije,Prepodobni Zaharije,voda,,0
+2026-04-07,97,Utorak,25.3.2026.,Blagovesti,Blagovesti,ulje,,0
+2026-04-08,98,Sreda,26.3.2026.,Sabor Svetog Arhangela Gavrila,Sabor Svetog Arhangela Gavrila,ulje,,0
+2026-04-09,99,Četvrtak,27.3.2026.,Veliki Četvrtak (Veliko bdenije),Veliki Četvrtak (Veliko bdenije),ulje,,0
+2026-04-10,100,Petak,28.3.2026.,Veliki Petak,Veliki Petak,strogi,,0
+2026-04-11,101,Subota,29.3.2026.,Velika Subota,Velika Subota,vino,,0
+2026-04-12,102,Nedelja,30.3.2026.,Vaskrs,Vaskrs,nema,,0
+2026-04-13,103,Ponedeljak,31.3.2026.,Vaskrsni ponedeljak,Vaskrsni ponedeljak,nema,,0
+2026-04-14,104,Utorak,1.4.2026.,Vaskrsni utorak,Vaskrsni utorak,nema,,0
+2026-04-15,105,Sreda,2.4.2026.,Prepodobni Tit Čudotvorac,Prepodobni Tit Čudotvorac,nema,,0
+2026-04-16,106,Četvrtak,3.4.2026.,Prepodobni Nikita Ispovednik,Prepodobni Nikita Ispovednik,nema,,0
+2026-04-17,107,Petak,4.4.2026.,Prepodobni Josif Himnograf (Istočni petak),Prepodobni Josif Himnograf (Istočni petak),nema,,0
+2026-04-18,108,Subota,5.4.2026.,Sveti mučenici Agatopod i Teodul,Sveti mučenici Agatopod i Teodul,nema,,0
+2026-04-19,109,Nedelja,6.4.2026.,"Sveti Evtihije, Patrijarh carigradski (Tomina nedelja)","Sveti Evtihije, Patrijarh carigradski (Tomina nedelja)",nema,,0
+2026-04-20,110,Ponedeljak,7.4.2026.,"Prepodobni Georgije, Mitropolit mitilenski; Prepodobni Nil Sorski (Pobusani ponedeljak)","Prepodobni Georgije, Mitropolit mitilenski; Prepodobni Nil Sorski (Pobusani ponedeljak)",nema,,0
+2026-04-21,111,Utorak,8.4.2026.,"Sveti apostoli Irodion, Agav, Ruf i drugi","Sveti apostoli Irodion, Agav, Ruf i drugi",nema,,0
+2026-04-22,112,Sreda,9.4.2026.,Sveti mučenik Evpsihije,Sveti mučenik Evpsihije,ulje,,0
+2026-04-23,113,Četvrtak,10.4.2026.,Sveti mučenik Terentije i 39 s njim,Sveti mučenik Terentije i 39 s njim,nema,,0
+2026-04-24,114,Petak,11.4.2026.,"Sveti sveštenomučenik Antipa, episkop Pergamski","Sveti sveštenomučenik Antipa, episkop Pergamski",ulje,,0
+2026-04-25,115,Subota,12.4.2026.,Prepodobni Vasilije Ispovednik,Prepodobni Vasilije Ispovednik,nema,,0
+2026-04-26,116,Nedelja,13.4.2026.,Sveti sveštenomučenik Artemon Laodikijski,Sveti sveštenomučenik Artemon Laodikijski,nema,,0
+2026-04-27,117,Ponedeljak,14.4.2026.,"Sveti Martin Ispovednik, Episkop rimski","Sveti Martin Ispovednik, Episkop rimski",nema,,0
+2026-04-28,118,Utorak,15.4.2026.,"Sveti apostoli Aristarh, Pud i Trofim; Sveti mučenik Sava Gotski","Sveti apostoli Aristarh, Pud i Trofim; Sveti mučenik Sava Gotski",nema,,0
+2026-04-29,119,Sreda,16.4.2026.,"Svete mučenice Agapija, Hionija i Irina","Svete mučenice Agapija, Hionija i Irina",ulje,,0
+2026-04-30,120,Četvrtak,17.4.2026.,"Sveti sveštenomučenik Simeon, Episkop persijski i ostali","Sveti sveštenomučenik Simeon, Episkop persijski i ostali",nema,,0
+2026-05-01,121,Petak,18.4.2026.,"Prepodobni Jovan, učenik Svetog Grigorija Dekapolita","Prepodobni Jovan, učenik Svetog Grigorija Dekapolita",ulje,,0
+2026-05-02,122,Subota,19.4.2026.,Prepodobni Jovan Vethopeščernik; Blažena Matrona Moskovska,Prepodobni Jovan Vethopeščernik; Blažena Matrona Moskovska,nema,,0
+2026-05-03,123,Nedelja,20.4.2026.,Prepodobni Teodor Trihina; Prepodobni Joasaf Srpski; Sveti Nikolaj Žički,Prepodobni Teodor Trihina; Prepodobni Joasaf Srpski; Sveti Nikolaj Žički,nema,,0
+2026-05-04,124,Ponedeljak,21.4.2026.,"Sveti sveštenomučenik Januarije, Episkop kampanijski","Sveti sveštenomučenik Januarije, Episkop kampanijski",nema,,0
+2026-05-05,125,Utorak,22.4.2026.,"Prepodobni Teodor Sikeot; Sveti sveštenomučenik Platon, Episkop banjalučki","Prepodobni Teodor Sikeot; Sveti sveštenomučenik Platon, Episkop banjalučki",nema,,0
+2026-05-06,126,Sreda,23.4.2026.,Sveti Velikomučenik Georgije – Đurđevdan; Sveta mučenica carica Aleksandra; Sveti mučenici Anatolije i Protoleon,Sveti Velikomučenik Georgije – Đurđevdan; Sveta mučenica carica Aleksandra; Sveti mučenici Anatolije i Protoleon,riba,,0
+2026-05-07,127,Četvrtak,24.4.2026.,Sveti mučenik Sava Stratilat; Sveti Sava Erdeljski; Sveti sveštenomučenik Branko,Sveti mučenik Sava Stratilat; Sveti Sava Erdeljski; Sveti sveštenomučenik Branko,nema,,0
+2026-05-08,128,Petak,25.4.2026.,Sveti apostol i jevanđelist Marko – Markovdan,Sveti apostol i jevanđelist Marko – Markovdan,riba,,0
+2026-05-09,129,Subota,26.4.2026.,"Sveti sveštenomučenik Vasilije, Episkop amasijski","Sveti sveštenomučenik Vasilije, Episkop amasijski",nema,,0
+2026-05-10,130,Nedelja,27.4.2026.,Spaljivanje moštiju Svetog Save na Vračaru,Spaljivanje moštiju Svetog Save na Vračaru,nema,,0
+2026-05-11,131,Ponedeljak,28.4.2026.,Sveti apostoli Jason i Sosipatr i ostali,Sveti apostoli Jason i Sosipatr i ostali,nema,,0
+2026-05-12,132,Utorak,29.4.2026.,"Sveti Vasilije Ostroški Čudotvorac; Sveti mučenik Vasilije, pekar iz Peći","Sveti Vasilije Ostroški Čudotvorac; Sveti mučenik Vasilije, pekar iz Peći",nema,,0
+2026-05-13,133,Sreda,30.4.2026.,Sveti apostol Jakov Zevedejev (Odanije Prepolovljenja),Sveti apostol Jakov Zevedejev (Odanije Prepolovljenja),riba,,0
+2026-05-14,134,Četvrtak,1.5.2026.,Sveti prorok Jeremija,Sveti prorok Jeremija,nema,,0
+2026-05-15,135,Petak,2.5.2026.,Sveti Atanasije Veliki; Sveti Mihail,Sveti Atanasije Veliki; Sveti Mihail,ulje,,0
+2026-05-16,136,Subota,3.5.2026.,Sveti mučenici Timotej i Mavra,Sveti mučenici Timotej i Mavra,nema,,0
+2026-05-17,137,Nedelja,4.5.2026.,Sveta mučenica Pelagija Tarsijska,Sveta mučenica Pelagija Tarsijska,nema,,0
+2026-05-18,138,Ponedeljak,5.5.2026.,Sveta velikomučenica Irina,Sveta velikomučenica Irina,nema,,0
+2026-05-19,139,Utorak,6.5.2026.,Sveti pravedni Jov; Prenos moštiju Svetog Save Srpskog,Sveti pravedni Jov; Prenos moštiju Svetog Save Srpskog,nema,,0
+2026-05-20,140,Sreda,7.5.2026.,Pojava Časnog Krsta u Jerusalimu (Odanije Vaskrsa),Pojava Časnog Krsta u Jerusalimu (Odanije Vaskrsa),riba,,0
+2026-05-21,141,Četvrtak,8.5.2026.,Vaznesenje – Spasovdan,Vaznesenje – Spasovdan,nema,,0
+2026-05-22,142,Petak,9.5.2026.,Prenos moštiju Svetog oca Nikolaja; Sveti prorok Isaija; Sveti mučenik Hristofor,Prenos moštiju Svetog oca Nikolaja; Sveti prorok Isaija; Sveti mučenik Hristofor,riba,,0
+2026-05-23,143,Subota,10.5.2026.,Sveti apostol Simon Zilot; Prepodobna Isidora,Sveti apostol Simon Zilot; Prepodobna Isidora,nema,,0
+2026-05-24,144,Nedelja,11.5.2026.,Sveti Kirilo i Metodije,Sveti Kirilo i Metodije,nema,,0
+2026-05-25,145,Ponedeljak,12.5.2026.,Sveti Epifanije; Sveti German Carigradski; Sveti Nikodim Srpski,Sveti Epifanije; Sveti German Carigradski; Sveti Nikodim Srpski,nema,,0
+2026-05-26,146,Utorak,13.5.2026.,Sveta mučenica Glikerija,Sveta mučenica Glikerija,nema,,0
+2026-05-27,147,Sreda,14.5.2026.,Sveti mučenik Isidor Hioski; Sveti mučenik Maksim,Sveti mučenik Isidor Hioski; Sveti mučenik Maksim,ulje,,0
+2026-05-28,148,Četvrtak,15.5.2026.,"Prepodobni Pahomije Veliki; Sveti Ahilije, Episkop lariski","Prepodobni Pahomije Veliki; Sveti Ahilije, Episkop lariski",nema,,0
+2026-05-29,149,Petak,16.5.2026.,Prepodobni Teodor; Sveti sveštenomučenik Teodor Vršački; Sveti mučenik Vukašin; Sveti Vikentije i Sveti mučenici Surdulički (Odanije Vaznesenja),Prepodobni Teodor; Sveti sveštenomučenik Teodor Vršački; Sveti mučenik Vukašin; Sveti Vikentije i Sveti mučenici Surdulički (Odanije Vaznesenja),ulje,,0
+2026-05-30,150,Subota,17.5.2026.,Sveti apostol Andronik i Sveta Junija (Zadušnice),Sveti apostol Andronik i Sveta Junija (Zadušnice),nema,,0
+2026-05-31,151,Nedelja,18.5.2026.,Duhovi,Duhovi,nema,,0
+2026-06-01,152,Ponedeljak,19.5.2026.,Duhovski ponedeljak,Duhovski ponedeljak,nema,,0
+2026-06-02,153,Utorak,20.5.2026.,Duhovski utorak,Duhovski utorak,nema,,0
+2026-06-03,154,Sreda,21.5.2026.,Sveti car Konstantin i carica Jelena; Prepodobna Jelena Dečanska; Pećka ikona Presvete Bogorodice,Sveti car Konstantin i carica Jelena; Prepodobna Jelena Dečanska; Pećka ikona Presvete Bogorodice,nema,,0
+2026-06-04,155,Četvrtak,22.5.2026.,"Sveti mučenik Jovan Vladimir, Knez srpski","Sveti mučenik Jovan Vladimir, Knez srpski",nema,,0
+2026-06-05,156,Petak,23.5.2026.,"Prepodobni Mihailo Ispovednik, Episkop sinadski","Prepodobni Mihailo Ispovednik, Episkop sinadski",nema,,0
+2026-06-06,157,Subota,24.5.2026.,Prepodobni Simeon Divnogorac (Odanije Pedesetnice),Prepodobni Simeon Divnogorac (Odanije Pedesetnice),nema,,0
+2026-06-07,158,Nedelja,25.5.2026.,Treće obretenje glave Svetog Jovana Krstitelja; Sveti mučenici Pivski (Petrovske poklade),Treće obretenje glave Svetog Jovana Krstitelja; Sveti mučenici Pivski (Petrovske poklade),nema,,0
+2026-06-08,159,Ponedeljak,26.5.2026.,Sveti apostol Karp; Sveti apostol Alfej (Petrovski post počinje),Sveti apostol Karp; Sveti apostol Alfej (Petrovski post počinje),voda,,0
+2026-06-09,160,Utorak,27.5.2026.,Sveti sveštenomučenik Terapont; Prepodobni Jovan Ruski,Sveti sveštenomučenik Terapont; Prepodobni Jovan Ruski,ulje,,0
+2026-06-10,161,Sreda,28.5.2026.,"Prepodobni Nikita Ispovednik, Episkop halkidonski","Prepodobni Nikita Ispovednik, Episkop halkidonski",voda,,0
+2026-06-11,162,Četvrtak,29.5.2026.,Sveta prepodobnomučenica Teodosija Tirska,Sveta prepodobnomučenica Teodosija Tirska,ulje,,0
+2026-06-12,163,Petak,30.5.2026.,Prepodobni Isakije Dalmatski,Prepodobni Isakije Dalmatski,voda,,0
+2026-06-13,164,Subota,31.5.2026.,Sveti apostol Jerma; Sveti mučenik Ermije,Sveti apostol Jerma; Sveti mučenik Ermije,riba,,0
+2026-06-14,165,Nedelja,1.6.2026.,Sveti mučenik Justin Filosof; Prepodobni Justin Ćelijski,Sveti mučenik Justin Filosof; Prepodobni Justin Ćelijski,riba,,0
+2026-06-15,166,Ponedeljak,2.6.2026.,Sveti Nikifor; Sveti sveštenomučenik Erazmo Ohridski,Sveti Nikifor; Sveti sveštenomučenik Erazmo Ohridski,voda,,0
+2026-06-16,167,Utorak,3.6.2026.,Sveti mučenik Lukilijan i drugi s njim,Sveti mučenik Lukilijan i drugi s njim,ulje,,0
+2026-06-17,168,Sreda,4.6.2026.,Sveti Mitrofan; Svete mironosice Marta i Marija; Sveti Joanikije Crnogorski; Sveti sveštenomučenik Đorđe (Bogić),Sveti Mitrofan; Svete mironosice Marta i Marija; Sveti Joanikije Crnogorski; Sveti sveštenomučenik Đorđe (Bogić),voda,,0
+2026-06-18,169,Četvrtak,5.6.2026.,Sveti sveštenomučenik Dorotej; Prepodobni Petar Koriški,Sveti sveštenomučenik Dorotej; Prepodobni Petar Koriški,ulje,,0
+2026-06-19,170,Petak,6.6.2026.,Prepodobni Visarion; Prepodobni Ilarion Novi,Prepodobni Visarion; Prepodobni Ilarion Novi,voda,,0
+2026-06-20,171,Subota,7.6.2026.,Sveti sveštenomučenik Teodot Ankirski,Sveti sveštenomučenik Teodot Ankirski,riba,,0
+2026-06-21,172,Nedelja,8.6.2026.,Sveti velikomučenik Teodor Stratilat,Sveti velikomučenik Teodor Stratilat,riba,,0
+2026-06-22,173,Ponedeljak,9.6.2026.,"Sveti Kirilo, Arhiepiskop aleksandrijski","Sveti Kirilo, Arhiepiskop aleksandrijski",voda,,0
+2026-06-23,174,Utorak,10.6.2026.,"Sveti sveštenomučenik Timotej, Episkop bruski","Sveti sveštenomučenik Timotej, Episkop bruski",ulje,,0
+2026-06-24,175,Sreda,11.6.2026.,Sveti apostoli Vartolomej i Varnava,Sveti apostoli Vartolomej i Varnava,riba,,0
+2026-06-25,176,Četvrtak,12.6.2026.,Prepodobni Onufrije Veliki; Prepodobni Petar Atonski,Prepodobni Onufrije Veliki; Prepodobni Petar Atonski,ulje,,0
+2026-06-26,177,Petak,13.6.2026.,"Sveti mučenica Akilina; Sveti Trifilije, Episkop kiparski","Sveti mučenica Akilina; Sveti Trifilije, Episkop kiparski",voda,,0
+2026-06-27,178,Subota,14.6.2026.,"Sveti prorok Jelisej; Sveti Metodije, Patrijarh carigradski","Sveti prorok Jelisej; Sveti Metodije, Patrijarh carigradski",riba,,0
+2026-06-28,179,Nedelja,15.6.2026.,Sveti prorok Amos; Sveti mučenik Knez Lazar i svi Sveti mučenici srpski – Vidovdan,Sveti prorok Amos; Sveti mučenik Knez Lazar i svi Sveti mučenici srpski – Vidovdan,riba,,0
+2026-06-29,180,Ponedeljak,16.6.2026.,"Sveti Tihon Čudotvorac, Episkop amatunski","Sveti Tihon Čudotvorac, Episkop amatunski",voda,,0
+2026-06-30,181,Utorak,17.6.2026.,"Sveti mučenici Manuil, Savel i Ismail","Sveti mučenici Manuil, Savel i Ismail",ulje,,0
+2026-07-01,182,Sreda,18.6.2026.,"Sveti mučenici Leontije, Ipatije i Teodul","Sveti mučenici Leontije, Ipatije i Teodul",voda,,0
+2026-07-02,183,Četvrtak,19.6.2026.,Sveti apostol Juda; Prepodobni Pajsije Veliki; Sveti Jovan Šangajski,Sveti apostol Juda; Prepodobni Pajsije Veliki; Sveti Jovan Šangajski,riba,,0
+2026-07-03,184,Petak,20.6.2026.,Sveti sveštenomučenik Metodije; Prepodobni Naum Ohridski,Sveti sveštenomučenik Metodije; Prepodobni Naum Ohridski,voda,,0
+2026-07-04,185,Subota,21.6.2026.,Sveti mučenik Julijan Tarsijski; Prepodobna Anastasija Srpska,Sveti mučenik Julijan Tarsijski; Prepodobna Anastasija Srpska,riba,,0
+2026-07-05,186,Nedelja,22.6.2026.,"Sveti sveštenomučenik Jevsevije, Episkop samosatski","Sveti sveštenomučenik Jevsevije, Episkop samosatski",riba,,0
+2026-07-06,187,Ponedeljak,23.6.2026.,Sveta mučenica Agripina; Vladimirska ikona Majke Božje,Sveta mučenica Agripina; Vladimirska ikona Majke Božje,voda,,0
+2026-07-07,188,Utorak,24.6.2026.,"Rođenje Svetog Jovana Preteče – Ivanjdan; Sveti Nikita, Episkop remezijanski","Rođenje Svetog Jovana Preteče – Ivanjdan; Sveti Nikita, Episkop remezijanski",riba,,0
+2026-07-08,189,Sreda,25.6.2026.,Sveta prepodobnomučenica Fevronija,Sveta prepodobnomučenica Fevronija,voda,,0
+2026-07-09,190,Četvrtak,26.6.2026.,Prepodobni David Solunski,Prepodobni David Solunski,ulje,,0
+2026-07-10,191,Petak,27.6.2026.,Prepodobni Sampson Stranoprimac,Prepodobni Sampson Stranoprimac,voda,,0
+2026-07-11,192,Subota,28.6.2026.,Prenos moštiju Svetih besrebrenika Kira i Jovana; Sveti mučenici Dabrobosanski i Mileševski,Prenos moštiju Svetih besrebrenika Kira i Jovana; Sveti mučenici Dabrobosanski i Mileševski,riba,,0
+2026-07-12,193,Nedelja,29.6.2026.,Sveti apostoli Petar i Pavle – Petrovdan,Sveti apostoli Petar i Pavle – Petrovdan,nema,,0
+2026-07-13,194,Ponedeljak,30.6.2026.,Sabor Svetih dvanaest apostola – Pavlovdan,Sabor Svetih dvanaest apostola – Pavlovdan,nema,,0
+2026-07-14,195,Utorak,1.7.2026.,Sveti mučenici i besrebrenici Kozma i Damjan,Sveti mučenici i besrebrenici Kozma i Damjan,nema,,0
+2026-07-15,196,Sreda,2.7.2026.,Polaganje rize Presvete Bogorodice,Polaganje rize Presvete Bogorodice,ulje,,0
+2026-07-16,197,Četvrtak,3.7.2026.,"Sveti mučenik Jakint; Sveti Anatolije, Patrijarh carigradski","Sveti mučenik Jakint; Sveti Anatolije, Patrijarh carigradski",nema,,0
+2026-07-17,198,Petak,4.7.2026.,"Sveti Andrej Kritski; Sveti ruski mučenici car Nikolaj Drugi, carica Aleksandra i deca im; Sveti sveštenomučenik Sava Gornjokarlovački","Sveti Andrej Kritski; Sveti ruski mučenici car Nikolaj Drugi, carica Aleksandra i deca im; Sveti sveštenomučenik Sava Gornjokarlovački",voda,,0
+2026-07-18,199,Subota,5.7.2026.,Prepodobni Atanasije Atonski; Prepodobni Sergije Radonješki,Prepodobni Atanasije Atonski; Prepodobni Sergije Radonješki,nema,,0
+2026-07-19,200,Nedelja,6.7.2026.,Prepodobni Sisoje Veliki,Prepodobni Sisoje Veliki,nema,,0
+2026-07-20,201,Ponedeljak,7.7.2026.,Prepodobni Toma Malein; Sveta velikomučenica Nedelja,Prepodobni Toma Malein; Sveta velikomučenica Nedelja,nema,,0
+2026-07-21,202,Utorak,8.7.2026.,Sveti velikomučenik Prokopije,Sveti velikomučenik Prokopije,nema,,0
+2026-07-22,203,Sreda,9.7.2026.,Sveti sveštenomučenik Pankratije; Sveti Teodor; Sveti mučenici Glamočki i Kulenvakufski,Sveti sveštenomučenik Pankratije; Sveti Teodor; Sveti mučenici Glamočki i Kulenvakufski,voda,,0
+2026-07-23,204,Četvrtak,10.7.2026.,Svetih 45 mučenika iz Nikopolja; Prepodobni Antonije Pečerski,Svetih 45 mučenika iz Nikopolja; Prepodobni Antonije Pečerski,nema,,0
+2026-07-24,205,Petak,11.7.2026.,Sveta velikomučenica Efimija; Sveta ravnoapostolna Olga Ruska,Sveta velikomučenica Efimija; Sveta ravnoapostolna Olga Ruska,voda,,0
+2026-07-25,206,Subota,12.7.2026.,Sveti mučenici Proklo i Ilarije; Ikona Presvete Bogorodice Trojeručice,Sveti mučenici Proklo i Ilarije; Ikona Presvete Bogorodice Trojeručice,nema,,0
+2026-07-26,207,Nedelja,13.7.2026.,Sabor Svetog Arhangela Gavrila,Sabor Svetog Arhangela Gavrila,nema,,0
+2026-07-27,208,Ponedeljak,14.7.2026.,Sveti apostol Akila; Prepodobni Nikodim Svetogorac,Sveti apostol Akila; Prepodobni Nikodim Svetogorac,nema,,0
+2026-07-28,209,Utorak,15.7.2026.,Sveti mučenici Kirik i Julita; Sveti Vladimir Kijevski; Sveti mučenici Veličko-gornjepolimski,Sveti mučenici Kirik i Julita; Sveti Vladimir Kijevski; Sveti mučenici Veličko-gornjepolimski,nema,,0
+2026-07-29,210,Sreda,16.7.2026.,Sveti sveštenomučenik Atinogen; Sveta mučenica Julija,Sveti sveštenomučenik Atinogen; Sveta mučenica Julija,voda,,0
+2026-07-30,211,Četvrtak,17.7.2026.,Sveta velikomučenica Marina – Ognjena Marija,Sveta velikomučenica Marina – Ognjena Marija,nema,,0
+2026-07-31,212,Petak,18.7.2026.,Sveti mučenik Emilijan; Sveti mučenik Jakint,Sveti mučenik Emilijan; Sveti mučenik Jakint,voda,,0
+2026-08-01,213,Subota,19.7.2026.,"Prepodobna Makrina; Sveti Stefan, Despot srpski i Prepodobna Evgenija (Lazarević)","Prepodobna Makrina; Sveti Stefan, Despot srpski i Prepodobna Evgenija (Lazarević)",nema,,0
+2026-08-02,214,Nedelja,20.7.2026.,Sveti prorok Ilija – Ilindan; Sveti Ilija Gruzijski,Sveti prorok Ilija – Ilindan; Sveti Ilija Gruzijski,nema,,0
+2026-08-03,215,Ponedeljak,21.7.2026.,Sveti prorok Jezekilj,Sveti prorok Jezekilj,nema,,0
+2026-08-04,216,Utorak,22.7.2026.,Sveta Marija Magdalina – Blaga Marija,Sveta Marija Magdalina – Blaga Marija,nema,,0
+2026-08-05,217,Sreda,23.7.2026.,"Sveti mučenici Trofim, Teofil i drugi s njima","Sveti mučenici Trofim, Teofil i drugi s njima",voda,,0
+2026-08-06,218,Četvrtak,24.7.2026.,Sveta mučenica Hristina; Prepodobni Polikarp Pečerski; Sveti mučenici Prebilovački i Donjohercegovački,Sveta mučenica Hristina; Prepodobni Polikarp Pečerski; Sveti mučenici Prebilovački i Donjohercegovački,nema,,0
+2026-08-07,219,Petak,25.7.2026.,"Uspenije Svete Ane, majke Presvete Bogorodice","Uspenije Svete Ane, majke Presvete Bogorodice",ulje,,0
+2026-08-08,220,Subota,26.7.2026.,"Sveta prepodobnomučenica Paraskeva – Petka; Sveti Sava Treći, Arhiepiskop srpski","Sveta prepodobnomučenica Paraskeva – Petka; Sveti Sava Treći, Arhiepiskop srpski",nema,,0
+2026-08-09,221,Nedelja,27.7.2026.,Sveti velikomučenik Pantelejmon; Sveti Kliment Ohridski,Sveti velikomučenik Pantelejmon; Sveti Kliment Ohridski,nema,,0
+2026-08-10,222,Ponedeljak,28.7.2026.,"Sveti apostoli i đakoni Prohor, Nikanor, Timon i Parmen","Sveti apostoli i đakoni Prohor, Nikanor, Timon i Parmen",nema,,0
+2026-08-11,223,Utorak,29.7.2026.,Sveti mučenik Kalinik; Sveta mučenica Serafima,Sveti mučenik Kalinik; Sveta mučenica Serafima,nema,,0
+2026-08-12,224,Sreda,30.7.2026.,Prepodobna mati Angelina Srpska,Prepodobna mati Angelina Srpska,ulje,,0
+2026-08-13,225,Četvrtak,31.7.2026.,Sveti pravedni Evdokim; Sveta mučenica Julita,Sveti pravedni Evdokim; Sveta mučenica Julita,nema,,0
+2026-08-14,226,Petak,1.8.2026.,Iznošenje Časnog Krsta – Sveti mučenici Makaveji,Iznošenje Časnog Krsta – Sveti mučenici Makaveji,vino,,0
+2026-08-15,227,Subota,2.8.2026.,Prenos moštiju Svetog prvomučenika i arhiđakona Stefana,Prenos moštiju Svetog prvomučenika i arhiđakona Stefana,ulje,,0
+2026-08-16,228,Nedelja,3.8.2026.,"Prepodobni Isakije, Dalmat i Faust","Prepodobni Isakije, Dalmat i Faust",ulje,,0
+2026-08-17,229,Ponedeljak,4.8.2026.,Svetih sedam mučenika u Efesu; Sveti sveštenomučenik Kozma Etolski,Svetih sedam mučenika u Efesu; Sveti sveštenomučenik Kozma Etolski,voda,,0
+2026-08-18,230,Utorak,5.8.2026.,Sveti mučenik Evsignije,Sveti mučenik Evsignije,voda,,0
+2026-08-19,231,Sreda,6.8.2026.,Preobraženje Gospodnje,Preobraženje Gospodnje,riba,,0
+2026-08-20,232,Četvrtak,7.8.2026.,Sveti prepodobnomučenik Dometije; Prepodobni Or,Sveti prepodobnomučenik Dometije; Prepodobni Or,voda,,0
+2026-08-21,233,Petak,8.8.2026.,Sveti Emilijan Ispovednik; Prepodobni Zosim i Jakov Tumanski,Sveti Emilijan Ispovednik; Prepodobni Zosim i Jakov Tumanski,voda,,0
+2026-08-22,234,Subota,9.8.2026.,Sveti apostol Matija; Sveti mučenik Antonije,Sveti apostol Matija; Sveti mučenik Antonije,ulje,,0
+2026-08-23,235,Nedelja,10.8.2026.,Sveti mučenik i arhiđakon Lavrentije,Sveti mučenik i arhiđakon Lavrentije,ulje,,0
+2026-08-24,236,Ponedeljak,11.8.2026.,"Sveti mučenik i arhiđakon Evplo; Prepodobni Nifont, Patrijarh carigradski","Sveti mučenik i arhiđakon Evplo; Prepodobni Nifont, Patrijarh carigradski",voda,,0
+2026-08-25,237,Utorak,12.8.2026.,"Sveti mučenici Fotije, Anikita i drugi s njima","Sveti mučenici Fotije, Anikita i drugi s njima",voda,,0
+2026-08-26,238,Sreda,13.8.2026.,Sveti mučenik Ipolit; Sveti Tihon Zadonski,Sveti mučenik Ipolit; Sveti Tihon Zadonski,ulje,,0
+2026-08-27,239,Četvrtak,14.8.2026.,Sveti prorok Mihej Drugi,Sveti prorok Mihej Drugi,voda,,0
+2026-08-28,240,Petak,15.8.2026.,Uspenije Presvete Bogorodice – Velika Gospojina,Uspenije Presvete Bogorodice – Velika Gospojina,riba,,0
+2026-08-29,241,Subota,16.8.2026.,"Nerukotvoreni Obraz Gospoda Isusa Hrista; Sveti Jevstatije Drugi, Arhiepiskop srpski; Prepodobni Roman; Prepodobni Rafailo Banatski","Nerukotvoreni Obraz Gospoda Isusa Hrista; Sveti Jevstatije Drugi, Arhiepiskop srpski; Prepodobni Roman; Prepodobni Rafailo Banatski",nema,,0
+2026-08-30,242,Nedelja,17.8.2026.,Sveti mučenik Miron; Sveti mučenik Patroklo,Sveti mučenik Miron; Sveti mučenik Patroklo,nema,,0
+2026-08-31,243,Ponedeljak,18.8.2026.,Sveti mučenici Flor i Lavr; Prepodobni Jovan Rilski,Sveti mučenici Flor i Lavr; Prepodobni Jovan Rilski,nema,,0
+2026-09-01,244,Utorak,19.8.2026.,Sveti mučenik Andrej Stratilat i ostali,Sveti mučenik Andrej Stratilat i ostali,nema,,0
+2026-09-02,245,Sreda,20.8.2026.,Sveti prorok Samuilo; Sveti sveštenomučenik Filip Iraklijski,Sveti prorok Samuilo; Sveti sveštenomučenik Filip Iraklijski,voda,,0
+2026-09-03,246,Četvrtak,21.8.2026.,Sveti apostol Tadej; Sveta mučenica Vasa sa decom; Sveti sveštenomučenik Rafailo Šišatovački,Sveti apostol Tadej; Sveta mučenica Vasa sa decom; Sveti sveštenomučenik Rafailo Šišatovački,nema,,0
+2026-09-04,247,Petak,22.8.2026.,"Sveti mučenik Agatonik; Sveti sveštenomučenik Gorazd, Episkop češki","Sveti mučenik Agatonik; Sveti sveštenomučenik Gorazd, Episkop češki",voda,,0
+2026-09-05,248,Subota,23.8.2026.,Sveti sveštenomučenik Irinej; Sveti mučenik Lup,Sveti sveštenomučenik Irinej; Sveti mučenik Lup,nema,,0
+2026-09-06,249,Nedelja,24.8.2026.,Sveti sveštenomučenik Evtihije; Sveta mučenica Sira,Sveti sveštenomučenik Evtihije; Sveta mučenica Sira,nema,,0
+2026-09-07,250,Ponedeljak,25.8.2026.,Prenos moštiju Svetog apostola Vartolomeja; Sveti apostol Tit,Prenos moštiju Svetog apostola Vartolomeja; Sveti apostol Tit,nema,,0
+2026-09-08,251,Utorak,26.8.2026.,Sveti mučenici Adrijan i Natalija,Sveti mučenici Adrijan i Natalija,nema,,0
+2026-09-09,252,Sreda,27.8.2026.,Prepodobni Pimen Veliki,Prepodobni Pimen Veliki,voda,,0
+2026-09-10,253,Četvrtak,28.8.2026.,Prepodobni Mojsej Murin; Prepodobni Sava Pskovski,Prepodobni Mojsej Murin; Prepodobni Sava Pskovski,nema,,0
+2026-09-11,254,Petak,29.8.2026.,Usekovanje glave Svetog Jovana Krstitelja; Sabor Srpskih Svetitelja,Usekovanje glave Svetog Jovana Krstitelja; Sabor Srpskih Svetitelja,ulje,,0
+2026-09-12,255,Subota,30.8.2026.,"Prenos moštiju Svetog Aleksandra Nevskog; Sveti Kirilo, Nikon i Makarije","Prenos moštiju Svetog Aleksandra Nevskog; Sveti Kirilo, Nikon i Makarije",nema,,0
+2026-09-13,256,Nedelja,31.8.2026.,Polaganje pojasa Presvete Bogorodice; Sveti mučenici Jasenovački,Polaganje pojasa Presvete Bogorodice; Sveti mučenici Jasenovački,nema,,0
+2026-09-14,257,Ponedeljak,1.9.2026.,Prepodobni Simeon Stolpnik; Crkvena Nova godina,Prepodobni Simeon Stolpnik; Crkvena Nova godina,nema,,0
+2026-09-15,258,Utorak,2.9.2026.,"Sveti mučenik Mamant; Sveti Jovan Posnik, Patrijarh carigradski","Sveti mučenik Mamant; Sveti Jovan Posnik, Patrijarh carigradski",nema,,0
+2026-09-16,259,Sreda,3.9.2026.,"Sveti sveštenomučenik Antim; Sveti Joanikije, prvi Patrijarh srpski","Sveti sveštenomučenik Antim; Sveti Joanikije, prvi Patrijarh srpski",voda,,0
+2026-09-17,260,Četvrtak,4.9.2026.,Sveti sveštenomučenik Vavila; Sveti prorok Mojsej Bogovidac; Sveti Petar Dabrobosanski; Prepodobni Stefan Tronoški,Sveti sveštenomučenik Vavila; Sveti prorok Mojsej Bogovidac; Sveti Petar Dabrobosanski; Prepodobni Stefan Tronoški,nema,,0
+2026-09-18,261,Petak,5.9.2026.,Sveti prorok Zaharija i Sveta pravedna Jelisaveta,Sveti prorok Zaharija i Sveta pravedna Jelisaveta,voda,,0
+2026-09-19,262,Subota,6.9.2026.,Čudo Svetog Arhangela Mihaila; Sveti mučenik Evdoksije,Čudo Svetog Arhangela Mihaila; Sveti mučenik Evdoksije,nema,,0
+2026-09-20,263,Nedelja,7.9.2026.,Sveti mučenik Sozont,Sveti mučenik Sozont,nema,,0
+2026-09-21,264,Ponedeljak,8.9.2026.,Rođenje Presvete Bogorodice – Mala Gospojina,Rođenje Presvete Bogorodice – Mala Gospojina,nema,,0
+2026-09-22,265,Utorak,9.9.2026.,Sveti pravedni bogoroditelji Joakim i Ana,Sveti pravedni bogoroditelji Joakim i Ana,nema,,0
+2026-09-23,266,Sreda,10.9.2026.,"Svete mučenice Minodora, Mitrodora i Nimfodora","Svete mučenice Minodora, Mitrodora i Nimfodora",voda,,0
+2026-09-24,267,Četvrtak,11.9.2026.,Prepodobna Teodora Aleksandrijska; Prepodobni Sergije i German Valaamski,Prepodobna Teodora Aleksandrijska; Prepodobni Sergije i German Valaamski,nema,,0
+2026-09-25,268,Petak,12.9.2026.,Sveti sveštenomučenik Avtonom,Sveti sveštenomučenik Avtonom,ulje,,0
+2026-09-26,269,Subota,13.9.2026.,Sveti sveštenomučenik Kornilije,Sveti sveštenomučenik Kornilije,nema,,0
+2026-09-27,270,Nedelja,14.9.2026.,Vozdviženje Časnog Krsta – Krstovdan,Vozdviženje Časnog Krsta – Krstovdan,ulje,,0
+2026-09-28,271,Ponedeljak,15.9.2026.,Sveti velikomučenik Nikita; Sveti Josif Temišvarski,Sveti velikomučenik Nikita; Sveti Josif Temišvarski,nema,,0
+2026-09-29,272,Utorak,16.9.2026.,Sveta velikomučenica Jefimija; Prepodobni Dorotej; Sveti Kiprijan,Sveta velikomučenica Jefimija; Prepodobni Dorotej; Sveti Kiprijan,nema,,0
+2026-09-30,273,Sreda,17.9.2026.,"Svete mučenice Vera, Nada i Ljubav i majka im Sofija","Svete mučenice Vera, Nada i Ljubav i majka im Sofija",voda,,0
+2026-10-01,274,Četvrtak,18.9.2026.,Sveti Evmenije Gortinski; Sveta mučenica Ariadna,Sveti Evmenije Gortinski; Sveta mučenica Ariadna,nema,,0
+2026-10-02,275,Petak,19.9.2026.,"Sveti mučenici Trofim, Savatije i Dorimedont","Sveti mučenici Trofim, Savatije i Dorimedont",voda,,0
+2026-10-03,276,Subota,20.9.2026.,Sveti velikomučenik Jevstatije,Sveti velikomučenik Jevstatije,nema,,0
+2026-10-04,277,Nedelja,21.9.2026.,Sveti apostol Kodrat,Sveti apostol Kodrat,nema,,0
+2026-10-05,278,Ponedeljak,22.9.2026.,Sveti sveštenomučenik Foka; Sveti prorok Jona,Sveti sveštenomučenik Foka; Sveti prorok Jona,nema,,0
+2026-10-06,279,Utorak,23.9.2026.,Začeće Svetog Jovana Preteče i Krstitelja,Začeće Svetog Jovana Preteče i Krstitelja,nema,,0
+2026-10-07,280,Sreda,24.9.2026.,Sveta prvomučenica Tekla; Prepodobni Simon; Sveti kralj Vladislav i Prepodobni David Srpski,Sveta prvomučenica Tekla; Prepodobni Simon; Sveti kralj Vladislav i Prepodobni David Srpski,ulje,,0
+2026-10-08,281,Četvrtak,25.9.2026.,Prepodobna Efrosinija; Prepodobni Sergije Radonješki,Prepodobna Efrosinija; Prepodobni Sergije Radonješki,nema,,0
+2026-10-09,282,Petak,26.9.2026.,Sveti apostol i jevanđelist Jovan Bogoslov,Sveti apostol i jevanđelist Jovan Bogoslov,riba,,0
+2026-10-10,283,Subota,27.9.2026.,Sveti mučenik Kalistrat i ostali (Zadušnice),Sveti mučenik Kalistrat i ostali (Zadušnice),nema,,0
+2026-10-11,284,Nedelja,28.9.2026.,Prepodobni Hariton Ispovednik,Prepodobni Hariton Ispovednik,nema,,0
+2026-10-12,285,Ponedeljak,29.9.2026.,Prepodobni Kirijak Otšelnik – Miholjdan,Prepodobni Kirijak Otšelnik – Miholjdan,nema,,0
+2026-10-13,286,Utorak,30.9.2026.,Sveti sveštenomučenik Grigorije; Sveti Mihail Kijevski,Sveti sveštenomučenik Grigorije; Sveti Mihail Kijevski,nema,,0
+2026-10-14,287,Sreda,1.10.2026.,Pokrov Presvete Bogorodice,Pokrov Presvete Bogorodice,riba,,0
+2026-10-15,288,Četvrtak,2.10.2026.,Sveti sveštenomučenik Kiprijan i Sveta mučenica Justina; Prepodobni Andrej,Sveti sveštenomučenik Kiprijan i Sveta mučenica Justina; Prepodobni Andrej,nema,,0
+2026-10-16,289,Petak,3.10.2026.,"Sveti sveštenomučenik Dionisije Areopagit; Sveti Pajsije (Janjevac), Patrijarh srpski","Sveti sveštenomučenik Dionisije Areopagit; Sveti Pajsije (Janjevac), Patrijarh srpski",voda,,0
+2026-10-17,290,Subota,4.10.2026.,Sveti Stefan i Prepodobna Jelisaveta (Jelena Štiljanović),Sveti Stefan i Prepodobna Jelisaveta (Jelena Štiljanović),nema,,0
+2026-10-18,291,Nedelja,5.10.2026.,Sveta mučenica Haritina; Sveti sveštenomučenik Dionisije,Sveta mučenica Haritina; Sveti sveštenomučenik Dionisije,nema,,0
+2026-10-19,292,Ponedeljak,6.10.2026.,Sveti apostol Toma – Tomindan,Sveti apostol Toma – Tomindan,nema,,0
+2026-10-20,293,Utorak,7.10.2026.,Sveti mučenici Sergije i Vakho – Srđevdan,Sveti mučenici Sergije i Vakho – Srđevdan,nema,,0
+2026-10-21,294,Sreda,8.10.2026.,Prepodobna Pelagija Palestinska; Prepodobna Taisa Tivaidska,Prepodobna Pelagija Palestinska; Prepodobna Taisa Tivaidska,voda,,0
+2026-10-22,295,Četvrtak,9.10.2026.,Sveti apostol Jakov; Sveti despot Stefan Srpski (Slepi),Sveti apostol Jakov; Sveti despot Stefan Srpski (Slepi),nema,,0
+2026-10-23,296,Petak,10.10.2026.,Sveti mučenici Evlampije i Evlampija,Sveti mučenici Evlampije i Evlampija,voda,,0
+2026-10-24,297,Subota,11.10.2026.,"Sveti apostol Filip, đakon; Prepodobni Teofan Načertani","Sveti apostol Filip, đakon; Prepodobni Teofan Načertani",nema,,0
+2026-10-25,298,Nedelja,12.10.2026.,"Sveti mučenici Tarah, Prov i Andronik","Sveti mučenici Tarah, Prov i Andronik",nema,,0
+2026-10-26,299,Ponedeljak,13.10.2026.,Sveti mučenik Karp; Sveta mučenica Zlata Meglenska; Sveta mučenica Bosiljka,Sveti mučenik Karp; Sveta mučenica Zlata Meglenska; Sveta mučenica Bosiljka,nema,,0
+2026-10-27,300,Utorak,14.10.2026.,Prepodobna mati Paraskeva – Sveta Petka,Prepodobna mati Paraskeva – Sveta Petka,nema,,0
+2026-10-28,301,Sreda,15.10.2026.,Sveti sveštenomučenik Lukijan; Prepodobni Jevtimije Novi,Sveti sveštenomučenik Lukijan; Prepodobni Jevtimije Novi,voda,,0
+2026-10-29,302,Četvrtak,16.10.2026.,Sveti mučenik Longin Sotnik,Sveti mučenik Longin Sotnik,nema,,0
+2026-10-30,303,Petak,17.10.2026.,Sveti prorok Osija; Sveti prepodobnomučenik Andrej Kritski,Sveti prorok Osija; Sveti prepodobnomučenik Andrej Kritski,voda,,0
+2026-10-31,304,Subota,18.10.2026.,Sveti apostol i jevanđelist Luka; Sveti Petar Cetinjski,Sveti apostol i jevanđelist Luka; Sveti Petar Cetinjski,nema,,0
+2026-11-01,305,Nedelja,19.10.2026.,Sveti prorok Joil; Prepodobni Prohor Pčinjski; Prepodobni Jovan Rilski,Sveti prorok Joil; Prepodobni Prohor Pčinjski; Prepodobni Jovan Rilski,nema,,0
+2026-11-02,306,Ponedeljak,20.10.2026.,Sveti velikomučenik Artemije; Prepodobni Gerasim Kefalonijski,Sveti velikomučenik Artemije; Prepodobni Gerasim Kefalonijski,nema,,0
+2026-11-03,307,Utorak,21.10.2026.,Prepodobni Ilarion; Sveti Ilarion Meglenski; Sveti Visarion Ispovednik,Prepodobni Ilarion; Sveti Ilarion Meglenski; Sveti Visarion Ispovednik,nema,,0
+2026-11-04,308,Sreda,22.10.2026.,"Sveti ravnoapostolni Averkije, Episkop jerapoljski","Sveti ravnoapostolni Averkije, Episkop jerapoljski",voda,,0
+2026-11-05,309,Četvrtak,23.10.2026.,"Sveti apostol Jakov, prvi Episkop jerusalimski","Sveti apostol Jakov, prvi Episkop jerusalimski",nema,,0
+2026-11-06,310,Petak,24.10.2026.,Sveti velikomučenik Areta i ostali,Sveti velikomučenik Areta i ostali,voda,,0
+2026-11-07,311,Subota,25.10.2026.,Sveti mučenici Markijan i Martirije; Sveta Tavita (Zadušnice),Sveti mučenici Markijan i Martirije; Sveta Tavita (Zadušnice),nema,,0
+2026-11-08,312,Nedelja,26.10.2026.,Sveti velikomučenik Dimitrije – Mitrovdan,Sveti velikomučenik Dimitrije – Mitrovdan,nema,,0
+2026-11-09,313,Ponedeljak,27.10.2026.,Sveti mučenik Nestor,Sveti mučenik Nestor,nema,,0
+2026-11-10,314,Utorak,28.10.2026.,"Sveti mučenik Terencije; Sveti Arsenije Sremac, Arhiepiskop srpski","Sveti mučenik Terencije; Sveti Arsenije Sremac, Arhiepiskop srpski",nema,,0
+2026-11-11,315,Sreda,29.10.2026.,Prepodobni Avramije Zatvornik; Sveta prepodobnomučenica Anastasija Rimljanka,Prepodobni Avramije Zatvornik; Sveta prepodobnomučenica Anastasija Rimljanka,voda,,0
+2026-11-12,316,Četvrtak,30.10.2026.,Sveti kralj Milutin; Prepodobni Teoktist i Jelena; Sveti Varnava Hvostanski Ispovednik,Sveti kralj Milutin; Prepodobni Teoktist i Jelena; Sveti Varnava Hvostanski Ispovednik,nema,,0
+2026-11-13,317,Petak,31.10.2026.,"Sveti apostoli Stahije, Amplije, Urvan i drugi s njima","Sveti apostoli Stahije, Amplije, Urvan i drugi s njima",voda,,0
+2026-11-14,318,Subota,1.11.2026.,Sveti Kozma i Damjan – Vračevi,Sveti Kozma i Damjan – Vračevi,nema,,0
+2026-11-15,319,Nedelja,2.11.2026.,"Sveti mučenici Akindin, Pigasije i drugi s njima","Sveti mučenici Akindin, Pigasije i drugi s njima",nema,,0
+2026-11-16,320,Ponedeljak,3.11.2026.,Obnovljenje hrama Svetog velikomučenika Georgija – Đurđic,Obnovljenje hrama Svetog velikomučenika Georgija – Đurđic,nema,,0
+2026-11-17,321,Utorak,4.11.2026.,Prepodobni Joanikije Veliki; Sveti sveštenomučenik Nikandar,Prepodobni Joanikije Veliki; Sveti sveštenomučenik Nikandar,nema,,0
+2026-11-18,322,Sreda,5.11.2026.,Sveti prepodobnomučenici Galaktion i Epistima,Sveti prepodobnomučenici Galaktion i Epistima,voda,,0
+2026-11-19,323,Četvrtak,6.11.2026.,Sveti Pavle Ispovednik; Prepodobni Varlaam Hutinski,Sveti Pavle Ispovednik; Prepodobni Varlaam Hutinski,nema,,0
+2026-11-20,324,Petak,7.11.2026.,Sveta 33 mučenika u Melitini; Prepodobni Lazar Galisijski,Sveta 33 mučenika u Melitini; Prepodobni Lazar Galisijski,voda,,0
+2026-11-21,325,Subota,8.11.2026.,Sabor Svetog Arhangela Mihaila i ostalih Nebeskih Sila Bestelesnih – Aranđelovdan,Sabor Svetog Arhangela Mihaila i ostalih Nebeskih Sila Bestelesnih – Aranđelovdan,nema,,0
+2026-11-22,326,Nedelja,9.11.2026.,Sveti mučenici Onisifor i Porfirije; Sveti Nektarije Eginski,Sveti mučenici Onisifor i Porfirije; Sveti Nektarije Eginski,nema,,0
+2026-11-23,327,Ponedeljak,10.11.2026.,"Sveti apostoli Olimp, Erast, Rodion i drugi s njima","Sveti apostoli Olimp, Erast, Rodion i drugi s njima",nema,,0
+2026-11-24,328,Utorak,11.11.2026.,Sveti velikomučenik Mina; Sveti kralj Stefan Dečanski,Sveti velikomučenik Mina; Sveti kralj Stefan Dečanski,nema,,0
+2026-11-25,329,Sreda,12.11.2026.,Sveti Jovan Milostivi; Prepodobni Nil Sinajski,Sveti Jovan Milostivi; Prepodobni Nil Sinajski,ulje,,0
+2026-11-26,330,Četvrtak,13.11.2026.,"Sveti Jovan Zlatousti, Patrijarh carigradski","Sveti Jovan Zlatousti, Patrijarh carigradski",nema,,0
+2026-11-27,331,Petak,14.11.2026.,Sveti apostol Filip; Sveti Grigorije Palama,Sveti apostol Filip; Sveti Grigorije Palama,riba,,0
+2026-11-28,332,Subota,15.11.2026.,"Sveti mučenici Gurije, Samon i Aviv","Sveti mučenici Gurije, Samon i Aviv",riba,,0
+2026-11-29,333,Nedelja,16.11.2026.,Sveti apostol i jevanđelist Matej,Sveti apostol i jevanđelist Matej,riba,,0
+2026-11-30,334,Ponedeljak,17.11.2026.,"Sveti Grigorije Čudotvorac; Sveti Maksim, Patrijarh carigradski; Prepodobni Sevastijan Džeksonski","Sveti Grigorije Čudotvorac; Sveti Maksim, Patrijarh carigradski; Prepodobni Sevastijan Džeksonski",voda,,0
+2026-12-01,335,Utorak,18.11.2026.,Sveti mučenik Platon; Sveti mučenici Roman i Varul Otrok,Sveti mučenik Platon; Sveti mučenici Roman i Varul Otrok,ulje,,0
+2026-12-02,336,Sreda,19.11.2026.,Sveti prorok Avdija; Sveti mučenik Varlaam; Prepodobni Joasaf; Prepodobni Porfirije Kavsokalivit,Sveti prorok Avdija; Sveti mučenik Varlaam; Prepodobni Joasaf; Prepodobni Porfirije Kavsokalivit,voda,,0
+2026-12-03,337,Četvrtak,20.11.2026.,Prepodobni Grigorije Dekapolit,Prepodobni Grigorije Dekapolit,ulje,,0
+2026-12-04,338,Petak,21.11.2026.,Vavedenje Presvete Bogorodice,Vavedenje Presvete Bogorodice,riba,,0
+2026-12-05,339,Subota,22.11.2026.,"Sveti apostoli Filimon, Apfija i Arhip; Sveta mučenica Kikilija","Sveti apostoli Filimon, Apfija i Arhip; Sveta mučenica Kikilija",riba,,0
+2026-12-06,340,Nedelja,23.11.2026.,Sveti Amfilohije Ikonijski; Sveti Grigorije; Sveti Aleksandar Nevski,Sveti Amfilohije Ikonijski; Sveti Grigorije; Sveti Aleksandar Nevski,riba,,0
+2026-12-07,341,Ponedeljak,24.11.2026.,Sveta velikomučenica Ekaterina,Sveta velikomučenica Ekaterina,ulje,,0
+2026-12-08,342,Utorak,25.11.2026.,Sveti sveštenomučenik Kliment,Sveti sveštenomučenik Kliment,ulje,,0
+2026-12-09,343,Sreda,26.11.2026.,Prepodobni Alimpije Stolpnik,Prepodobni Alimpije Stolpnik,voda,,0
+2026-12-10,344,Četvrtak,27.11.2026.,"Sveti mučenik Jakov Persijanac; Sveti Jakov, Episkop rostovski","Sveti mučenik Jakov Persijanac; Sveti Jakov, Episkop rostovski",ulje,,0
+2026-12-11,345,Petak,28.11.2026.,Sveti prepodobnomučenik Stefan Novi Ispovednik; Sveti mučenik Hristo,Sveti prepodobnomučenik Stefan Novi Ispovednik; Sveti mučenik Hristo,voda,,0
+2026-12-12,346,Subota,29.11.2026.,"Sveti mučenici Paramon i Filumen; Sveti Mardarije, Episkop američko-kanadski","Sveti mučenici Paramon i Filumen; Sveti Mardarije, Episkop američko-kanadski",riba,,0
+2026-12-13,347,Nedelja,30.11.2026.,Sveti apostol Andrej Prvozvani,Sveti apostol Andrej Prvozvani,riba,,0
+2026-12-14,348,Ponedeljak,1.12.2026.,Sveti prorok Naum; Sveti Filaret Milostivi,Sveti prorok Naum; Sveti Filaret Milostivi,voda,,0
+2026-12-15,349,Utorak,2.12.2026.,Sveti prorok Avakum; Sveti car Uroš; Prepodobni Joanikije Devički,Sveti prorok Avakum; Sveti car Uroš; Prepodobni Joanikije Devički,ulje,,0
+2026-12-16,350,Sreda,3.12.2026.,Sveti prorok Sofonije; Prepodobni Jovan Ćutljivi,Sveti prorok Sofonije; Prepodobni Jovan Ćutljivi,voda,,0
+2026-12-17,351,Četvrtak,4.12.2026.,Sveti velikomučenica Varvara; Prepodobni Jovan Damaskin,Sveti velikomučenica Varvara; Prepodobni Jovan Damaskin,ulje,,0
+2026-12-18,352,Petak,5.12.2026.,Prepodobni Sava Osvećeni; Prepodobni Nektarije Bitoljski,Prepodobni Sava Osvećeni; Prepodobni Nektarije Bitoljski,riba,,0
+2026-12-19,353,Subota,6.12.2026.,Sveti Nikolaj Arhiepiskop mirlikijski Čudotvorac – Nikoljdan,Sveti Nikolaj Arhiepiskop mirlikijski Čudotvorac – Nikoljdan,riba,,0
+2026-12-20,354,Nedelja,7.12.2026.,Sveti Amvrosije; Prepodobni Grigorije Gornjački; Detinjci,Sveti Amvrosije; Prepodobni Grigorije Gornjački; Detinjci,riba,,0
+2026-12-21,355,Ponedeljak,8.12.2026.,"Prepodobni Patapije; Sveti apostoli Sosten, Apolo i drugi s njima","Prepodobni Patapije; Sveti apostoli Sosten, Apolo i drugi s njima",voda,,0
+2026-12-22,356,Utorak,9.12.2026.,Začeće Svete Ane; Sveta proročica Ana,Začeće Svete Ane; Sveta proročica Ana,riba,,0
+2026-12-23,357,Sreda,10.12.2026.,"Sveti mučenik Mina i drugi s njim; Sveti Jovan, Despot srpski","Sveti mučenik Mina i drugi s njim; Sveti Jovan, Despot srpski",voda,,0
+2026-12-24,358,Četvrtak,11.12.2026.,Prepodobni Danilo Stolpnik,Prepodobni Danilo Stolpnik,ulje,,0
+2026-12-25,359,Petak,12.12.2026.,"Sveti Spiridon Čudotvorac, Episkop trimituntski","Sveti Spiridon Čudotvorac, Episkop trimituntski",ulje,,0
+2026-12-26,360,Subota,13.12.2026.,"Sveti mučenik Evstratije; Sveti sveštenomučenik Gavrilo, Patrijarh srpski","Sveti mučenik Evstratije; Sveti sveštenomučenik Gavrilo, Patrijarh srpski",riba,,0
+2026-12-27,361,Nedelja,14.12.2026.,"Sveti mučenici Tirs, Levkije, Filimon, Apolonije i drugi s njima; Nedelja Svetih Praotaca – Materice","Sveti mučenici Tirs, Levkije, Filimon, Apolonije i drugi s njima; Nedelja Svetih Praotaca – Materice",riba,,0
+2026-12-28,362,Ponedeljak,15.12.2026.,Sveti sveštenomučenik Elevterije; Prepodobni Pavle,Sveti sveštenomučenik Elevterije; Prepodobni Pavle,voda,,0
+2026-12-29,363,Utorak,16.12.2026.,Sveti prorok Agej; Sveta blažena carica Teofanija,Sveti prorok Agej; Sveta blažena carica Teofanija,ulje,,0
+2026-12-30,364,Sreda,17.12.2026.,Sveti prorok Danilo; Sveti prepodobnomučenici đakon Avakum i iguman Pajsije,Sveti prorok Danilo; Sveti prepodobnomučenici đakon Avakum i iguman Pajsije,ulje,,0
+2026-12-31,365,Četvrtak,18.12.2026.,Sveti mučenik Sevastijan; Sveti Modest i drugi s njim,Sveti mučenik Sevastijan; Sveti Modest i drugi s njim,ulje,,0
