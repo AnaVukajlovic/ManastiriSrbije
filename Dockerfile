@@ -1,23 +1,29 @@
 FROM php:8.2-cli
 
-# System dependencies
+# Install system deps
 RUN apt-get update && apt-get install -y \
     git \
     unzip \
     libzip-dev \
     zip \
-    curl
+    curl \
+ && docker-php-ext-install zip
 
-# Install Composer
+# Install composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 WORKDIR /app
 
+# Copy files
 COPY . .
 
+# Install dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-RUN php artisan key:generate || true
+# Laravel optimizations
+RUN php artisan config:cache || true
+RUN php artisan route:cache || true
+RUN php artisan view:cache || true
 
 EXPOSE 10000
 
