@@ -9,8 +9,7 @@
 
     <!-- GLAVNI CSS -->
 
-<link rel="stylesheet" href="{{ asset('css/site.css') }}?v={{ time() }}">
-<style>
+<link rel="stylesheet" href="{{ secure_asset('css/site.css') }}?v={{ filemtime(public_path('css/site.css')) }}"><style>
   html, body {
     margin: 0;
     padding: 0;
