@@ -1,6 +1,5 @@
 FROM php:8.2-cli
 
-# Install system deps
 RUN apt-get update && apt-get install -y \
     git \
     unzip \
@@ -9,19 +8,16 @@ RUN apt-get update && apt-get install -y \
     curl \
  && docker-php-ext-install zip
 
-# Install composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 WORKDIR /app
 
-# Copy files
 COPY . .
 
-# Install dependencies
+# 🔥 OVO JE NOVO
+RUN chmod -R 775 storage bootstrap/cache
+
 RUN composer install --no-dev --optimize-autoloader
-
-# Laravel optimizations
-
 
 EXPOSE 10000
 
