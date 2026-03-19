@@ -8,7 +8,8 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- GLAVNI CSS -->
-    <link rel="stylesheet" href="{{ asset('css/site.css') }}">
+
+<link rel="stylesheet" href="{{ asset('css/site.css') }}?v={{ time() }}">
 <style>
   html, body {
     margin: 0;
