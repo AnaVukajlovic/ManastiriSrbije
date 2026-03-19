@@ -10629,3 +10629,627 @@ body{
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   PRAVOSLAVNI SVETIONIK / MANASTIRI SRBIJE
+   GLOBAL STABILIZATION PATCH
+   Dodati na KRAJ public/css/site.css
+   ========================================================= */
+
+/* -------------------------
+   1. Global reset / osnova
+-------------------------- */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    min-width: 320px;
+    overflow-x: hidden;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #1f2937;
+    background: #f8fafc;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+/* -------------------------
+   2. Centralni wrapperi
+-------------------------- */
+.container,
+.site-container,
+.main-container,
+.page-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+main {
+    width: 100%;
+}
+
+.site-main,
+.page-content,
+.content-wrapper {
+    width: 100%;
+}
+
+/* -------------------------
+   3. Tipografija
+-------------------------- */
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 0;
+    color: #111827;
+    line-height: 1.25;
+    font-weight: 700;
+}
+
+h1 {
+    font-size: clamp(2rem, 3vw, 2.6rem);
+    margin-bottom: 18px;
+}
+
+h2 {
+    font-size: clamp(1.5rem, 2.2vw, 2rem);
+    margin-bottom: 16px;
+}
+
+h3 {
+    font-size: clamp(1.2rem, 1.8vw, 1.45rem);
+    margin-bottom: 14px;
+}
+
+p {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+/* -------------------------
+   4. Header / navbar
+-------------------------- */
+.site-header,
+.main-header,
+header {
+    width: 100%;
+}
+
+.site-navbar,
+.navbar,
+.topbar,
+.header-inner {
+    width: 100%;
+}
+
+.site-header .container,
+.navbar .container,
+.header-inner .container,
+.site-navbar .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    min-height: 72px;
+}
+
+.site-logo,
+.navbar-brand,
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #111827;
+    flex-shrink: 0;
+}
+
+.site-nav,
+.nav-links,
+.navbar-nav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.site-nav a,
+.nav-links a,
+.navbar-nav a,
+.auth-links a,
+.account-dropdown-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+    padding: 8px 14px;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.site-nav a:hover,
+.nav-links a:hover,
+.navbar-nav a:hover,
+.auth-links a:hover,
+.account-dropdown-toggle:hover {
+    background: rgba(15, 23, 42, 0.06);
+}
+
+/* -------------------------
+   5. Auth / nalog deo
+-------------------------- */
+.auth-links,
+.account-menu,
+.user-menu,
+.nav-auth {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.auth-links .btn,
+.account-menu .btn,
+.user-menu .btn,
+.nav-auth .btn {
+    min-height: 40px;
+    padding: 8px 14px;
+    border-radius: 10px;
+}
+
+.dropdown-menu,
+.account-dropdown-menu {
+    min-width: 210px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.10);
+    background: #ffffff;
+}
+
+.dropdown-menu a,
+.account-dropdown-menu a,
+.dropdown-item {
+    display: block;
+    padding: 11px 14px;
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+/* -------------------------
+   6. Kartice i sekcije
+-------------------------- */
+.card,
+.monastery-card,
+.ktitor-card,
+.feature-card,
+.info-card,
+.quick-card {
+    background: #ffffff;
+    border-radius: 16px;
+    border: 1px solid rgba(15, 23, 42, 0.06);
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
+    overflow: hidden;
+}
+
+.card-body,
+.monastery-card-body,
+.ktitor-card-body,
+.feature-card-body {
+    padding: 18px;
+}
+
+.section,
+.page-section {
+    margin-bottom: 32px;
+}
+
+.section-title,
+.page-title {
+    margin-bottom: 18px;
+}
+
+/* -------------------------
+   7. Dugmad
+-------------------------- */
+.btn,
+button,
+input[type="submit"],
+input[type="button"] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 42px;
+    padding: 10px 16px;
+    border-radius: 10px;
+    border: 1px solid transparent;
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.2;
+    cursor: pointer;
+}
+
+.btn-sm {
+    min-height: 36px;
+    padding: 8px 12px;
+    font-size: 0.9rem;
+}
+
+/* -------------------------
+   8. Forme
+-------------------------- */
+.form-control,
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+select,
+textarea {
+    width: 100%;
+    min-height: 44px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid #d1d5db;
+    background: #ffffff;
+    color: #111827;
+    box-shadow: none;
+}
+
+textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.form-control:focus,
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: #94a3b8;
+    box-shadow: 0 0 0 3px rgba(148, 163, 184, 0.18);
+}
+
+/* -------------------------
+   9. Tabele i liste
+-------------------------- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 12px 14px;
+    vertical-align: middle;
+}
+
+ul,
+ol {
+    padding-left: 1.2rem;
+}
+
+/* -------------------------
+   10. Pagination fix
+   Strelice i brojevi da ne "rastu"
+-------------------------- */
+.pagination,
+nav[role="navigation"] .pagination,
+.pagination-wrapper .pagination {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 28px 0 10px;
+    padding: 0;
+    list-style: none;
+}
+
+.pagination li,
+nav[role="navigation"] .pagination li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.pagination .page-link,
+.pagination li a,
+.pagination li span,
+nav[role="navigation"] .pagination a,
+nav[role="navigation"] .pagination span {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 40px !important;
+    min-width: 40px !important;
+    max-width: 40px !important;
+    height: 40px !important;
+    min-height: 40px !important;
+    max-height: 40px !important;
+    padding: 0 !important;
+    border-radius: 10px !important;
+    font-size: 0.95rem !important;
+    line-height: 1 !important;
+    font-weight: 600;
+    text-align: center;
+    border: 1px solid #dbe3ea;
+    background: #ffffff;
+    color: #334155;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+.pagination .page-link svg,
+.pagination li a svg,
+.pagination li span svg,
+nav[role="navigation"] .pagination a svg,
+nav[role="navigation"] .pagination span svg {
+    width: 16px !important;
+    height: 16px !important;
+    flex-shrink: 0;
+}
+
+.pagination .active .page-link,
+.pagination li.active a,
+.pagination li.active span,
+nav[role="navigation"] .pagination .active span {
+    background: #1e293b !important;
+    border-color: #1e293b !important;
+    color: #ffffff !important;
+}
+
+.pagination .disabled .page-link,
+.pagination li.disabled span,
+nav[role="navigation"] .pagination .disabled span {
+    opacity: 0.5;
+    cursor: default;
+}
+
+.pagination .page-link:hover,
+.pagination li a:hover,
+nav[role="navigation"] .pagination a:hover {
+    background: #f1f5f9;
+}
+
+/* -------------------------
+   11. Footer
+-------------------------- */
+.site-footer,
+footer {
+    width: 100%;
+    margin-top: 48px;
+    background: #111827;
+    color: #e5e7eb;
+}
+
+.site-footer .container,
+footer .container,
+.footer-inner {
+    padding-top: 28px;
+    padding-bottom: 28px;
+}
+
+.site-footer a,
+footer a {
+    color: inherit;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+}
+
+.footer-bottom {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    font-size: 0.92rem;
+}
+
+/* -------------------------
+   12. Helpers za layout
+-------------------------- */
+.grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+}
+
+.grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+}
+
+.grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 24px;
+}
+
+/* -------------------------
+   13. Render/local stabilizacija
+-------------------------- */
+.shadow-sm,
+.shadow,
+.shadow-md,
+.shadow-lg {
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05) !important;
+}
+
+.rounded,
+.rounded-md,
+.rounded-lg,
+.rounded-xl {
+    border-radius: 16px !important;
+}
+
+/* Sprečava da neki elementi "iskaču" preko širine */
+.row,
+[class*="col-"],
+.card,
+.table-responsive,
+.hero,
+.banner,
+.section,
+.page-section {
+    min-width: 0;
+}
+
+/* -------------------------
+   14. Responsive
+-------------------------- */
+@media (max-width: 991.98px) {
+    .site-header .container,
+    .navbar .container,
+    .header-inner .container,
+    .site-navbar .container {
+        min-height: auto;
+        padding-top: 12px;
+        padding-bottom: 12px;
+    }
+
+    .grid-4 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .grid-3 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 767.98px) {
+    body {
+        font-size: 15px;
+    }
+
+    .container,
+    .site-container,
+    .main-container,
+    .page-container {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+    .site-nav,
+    .nav-links,
+    .navbar-nav,
+    .auth-links,
+    .account-menu,
+    .user-menu,
+    .nav-auth {
+        gap: 8px;
+    }
+
+    .site-nav a,
+    .nav-links a,
+    .navbar-nav a,
+    .auth-links a,
+    .account-dropdown-toggle {
+        min-height: 38px;
+        padding: 8px 12px;
+        font-size: 0.92rem;
+    }
+
+    .grid-2,
+    .grid-3,
+    .grid-4 {
+        grid-template-columns: 1fr;
+    }
+
+    .card-body,
+    .monastery-card-body,
+    .ktitor-card-body,
+    .feature-card-body {
+        padding: 15px;
+    }
+
+    .pagination .page-link,
+    .pagination li a,
+    .pagination li span,
+    nav[role="navigation"] .pagination a,
+    nav[role="navigation"] .pagination span {
+        width: 36px !important;
+        min-width: 36px !important;
+        max-width: 36px !important;
+        height: 36px !important;
+        min-height: 36px !important;
+        max-height: 36px !important;
+        font-size: 0.9rem !important;
+    }
+}
+
+
+
+
