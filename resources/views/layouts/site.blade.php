@@ -1,23 +1,14 @@
 <!doctype html>
 <html lang="sr">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-  <title>@yield('title', 'Pravoslavni Svetionik')</title>
+    <title>{{ config('app.name', 'Laravel') }}</title>
 
-  {{-- CSRF --}}
-  <meta name="csrf-token" content="{{ csrf_token() }}">
-
-  {{-- Leaflet / MarkerCluster --}}
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
-
-  {{-- Main styles --}}
-  <link rel="stylesheet" href="{{ asset('css/site.css') }}">
-
-  @yield('head')
+    <!-- GLAVNI CSS -->
+    <link rel="stylesheet" href="{{ asset('css/site.css') }}">
 </head>
 <body>
   @php
