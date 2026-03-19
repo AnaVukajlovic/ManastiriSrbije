@@ -10503,3 +10503,10 @@ p, li, label, span, div {
     display: none;
   }
 }
+
+.topnav { background: #111 !important; border-bottom: 2px solid red !important; }
+.topnav__inner { display: flex !important; align-items: center !important; justify-content: space-between !important; }
+.navlinks { display: flex !important; gap: 12px !important; }
+.navlinks a { color: yellow !important; }
+.acct summary { background: blue !important; color: white !important; padding: 10px 14px !important; border-radius: 10px !important; }
+.burger { display: inline-block !important; background: green !important; color: white !important; }
