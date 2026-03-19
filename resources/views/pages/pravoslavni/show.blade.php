@@ -4,29 +4,44 @@
 @section('nav_pravoslavni', 'active')
 
 @section('content')
-<section class="section ps-show">
+<section class="section ps-show" id="top">
   <div class="container">
 
-    {{-- Breadcrumb --}}
+    @php
+      $pageTitle = $page['title'] ?? 'Pravoslavni sadržaj';
+      $pageSubtitle = $page['subtitle'] ?? null;
+      $pageCategory = $page['category'] ?? 'Duhovni modul';
+      $pageBadge = $page['badge'] ?? null;
+      $sections = $page['sections'] ?? [];
+      $todayTitle = $day?->saint_name ?: ($day?->feast_name ?: '—');
+      $todayFast = $day?->fasting_type ?: 'Nema posta';
+
+      $moduleLinks = [
+        'osnovni-koncepti' => ['label' => 'Osnovni koncepti vere', 'icon' => '📘'],
+        'kalendar' => ['label' => 'Pravoslavni kalendar', 'icon' => '🗓️'],
+        'zanimljivosti' => ['label' => 'Zanimljivosti', 'icon' => '✨'],
+        'datum-vaskrsa' => ['label' => 'Datum Vaskrsa', 'icon' => '✝️'],
+        'posni-recepti' => ['label' => 'Posni recepti', 'icon' => '🥗'],
+      ];
+    @endphp
+
     <nav class="ps-bc" aria-label="Breadcrumb">
       <a class="ps-bc__link" href="{{ route('pravoslavni.index') }}">Pravoslavni sadržaj</a>
       <span class="ps-bc__sep">/</span>
-      <span class="ps-bc__current">{{ $page['title'] ?? 'Detalj' }}</span>
+      <span class="ps-bc__current">{{ $pageTitle }}</span>
     </nav>
 
-    {{-- HERO HEAD --}}
     <header class="ps-showhero">
       <div class="ps-showhero__inner">
 
         <div class="ps-showhero__top">
           <div class="ps-showhead__eyebrow">
-            <span class="ps-pill">{{ $page['category'] ?? 'Duhovni modul' }}</span>
-            @if(!empty($page['badge']))
-              <span class="ps-pill ps-pill--gold">{{ $page['badge'] }}</span>
+            <span class="ps-pill">{{ $pageCategory }}</span>
+            @if($pageBadge)
+              <span class="ps-pill ps-pill--gold">{{ $pageBadge }}</span>
             @endif
           </div>
 
-          {{-- Mali widget dana --}}
           <div class="ps-miniwrap">
             <div class="ps-minihead">
               <span class="ps-ico">🕯️</span>
@@ -38,13 +53,13 @@
 
             <div class="ps-minibody">
               <div class="ps-miniline">
-                <span class="muted">Svetac:</span>
-                <strong>{{ $day->saint_name ?: ($day->feast_name ?: '—') }}</strong>
+                <span class="muted">Svetitelj:</span>
+                <strong>{{ $todayTitle }}</strong>
               </div>
 
               <div class="ps-miniline">
                 <span class="muted">Post:</span>
-                <strong>{{ $day->fasting_type ?: 'Nema posta' }}</strong>
+                <strong>{{ $todayFast }}</strong>
               </div>
 
               @if(!empty($day?->is_red_letter))
@@ -56,29 +71,24 @@
           </div>
         </div>
 
-        <h1 class="ps-showtitle">{{ $page['title'] ?? 'Pravoslavni sadržaj' }}</h1>
+        <h1 class="ps-showtitle">{{ $pageTitle }}</h1>
 
-        @if(!empty($page['subtitle']))
-          <p class="ps-showsub">{{ $page['subtitle'] }}</p>
+        @if($pageSubtitle)
+          <p class="ps-showsub">{{ $pageSubtitle }}</p>
         @endif
 
-        {{-- brze “tag” info (opciono) --}}
         <div class="ps-herorow">
           <span class="ps-heropill">⛪ Duhovni modul</span>
-          <span class="ps-heropill">📌 Praktično i jasno</span>
+          <span class="ps-heropill">📌 Jasno i pregledno</span>
           <span class="ps-heropill">🕊️ Korak po korak</span>
         </div>
-
       </div>
     </header>
 
-    {{-- Main layout --}}
     <div class="ps-showgrid">
 
-      {{-- CONTENT --}}
       <article class="ps-article">
 
-        {{-- Intro --}}
         @if(!empty($page['intro']))
           <div class="ps-intro">
             <div class="ps-intro__label">Ukratko</div>
@@ -86,13 +96,12 @@
           </div>
         @endif
 
-        {{-- Sections --}}
-        @if(!empty($page['sections']) && is_array($page['sections']))
-          @foreach($page['sections'] as $i => $sec)
-            <section class="ps-asec" id="sec-{{ $i+1 }}">
+        @if(!empty($sections) && is_array($sections))
+          @foreach($sections as $i => $sec)
+            <section class="ps-asec" id="sec-{{ $i + 1 }}">
               <div class="ps-asec__head">
                 <h2>{{ $sec['title'] ?? '' }}</h2>
-                <span class="ps-asec__n">{{ $i+1 }}</span>
+                <span class="ps-asec__n">{{ $i + 1 }}</span>
               </div>
 
               @if(!empty($sec['text']))
@@ -124,12 +133,11 @@
               <span class="ps-asec__n">…</span>
             </div>
             <p class="ps-ap muted">
-              Ovaj modul se trenutno dopunjava. Uskoro dodajemo kompletan sadržaj.
+              Ovaj modul se trenutno dopunjava. Uskoro dodajemo potpun sadržaj.
             </p>
           </section>
         @endif
 
-        {{-- Quote --}}
         @if(!empty($page['quote']))
           <blockquote class="ps-quote ps-quote--big">
             <span class="ps-quote__mark">„</span>
@@ -143,7 +151,6 @@
 
       </article>
 
-      {{-- SIDEBAR --}}
       <aside class="ps-side">
 
         <div class="ps-box">
@@ -156,53 +163,47 @@
               <span class="ps-sidelink__arr">→</span>
             </a>
 
-            <a class="ps-sidelink" href="#" onclick="return false;">
-              <span class="ps-sidelink__ico">📘</span>
-              <span>Osnovni koncepti vere</span>
-              <span class="ps-sidelink__arr">→</span>
-            </a>
-
-            <a class="ps-sidelink" href="#" onclick="return false;">
-              <span class="ps-sidelink__ico">🗓️</span>
-              <span>Pravoslavni kalendar</span>
-              <span class="ps-sidelink__arr">→</span>
-            </a>
-
-            <a class="ps-sidelink" href="#" onclick="return false;">
-              <span class="ps-sidelink__ico">✝️</span>
-              <span>Datum Vaskrsa</span>
-              <span class="ps-sidelink__arr">→</span>
-            </a>
-
-            <a class="ps-sidelink" href="#" onclick="return false;">
-              <span class="ps-sidelink__ico">🥗</span>
-              <span>Posni recepti</span>
-              <span class="ps-sidelink__arr">→</span>
-            </a>
+            @foreach($moduleLinks as $slug => $item)
+              <a class="ps-sidelink" href="{{ route('pravoslavni.show', $slug) }}">
+                <span class="ps-sidelink__ico">{{ $item['icon'] }}</span>
+                <span>{{ $item['label'] }}</span>
+                <span class="ps-sidelink__arr">→</span>
+              </a>
+            @endforeach
           </div>
         </div>
 
         <div class="ps-box">
           <div class="ps-box__title">Napomena</div>
           <div class="ps-sidep muted">
-            Sadržaj je informativnog karaktera. Za duhovno rukovođenje najbolje je obratiti se svom parohijskom svešteniku.
+            Sadržaj je informativnog karaktera. Za lično duhovno rukovođenje najbolje je obratiti se svom parohijskom svešteniku.
           </div>
         </div>
 
-        {{-- Mini TOC (prikazuje sekcije ako postoje) --}}
-        @if(!empty($page['sections']) && is_array($page['sections']))
+        @if(!empty($sections) && is_array($sections))
           <div class="ps-box ps-box--toc">
             <div class="ps-box__title">Sadržaj</div>
             <div class="ps-tocmini">
-              @foreach($page['sections'] as $i => $sec)
-                <a class="ps-tocmini__a" href="#sec-{{ $i+1 }}">
-                  <span class="ps-tocmini__n">{{ $i+1 }}</span>
-                  <span class="ps-tocmini__t">{{ $sec['title'] ?? ('Sekcija ' . ($i+1)) }}</span>
+              @foreach($sections as $i => $sec)
+                <a class="ps-tocmini__a" href="#sec-{{ $i + 1 }}">
+                  <span class="ps-tocmini__n">{{ $i + 1 }}</span>
+                  <span class="ps-tocmini__t">{{ $sec['title'] ?? ('Sekcija ' . ($i + 1)) }}</span>
                 </a>
               @endforeach
             </div>
           </div>
         @endif
+
+        <div class="ps-box">
+          <div class="ps-box__title">Povratak</div>
+          <div class="ps-sidelinks">
+            <a class="ps-sidelink" href="#top">
+              <span class="ps-sidelink__ico">↑</span>
+              <span>Na vrh stranice</span>
+              <span class="ps-sidelink__arr">→</span>
+            </a>
+          </div>
+        </div>
 
       </aside>
     </div>

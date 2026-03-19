@@ -16,12 +16,10 @@ use App\Http\Controllers\Api\AiController;
 Route::get('/health', fn () => response()->json(['ok' => true]));
 
 // === MANASTIRI ===
-// prvo "specifične" rute
 Route::get('/monasteries/regions', [MonasteryController::class, 'regions']);
 Route::get('/monasteries/cities', [MonasteryController::class, 'cities']);
 Route::get('/monasteries-map', [MonasteryController::class, 'map']);
 
-// onda lista i detalj
 Route::get('/monasteries', [MonasteryController::class, 'index']);
 Route::get('/monasteries/{slug}', [MonasteryController::class, 'show']);
 
@@ -34,6 +32,5 @@ Route::get('/content/categories', [ContentController::class, 'categories']);
 Route::get('/content/{categorySlug}/items', [ContentController::class, 'items']);
 Route::get('/content/{categorySlug}/items/{itemSlug}', [ContentController::class, 'show']);
 
-Route::get('/monasteries-map', [MonasteryController::class, 'map']);
+// === AI ===
 Route::post('/ai/chat', [AiController::class, 'chat']);
-

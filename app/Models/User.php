@@ -10,10 +10,14 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+    public const ROLE_ADMIN = 'admin';
+    public const ROLE_USER = 'user';
+
     protected $fillable = [
         'name',
         'email',
         'password',
+        'role',
     ];
 
     protected $hidden = [
@@ -29,24 +33,13 @@ class User extends Authenticatable
         ];
     }
 
-    /**
-     * Redovi iz favorites tabele (user_id + monastery_id).
-     */
-    public function favorites()
-    {
-        return $this->hasMany(\App\Models\Favorite::class);
-    }
+public function isAdmin()
+{
+    return $this->role === 'admin';
+}
 
-    /**
-     * Direktno manastiri koje je korisnik dodao u omiljene.
-     */
-    public function favoriteMonasteries()
-    {
-        return $this->belongsToMany(
-            \App\Models\Monastery::class,
-            'favorites',
-            'user_id',
-            'monastery_id'
-        )->withTimestamps();
-    }
+public function isUser()
+{
+    return $this->role === 'user';
+}
 }

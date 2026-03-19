@@ -14,5 +14,6 @@ class DatabaseSeeder extends Seeder
             CalendarDaysSeeder::class,
         ]);
         $this->call(\Database\Seeders\CuriositiesSeeder::class);
+        $this->call(KtitorsCsvSeeder::class);
     }
 }

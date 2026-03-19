@@ -542,5 +542,172 @@
 
   </div>
 </section>
+<style>
+/* ===== OSNOVNI KONCEPTI — FORCE STYLE ===== */
 
+.ps-hero .ps-hero__title{
+  margin:0 0 12px !important;
+  font-size:clamp(1.9rem, 2.7vw, 2.55rem) !important;
+  line-height:1.06 !important;
+  letter-spacing:-.025em !important;
+  font-weight:800 !important;
+  color:#c5a24a !important;
+  text-shadow:0 0 14px rgba(197,162,74,.14) !important;
+}
+
+.ps-hero .ps-hero__lead{
+  color:rgba(255,255,255,.80) !important;
+  line-height:1.85 !important;
+  font-size:1rem !important;
+  max-width:920px !important;
+}
+
+.ps-hero .ps-hero__badge{
+  display:inline-flex !important;
+  align-items:center !important;
+  gap:8px !important;
+  padding:8px 12px !important;
+  border-radius:999px !important;
+  border:1px solid rgba(197,162,74,.18) !important;
+  background:rgba(197,162,74,.08) !important;
+  color:#e2c26a !important;
+  font-size:.88rem !important;
+  font-weight:700 !important;
+}
+
+.ps-hero .ps-hero__dot{
+  width:10px !important;
+  height:10px !important;
+  border-radius:999px !important;
+  background:#c5a24a !important;
+  box-shadow:0 0 0 4px rgba(197,162,74,.10) !important;
+}
+
+.ps-wrap .ps-asec__head h2{
+  margin:0 0 8px !important;
+  font-size:clamp(1.45rem, 2vw, 1.9rem) !important;
+  line-height:1.08 !important;
+  letter-spacing:-.02em !important;
+  font-weight:800 !important;
+  color:#c5a24a !important;
+  text-shadow:0 0 12px rgba(197,162,74,.12) !important;
+}
+
+.ps-wrap .ps-sub{
+  margin:0 !important;
+  color:rgba(255,255,255,.74) !important;
+  line-height:1.8 !important;
+  font-size:.98rem !important;
+  text-align:justify !important;
+  text-justify:inter-word !important;
+  max-width:none !important;
+}
+
+.ps-wrap .ps-card__title{
+  color:#ffffff !important;
+  font-size:1.12rem !important;
+  line-height:1.18 !important;
+  font-weight:800 !important;
+  margin:0 0 10px !important;
+}
+
+.ps-wrap .ps-card__text,
+.ps-wrap .ps-ap,
+.ps-wrap .ps-note__p,
+.ps-wrap .ps-ul,
+.ps-wrap .ps-check{
+  color:rgba(255,255,255,.82) !important;
+  line-height:1.8 !important;
+}
+
+.ps-wrap .ps-panel__title{
+  margin:0 0 12px !important;
+  font-size:1.02rem !important;
+  font-weight:800 !important;
+  color:#c5a24a !important;
+  text-shadow:0 0 10px rgba(197,162,74,.10) !important;
+}
+
+.ps-wrap .ps-chip,
+.ps-wrap .ps-pill{
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  padding:8px 12px !important;
+  border-radius:999px !important;
+  border:1px solid rgba(197,162,74,.18) !important;
+  background:rgba(197,162,74,.08) !important;
+  color:#e2c26a !important;
+  font-size:.84rem !important;
+  font-weight:700 !important;
+}
+
+.ps-wrap .ps-pill--soft{
+  border-color:rgba(255,255,255,.08) !important;
+  background:rgba(255,255,255,.03) !important;
+  color:rgba(255,255,255,.78) !important;
+}
+
+.ps-wrap .ps-callout--gold{
+  border:1px solid rgba(197,162,74,.20) !important;
+  background:rgba(197,162,74,.08) !important;
+  color:rgba(255,255,255,.88) !important;
+}
+
+.ps-wrap .ps-callout--gold strong{
+  color:#e2c26a !important;
+}
+
+.ps-wrap .ps-note__t{
+  color:#c5a24a !important;
+  font-weight:800 !important;
+}
+
+.ps-wrap .ps-acc__sum{
+  color:#ffffff !important;
+  font-weight:700 !important;
+}
+
+.ps-wrap .ps-acc__n{
+  color:#e2c26a !important;
+  font-weight:800 !important;
+}
+
+.ps-wrap .ps-footerline strong{
+  color:#e2c26a !important;
+}
+
+.ps-wrap .ps-quote--big{
+  margin-top:34px !important;
+  padding:22px 24px !important;
+  border-radius:24px !important;
+  border:1px solid rgba(197,162,74,.16) !important;
+  background:
+    radial-gradient(circle at top left, rgba(197,162,74,.07), transparent 24%),
+    rgba(255,255,255,.02) !important;
+}
+
+.ps-wrap .ps-quote--big .ps-quote__mark{
+  color:#c5a24a !important;
+  font-size:2.4rem !important;
+  line-height:1 !important;
+}
+
+.ps-wrap .ps-quote--big .ps-quote__text{
+  color:rgba(255,255,255,.90) !important;
+  font-size:1.02rem !important;
+  line-height:1.85 !important;
+  font-style:italic !important;
+}
+
+@media (max-width: 768px){
+  .ps-hero .ps-hero__title{
+    font-size:clamp(1.65rem, 7vw, 2rem) !important;
+  }
+
+  .ps-wrap .ps-asec__head h2{
+    font-size:clamp(1.28rem, 5vw, 1.55rem) !important;
+  }
+}
+</style>
 @endsection

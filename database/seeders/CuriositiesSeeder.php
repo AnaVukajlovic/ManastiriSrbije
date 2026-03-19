@@ -3,343 +3,229 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use App\Models\Curiosity;
 
 class CuriositiesSeeder extends Seeder
 {
     public function run(): void
     {
+        DB::table('curiosities')->truncate();
+
         $items = [
+
             [
-                'title' => 'Zašto se u pravoslavlju pale sveće?',
-                'category' => 'Običaji',
-                'reading_minutes' => 7,
-                'excerpt' => 'Sveća nije dekoracija, niti “obaveza”, već mala lična molitva i znak unutrašnje pažnje pred Bogom.',
-                'content' => $this->textSvece(),
+                "title" => "Zašto ljudi osećaju mir u manastiru",
+                "slug" => Str::slug("Zašto ljudi osećaju mir u manastiru"),
+                "category" => "Duhovni život",
+                "image" => "images/curiosities/mir-u-manastiru.jpg",
+                "reading_minutes" => 3,
+                "excerpt" => "Mir koji ljudi osećaju u manastiru nije slučajan već dolazi iz duhovne atmosfere molitve i tišine.",
+                "content" => "Manastiri vekovima predstavljaju mesta tišine, molitve i unutrašnjeg sabiranja. Ljudi koji ih posećuju često osećaju neobičan mir čim uđu u manastirski prostor. Taj mir nije slučajan, već nastaje iz ritma molitve koji monasi održavaju svakodnevno. U manastirima se dani provode u tišini, radu i bogosluženju, pa se i sam prostor oblikuje kao mesto sabranosti i smirenja.
+
+U savremenom svetu čovek je često izložen buci, informacijama, žurbi i stalnoj napetosti. Kada dođe u manastir, makar na kratko izlazi iz takvog ritma i ulazi u drugačiji poredak vremena. Tišina, zvuk zvona, miris tamjana i prirodno okruženje pomažu da se misli uspore i da se čovek vrati sebi. Zato mnogi ljudi i bez posebnog objašnjenja osećaju olakšanje i mir već pri samom boravku u manastiru.
+
+Pored spoljašnje tišine, važna je i unutrašnja dimenzija manastira. To su mesta u kojima se vekovima uznosi molitva, gde se neguju vera, poslušanje i duhovna disciplina. Posetioci često osećaju upravo tu atmosferu molitvenog života, čak i kada ne mogu odmah da je opišu rečima. Zbog toga mnogi ljudi upravo u manastirima pronalaze duhovni predah, smirenje i osećaj da su se udaljili od svakodnevnog nemira."
             ],
+
             [
-                'title' => 'Tajne fresaka: zašto svetitelji gledaju pravo u vas',
-                'category' => 'Freske',
-                'reading_minutes' => 8,
-                'excerpt' => 'Freska nije samo slika; ona je vizuelna teologija. Pogled svetitelja često je poziv na budnost i dijalog.',
-                'content' => $this->textFreske(),
+                "title" => "Manastiri kao centri znanja: knjige, prepisivači i pamćenje naroda",
+                "slug" => Str::slug("Manastiri kao centri znanja: knjige, prepisivači i pamćenje naroda"),
+                "category" => "Istorija",
+                "image" => "images/curiosities/manastiri-knjige.jpg",
+                "reading_minutes" => 4,
+                "excerpt" => "Manastiri su vekovima bili centri obrazovanja, pisanja i čuvanja istorije.",
+                "content" => "U srednjem veku manastiri su imali ogromnu ulogu u očuvanju kulture, pismenosti i istorijskog pamćenja. U njima su monasi prepisivali knjige i stvarali rukopise koji su sačuvani do danas. Taj posao zahtevao je veliko strpljenje, tačnost i posvećenost, jer se jedna knjiga često prepisivala mesecima, a nekada i godinama. Zahvaljujući takvom radu sačuvana su mnoga dela crkvene književnosti, istorije i duhovne misli.
+
+Manastiri nisu bili samo mesta gde se čuvaju knjige, već i mesta gde se znanje prenosi. Mladi ljudi su u njima učili čitanje i pisanje, a monasi su bili među retkima koji su imali pristup rukopisima, obrazovanju i bogatoj duhovnoj tradiciji. Zbog toga su manastiri postajali i obrazovni centri u kojima se oblikovalo kulturno lice jednog naroda.
+
+Njihove biblioteke i danas predstavljaju dragoceno kulturno blago. U njima je sačuvano ne samo znanje, već i trag o vremenu, jeziku i duhovnom životu ljudi koji su te knjige stvarali i čuvali. Zato se s pravom kaže da su manastiri vekovima bili čuvari pamćenja naroda."
             ],
+
             [
-                'title' => 'Vladari koji su postali monasi: od krune do poslušanja',
-                'category' => 'Istorija',
-                'reading_minutes' => 8,
-                'excerpt' => 'U srpskoj tradiciji nije retkost da moćni ljudi na kraju biraju tišinu manastira.',
-                'content' => $this->textVladariMonasi(),
+                "title" => "Mit ili istina: najčešće zablude o crkvenim običajima",
+                "slug" => Str::slug("Mit ili istina: najčešće zablude o crkvenim običajima"),
+                "category" => "Običaji",
+                "image" => "images/curiosities/crkvene-svece.jpg",
+                "reading_minutes" => 3,
+                "excerpt" => "Mnogi crkveni običaji imaju dublje značenje koje ljudi često pogrešno razumeju.",
+                "content" => "U crkvenom životu postoji mnogo običaja koji su nastajali tokom vekova, ali ljudi ponekad pogrešno razumeju njihov smisao. Na primer, paljenje sveće nije magijski čin, već simbol molitve, nade i vere. Sveća predstavlja svetlost Hristovu i podseća vernike da čovek ne treba da živi samo spoljašnjim navikama, već i unutrašnjom sabranošću pred Bogom.
+
+Slično važi i za druge običaje u crkvi. Poklonjenje ikonama, osenjivanje krstom, stajanje na bogosluženju ili uzimanje osvećene vode nisu radnje koje imaju smisao same po sebi. Njihova vrednost postoji samo kada su povezane sa verom, molitvom i razumevanjem onoga što čovek čini. Ako se običaji svode samo na spoljašnje ponavljanje, njihov pravi duhovni sadržaj ostaje neprepoznat.
+
+Crkva zato ne naglašava običaj radi običaja, već veru koja mu daje smisao. Običaji imaju vrednost kada čoveka vode dubljem odnosu prema Bogu, bližnjima i sopstvenom životu. Tek tada oni postaju deo živog duhovnog iskustva, a ne samo nasledstvo bez razumevanja."
             ],
+
             [
-                'title' => 'Manastiri skriveni od sveta: zašto su građeni daleko od puteva',
-                'category' => 'Manastiri',
-                'reading_minutes' => 7,
-                'excerpt' => 'Teško dostupna mesta nisu bila slučajnost — tišina i zaštita često su bile deo plana.',
-                'content' => $this->textSkriveni(),
+                "title" => "Zašto pravoslavni hramovi imaju kupole",
+                "slug" => Str::slug("Zašto pravoslavni hramovi imaju kupole"),
+                "category" => "Arhitektura",
+                "image" => "images/curiosities/pravoslavne-kupole.jpg",
+                "reading_minutes" => 3,
+                "excerpt" => "Kupole pravoslavnih hramova imaju duboku simboliku i predstavljaju nebo.",
+                "content" => "Kupole su jedan od najprepoznatljivijih elemenata pravoslavnih crkava i imaju duboko simboličko značenje. Njihov oblik upućuje na nebo i Božije prisustvo, pa se pogled vernika pri ulasku u hram prirodno usmerava nagore. Na taj način sama arhitektura podseća čoveka da je hram prostor u kome se zemaljsko uzdiže ka nebeskom.
+
+U mnogim kupolama nalazi se freska Hrista Pantokratora, odnosno Hrista kao Vladara sveta. To dodatno naglašava da se u središtu crkvenog prostora nalazi Bog, a ne čovek. Kupola tako ne služi samo estetskom utisku, već nosi poruku vere i pomaže da čitav prostor hrama dobije svoj duhovni smisao.
+
+Pored simbolike, kupole imaju i praktičnu ulogu. One doprinose akustici u crkvi, pa se zvuk pojanja i bogosluženja lepše i ravnomernije širi kroz prostor. Zato su kupole istovremeno i arhitektonski, i liturgijski, i simbolički važan deo pravoslavnog hrama."
             ],
+
             [
-                'title' => 'Zvona: kada zvone i šta poručuju',
-                'category' => 'Bogosluženje',
-                'reading_minutes' => 6,
-                'excerpt' => 'Zvuk zvona je poziv, podsetnik i “ritam” crkvenog života koji se čuje i kada ne vidimo hram.',
-                'content' => $this->textZvona(),
+                "title" => "Zašto se krstimo sa tri prsta: vera u Trojicu",
+                "slug" => Str::slug("Zašto se krstimo sa tri prsta: vera u Trojicu"),
+                "category" => "Osnovi vere",
+                "image" => "images/curiosities/tri-prsta.jpg",
+                "reading_minutes" => 3,
+                "excerpt" => "Tri prsta pri krštenju simbolizuju veru u Svetu Trojicu i dve Hristove prirode.",
+                "content" => "Kada se pravoslavni vernici krste, spajaju tri prsta desne ruke. Ta tri prsta simbolizuju veru u Svetu Trojicu: Oca, Sina i Svetoga Duha. Preostala dva prsta predstavljaju dve Hristove prirode, božansku i ljudsku. Sam čin krštenja ima duboku simboliku i nije samo navika, već ispovedanje vere kroz pokret.
+
+Vernik dodiruje čelo, stomak i ramena pokazujući da je ceo čovek, i umom i srcem i telom, pozvan da pripada Bogu. Ovaj gest potiče iz starih vremena hrišćanske tradicije i vremenom je postao jedan od najprepoznatljivijih znakova pravoslavne vere. On nije samo spoljašnji pokret, već kratka molitva i podsećanje na temeljne istine hrišćanskog učenja.
+
+Zato se pravoslavni vernici krste na molitvi, u crkvi i u mnogim važnim trenucima života. Krštenje izražava veru, traženje blagoslova i želju da čovek ostane pod Božijom zaštitom. Upravo zbog toga ovaj jednostavan gest ima tako veliko duhovno značenje."
             ],
+
             [
-                'title' => 'Zašto se u crkvi stoji: smisao budnosti i poštovanja',
-                'category' => 'Običaji',
-                'reading_minutes' => 6,
-                'excerpt' => 'Stajanje u hramu nije “teško pravilo”, već znak pažnje i sabranosti.',
-                'content' => $this->textStajanje(),
+                "title" => "Post: više od hrane — škola slobode",
+                "slug" => Str::slug("Post: više od hrane — škola slobode"),
+                "category" => "Post",
+                "image" => "images/curiosities/pravoslavni-post.jpg",
+                "reading_minutes" => 3,
+                "excerpt" => "Post u pravoslavlju nije samo promena ishrane već duhovna disciplina i vežba slobode.",
+                "content" => "Post ima duboko duhovno značenje u pravoslavnoj tradiciji. Njegov cilj nije samo uzdržavanje od određene hrane, već celokupno usmeravanje čoveka ka sabranijem i pažljivijem životu. Post pomaže da se razviju samodisciplina, strpljenje i smirenje, ali i da čovek jasnije vidi sopstvene slabosti i navike.
+
+U vremenu posta vernici se više posvećuju molitvi, uzdržanju, ispovesti i dobrim delima. Crkva naglašava da post bez ljubavi, milosrđa i rada na sebi nema puni smisao. Ako se svede samo na jelovnik, on gubi svoju najvažniju dimenziju. Suština posta jeste da čovek ne bude rob svojih želja, navika i trenutnih potreba.
+
+Zato se post često naziva školom slobode. On uči čoveka da upravlja sobom, a ne da njime upravljaju strasti i navike. Na taj način post postaje put unutrašnjeg sazrevanja, trezvenosti i dubljeg razumevanja duhovnog života."
             ],
+
             [
-                'title' => 'Miris tamjana: molitva koja se uzdiže',
-                'category' => 'Bogosluženje',
-                'reading_minutes' => 6,
-                'excerpt' => 'Tamjan ima duboko biblijsko i liturgijsko značenje — i utiče na doživljaj službe.',
-                'content' => $this->textTamjan(),
+                "title" => "Poklonjenje ikonama: poštovanje, ne idolopoklonstvo",
+                "slug" => Str::slug("Poklonjenje ikonama: poštovanje, ne idolopoklonstvo"),
+                "category" => "Ikone",
+                "image" => "images/curiosities/ikona-ruke.jpg",
+                "reading_minutes" => 3,
+                "excerpt" => "Pravoslavni vernici ne obožavaju drvo i boju, već iskazuju poštovanje onome ko je na ikoni prikazan.",
+                "content" => "Ikone u pravoslavlju imaju posebno mesto u duhovnom životu. One nisu samo slike, već vidljivi podsetnik na Hrista, Bogorodicu i svetitelje. Kada vernici celivaju ikonu, oni ne obožavaju drvo, boju ili materijal od kog je ikona napravljena. Poštovanje je usmereno ka osobi koja je na ikoni prikazana.
+
+Ikona se zato često naziva prozorom ka duhovnoj stvarnosti. Ona ne služi samo da ukrasi prostor, već da pomogne verniku da usmeri misli ka Bogu i svetosti. Kroz vekove je Crkva jasno razlikovala poštovanje ikona od idolopoklonstva. Idolopoklonstvo pripisuje božansku vrednost samom predmetu, dok ikona upućuje na onoga koga predstavlja.
+
+Zbog toga ikone zauzimaju važno mesto i u crkvama i u domovima. Njihovo poštovanje podseća na prisutnost vere u svakodnevnom životu i pomaže čoveku da razvije dublji molitveni odnos. Upravo zato poklonjenje ikonama u pravoslavlju predstavlja izraz vere i poštovanja, a ne obožavanje predmeta."
             ],
+
             [
-                'title' => 'Kako izgleda život jednog monaha: dan koji uči tišini',
-                'category' => 'Manastirski život',
-                'reading_minutes' => 9,
-                'excerpt' => 'Manastirski život nije “beg”, nego uređen put molitve, rada i poslušanja.',
-                'content' => $this->textMonah(),
+                "title" => "Kako izgleda život jednog monaha: dan koji uči tišini",
+                "slug" => Str::slug("Kako izgleda život jednog monaha: dan koji uči tišini"),
+                "category" => "Monaški život",
+                "image" => "images/curiosities/monah-manastir.jpg",
+                "reading_minutes" => 3,
+                "excerpt" => "Monaški dan je jednostavan, disciplinovan i ispunjen molitvom, radom i tišinom.",
+                "content" => "Život monaha razlikuje se od uobičajenog ritma sveta. Dan u manastiru počinje rano, često pre izlaska sunca, i od samog početka je usmeren na molitvu. Prvi deo dana posvećen je bogosluženju, čitanju i unutrašnjem sabiranju, a zatim slede svakodnevni poslovi bez kojih manastirski život ne bi mogao da funkcioniše.
+
+Monasi rade u bašti, kuhinji, radionici, biblioteci ili pri dočeku gostiju. Taj rad nije samo praktična obaveza, već deo duhovne discipline. U manastiru se rad i molitva ne suprotstavljaju, već dopunjuju. Kroz takav ritam čovek uči strpljenju, pažnji, jednostavnosti i unutrašnjem miru.
+
+Tokom dana smenjuju se molitva, ćutanje i korisni poslovi. Upravo taj spoj čini da monaški život mnogima deluje tih, ali duboko smislen. On pokazuje da nije neophodno živeti u stalnoj užurbanosti da bi život bio ispunjen. Naprotiv, sabran i jednostavan ritam često čoveku otkriva dublji mir."
             ],
+
             [
-                'title' => 'Poklonjenje ikonama: poštovanje, ne idolopoklonstvo',
-                'category' => 'Ikone',
-                'reading_minutes' => 7,
-                'excerpt' => 'Ikona je prozor ka ličnosti, a poklonjenje je izraz ljubavi i poštovanja.',
-                'content' => $this->textIkone(),
+                "title" => "Miris tamjana: molitva koja se uzdiže",
+                "slug" => Str::slug("Miris tamjana: molitva koja se uzdiže"),
+                "category" => "Bogosluženje",
+                "image" => "images/curiosities/tamjan-kadionica.jpg",
+                "reading_minutes" => 3,
+                "excerpt" => "Tamjan u pravoslavnom bogosluženju simbolizuje molitvu koja se uzdiže ka Bogu.",
+                "content" => "Tamjan zauzima posebno mesto u pravoslavnom bogosluženju. Kada se pali, njegov miris ispunjava prostor hrama i stvara atmosferu sabranosti i poštovanja. Dim tamjana simbolizuje molitvu vernika koja se uzdiže ka Bogu, pa ovaj čin ima duboko biblijsko i liturgijsko značenje.
+
+Kadionica kojom se tamjan raznosi koristi se vekovima i sastavni je deo bogoslužbenog poretka. Kroz miris, pokret i dim vernik ne doživljava molitvu samo razumom, već i čitavim bićem. Zato je tamjan više od običnog mirisa — on učestvuje u oblikovanju liturgijskog iskustva.
+
+Mnogi ljudi upravo miris tamjana povezuju sa mirom, hramom i osećajem svetinje. On pomaže čoveku da se dublje unese u molitvu i da oseti da je bogosluženje nešto više od običnog okupljanja. Zato tamjan ostaje jedan od najupečatljivijih simbola pravoslavne molitve."
             ],
+
             [
-                'title' => 'Post: više od hrane — škola slobode',
-                'category' => 'Post',
-                'reading_minutes' => 8,
-                'excerpt' => 'U pravoslavlju post je unutrašnja disciplina: reči, misli, dela i odnos prema drugima.',
-                'content' => $this->textPost(),
+                "title" => "Zašto se u crkvi stoji: smisao budnosti i poštovanja",
+                "slug" => Str::slug("Zašto se u crkvi stoji: smisao budnosti i poštovanja"),
+                "category" => "Običaji",
+                "image" => "images/curiosities/stajanje-u-crkvi.jpg",
+                "reading_minutes" => 3,
+                "excerpt" => "Stajanje u crkvi izražava pažnju, budnost i poštovanje pred Bogom.",
+                "content" => "U pravoslavnoj tradiciji vernici tokom bogosluženja često stoje. To nije slučajno, već ima dubok smisao. Stajanje izražava pažnju, budnost i poštovanje pred Bogom. Ono pokazuje da čovek ne prisustvuje bogosluženju ravnodušno, već aktivno i sabrano.
+
+U starim vremenima stajanje je bilo uobičajen molitveni stav. Sedenje se koristilo više kao izuzetak nego kao pravilo. Naravno, Crkva uvek pokazuje razumevanje prema bolesnima, starima i umornima, jer suština nije u spoljašnjem naporu, već u unutrašnjem raspoloženju. Ipak, sam stav tela često pomaže čoveku da bude pažljiviji i da se manje rasipa mislima.
+
+Zato se stajanje u crkvi posmatra kao znak duhovne budnosti. Ono podseća da molitva zahteva prisutnost celog čoveka — i tela i misli i srca. Na taj način i spoljašnji stav dobija dublje unutrašnje značenje."
             ],
+
             [
-                'title' => 'Zašto se krstimo sa tri prsta: vera u Trojicu',
-                'category' => 'Osnovi vere',
-                'reading_minutes' => 6,
-                'excerpt' => 'Način krštenja nije formalnost — on čuva sadržaj ispovedanja vere.',
-                'content' => $this->textTriPrsta(),
+                "title" => "Zvona: kada zvone i šta poručuju",
+                "slug" => Str::slug("Zvona: kada zvone i šta poručuju"),
+                "category" => "Bogosluženje",
+                "image" => "images/curiosities/zvona-hrama.jpg",
+                "reading_minutes" => 3,
+                "excerpt" => "Zvona pozivaju vernike na molitvu i obaveštavaju zajednicu o važnim trenucima.",
+                "content" => "Zvona imaju posebno mesto u životu pravoslavne zajednice. Njihov zvuk nije samo obaveštenje, već i poziv na molitvu. Kada zazvone pred bogosluženje, vernici znaju da je vreme da se saberu i dođu u hram. Tako zvona postaju deo zajedničkog duhovnog ritma.
+
+Njihov ton može biti radostan, svečan ili ozbiljan, u zavisnosti od prilike. Zvona se oglašavaju na praznike, u važnim liturgijskim trenucima, ali i u trenucima tuge, opela i sećanja. Zbog toga zvona nisu samo praktičan znak, već i nosilac raspoloženja i poruke koju zajednica prepoznaje.
+
+Kroz vekove su zvona postala važan deo crkvenog identiteta. Njihov zvuk širi se dalje od zidova hrama i povezuje ljude u molitvenom iskustvu. Zato ona imaju i praktičan i duboko simboličan značaj u životu vernika."
             ],
+
             [
-                'title' => 'Zašto pravoslavni hramovi imaju kupole',
-                'category' => 'Arhitektura',
-                'reading_minutes' => 7,
-                'excerpt' => 'Kupola nije samo lep detalj; ona simboliše nebo i menja način na koji doživljavamo prostor.',
-                'content' => $this->textKupole(),
+                "title" => "Manastiri skriveni od sveta: zašto su građeni daleko od puteva",
+                "slug" => Str::slug("Manastiri skriveni od sveta: zašto su građeni daleko od puteva"),
+                "category" => "Manastiri",
+                "image" => "images/curiosities/manastir-priroda.jpg",
+                "reading_minutes" => 3,
+                "excerpt" => "Mnogi manastiri građeni su u tišini prirode kako bi omogućili molitveni i sabrani život.",
+                "content" => "Mnogi pravoslavni manastiri nalaze se daleko od velikih puteva i gradova. To nije slučajnost, već svesan izbor. Mirno okruženje pomaže monasima da vode sabran i tih život, udaljen od svakodnevne buke i rastrzanosti. Priroda tako postaje deo duhovnog prostora manastira.
+
+Tišina šume, planine ili reke doprinosi molitvenoj atmosferi. U takvom okruženju lakše je usmeriti misli na molitvu, rad i unutrašnju disciplinu. Manastiri su često građeni upravo tamo gde je bilo moguće živeti jednostavno, skromno i sabrano. Istovremeno, takva mesta su u mnogim istorijskim periodima pružala i određenu zaštitu.
+
+Posetioci i danas upravo zato doživljavaju manastire kao duhovna utočišta. Njihova udaljenost od sveta ne znači bekstvo od ljudi, već stvaranje prostora u kome se čovek može lakše sresti sa sobom, tišinom i Bogom. Zbog toga ta skrivenost ostaje deo njihove posebne lepote."
             ],
+
             [
-                'title' => 'Mit ili istina: najčešće zablude o crkvenim običajima',
-                'category' => 'Običaji',
-                'reading_minutes' => 8,
-                'excerpt' => 'Mnogi ljudi rade “kako su čuli”, ali bez razumevanja. Ovaj tekst razdvaja naviku od smisla.',
-                'content' => $this->textMitIstina(),
+                "title" => "Vladari koji su postali monasi: od krune do poslušanja",
+                "slug" => Str::slug("Vladari koji su postali monasi: od krune do poslušanja"),
+                "category" => "Istorija",
+                "image" => "images/curiosities/vladar-monah.jpg",
+                "reading_minutes" => 3,
+                "excerpt" => "U srpskoj istoriji pojedini vladari su na kraju života birali monaški put.",
+                "content" => "U istoriji srpskog naroda poznati su primeri vladara koji su postali monasi. Taj korak pokazuje koliko je u srednjovekovnom društvu duhovni život bio cenjen. Vladarska moć, ugled i bogatstvo nisu smatrani poslednjim ciljem čoveka, već prolaznim stvarima koje ne mogu zameniti mir duše.
+
+Kada bi se povukli iz javnog života, pojedini vladari birali su monaštvo kao put pokajanja, smirenja i duhovne pripreme. Time su pokazivali da i najviši položaj u društvu nije iznad potrebe za ličnim preobražajem. U manastiru više nisu bili gospodari, već poslušnici, što je imalo snažnu poruku i za savremenike i za buduća pokolenja.
+
+Takva promena puta ostala je upečatljiva u narodnom sećanju. Ona pokazuje da su i najmoćniji ljudi prolazni pred Bogom i da je duhovna vrednost veća od zemaljske slave. Upravo zbog toga priče o vladarima koji su postali monasi i danas imaju veliku snagu."
             ],
+
             [
-                'title' => 'Manastiri kao centri znanja: knjige, prepisivači i pamćenje naroda',
-                'category' => 'Istorija',
-                'reading_minutes' => 8,
-                'excerpt' => 'Manastiri nisu čuvali samo veru, nego i pismenost, istoriju i kulturu.',
-                'content' => $this->textZnanje(),
+                "title" => "Tajne fresaka: zašto svetitelji gledaju pravo u vas",
+                "slug" => Str::slug("Tajne fresaka: zašto svetitelji gledaju pravo u vas"),
+                "category" => "Freske",
+                "image" => "images/curiosities/freska-lice.jpg",
+                "reading_minutes" => 3,
+                "excerpt" => "Pogled svetitelja na freskama ima duhovnu poruku i nije slučajan umetnički detalj.",
+                "content" => "Freske u pravoslavnim hramovima oslikane su sa posebnom pažnjom i simbolikom. Vernici često primećuju da izgleda kao da ih svetitelji posmatraju. Taj utisak nije slučajan. U ikonografiji lice i pogled imaju veliku važnost, jer freske nisu zamišljene kao obični portreti, već kao svedočanstvo duhovne stvarnosti.
+
+Svetitelji na freskama ne prikazuju se kao istorijske ličnosti zatvorene u prošlost, već kao živa prisutnost Crkve i vere. Pogled usmeren ka verniku podseća čoveka na lični odnos sa Bogom, na odgovornost i na budnost u duhovnom životu. Freske ne služe samo da ukrase zidove hrama, već i da poučavaju i vode vernika ka dubljem razumevanju vere.
+
+Zato je svaki detalj pažljivo osmišljen. Kroz lice, boje, položaj tela i pogled prenosi se poruka koja prevazilazi običnu umetničku lepotu. Upravo zbog toga svetitelji na freskama deluju tako snažno i upečatljivo."
             ],
+
             [
-                'title' => 'Zašto ljudi osećaju mir u manastiru',
-                'category' => 'Duhovni život',
-                'reading_minutes' => 7,
-                'excerpt' => 'Mir nije magija prostora — to je spoj tišine, ritma, molitve i jednostavnosti.',
-                'content' => $this->textMir(),
+                "title" => "Zašto se u pravoslavlju pale sveće?",
+                "slug" => Str::slug("Zašto se u pravoslavlju pale sveće?"),
+                "category" => "Običaji",
+                "image" => "images/curiosities/paljenje-sveca.jpg",
+                "reading_minutes" => 3,
+                "excerpt" => "Paljenje sveće je izraz molitve, vere i nade, a ne običaj bez značenja.",
+                "content" => "Paljenje sveća jedan je od najpoznatijih običaja u pravoslavnoj crkvi, ali njegov smisao je mnogo dublji od spoljašnjeg čina. Sveća predstavlja svetlost Hristovu koja osvetljava život vernika. Kada čovek pali sveću, on time izražava molitvu, nadu i želju da svoj život prinese Bogu sa verom i sabranošću.
+
+Plamen podseća da vera treba da gori i u srcu čoveka. Sveće se pale za zdravlje, za pokoj duša, u trenucima tuge, zahvalnosti ili molitvenog traženja pomoći. Taj čin uvek prati tiha molitva i lična sabranost. Crkva uči da sama sveća nema magijsku moć i da njena vrednost nije u predmetu, već u veri sa kojom se prinosi.
+
+Zato paljenje sveće ostaje lep i dubok znak molitvenog obraćanja Bogu. To je jednostavan, ali snažan izraz vere koji povezuje spoljašnji gest i unutrašnju molitvu."
             ],
+
         ];
 
-        foreach ($items as $i) {
-            Curiosity::updateOrCreate(
-                ['slug' => Str::slug($i['title'])],
-                [
-                    'title' => $i['title'],
-                    'slug' => Str::slug($i['title']),
-                    'category' => $i['category'],
-                    'reading_minutes' => $i['reading_minutes'],
-                    'image' => null, // kasnije: images/curiosities/xxx.jpg
-                    'excerpt' => $i['excerpt'],
-                    'content' => $i['content'],
-                    'is_published' => true,
-                ]
-            );
-        }
-    }
-
-    private function textSvece(): string
-    {
-        return "Sveća u pravoslavlju nije ukras, niti “formalnost” koju treba obaviti na brzinu.\n\n"
-            ."Kada palimo sveću, mi u stvari dajemo mali vidljivi znak nevidljivoj molitvi.\n\n"
-            ."Svetlost sveće podseća da Hristos naziva sebe Svetlošću sveta i da vera nije samo misao, već i život.\n\n"
-            ."Vosak se tradicionalno koristi jer je prirodan i čist, a i simbolično govori o prinošenju: ono što je naše, dajemo Bogu.\n\n"
-            ."Važno je i raspoloženje: sveća “vredi” onoliko koliko je u nju utkana molitva.\n\n"
-            ."Mnogi pitaju gde se pali sveća za zdravlje, a gde za upokojene.\n\n"
-            ."Praksa se razlikuje po hramovima, ali smisao je isti: setiti se živih u molitvi, setiti se upokojenih sa nadom u Vaskrsenje.\n\n"
-            ."Najbolje je uvek pitati u konkretnom hramu ako nisi sigurna, bez ustručavanja.\n\n"
-            ."Suština nije “tačna strana”, već sabranost i poštovanje.\n\n"
-            ."Ako si u žurbi, bolje je zapaliti jednu sveću sa pažnjom nego pet bez ikakvog unutrašnjeg učešća.\n\n"
-            ."Sveća nas uči i jednoj tihoj disciplini: da stanemo, udahnemo i uđemo u mir, makar na minut.\n\n"
-            ."U tom smislu, sveća je mali početak molitve, a ne njen kraj.";
-    }
-
-    private function textFreske(): string
-    {
-        return "Freske nisu nastale da “ukrase zid”, nego da prenesu veru u boji i obliku.\n\n"
-            ."U ikonografiji ništa nije slučajno: položaj ruku, pogled, odežda, boje, pa čak i način na koji je prostor naslikan.\n\n"
-            ."Ljudi često primete da svetitelji na freskama gledaju pravo u posmatrača.\n\n"
-            ."To nije efekat “realizma”, već poruka: svetitelj nije daleki lik iz prošlosti, već živa ličnost u zajednici Crkve.\n\n"
-            ."Velike oči simbolizuju budnost i duhovni pogled, odnosno čoveka koji gleda srcem.\n\n"
-            ."Još jedna zanimljivost je “obrnuta perspektiva”: umesto da se sve sužava ka daljini, ponekad se širi ka posmatraču.\n\n"
-            ."To je način da se kaže: ti nisi samo gledalac, ti si pozvan da uđeš u događaj.\n\n"
-            ."Zlatna pozadina nije “luksuz”, nego znak Carstva nebeskog, svetlosti koja nije od ovog sveta.\n\n"
-            ."Boje takođe imaju značenje: plava često govori o nebu i tajni, crvena o životu i žrtvi, bela o svetlosti i preobraženju.\n\n"
-            ."Freska može da bude i “učitelj”: u vreme kad mnogi nisu umeli da čitaju, zidovi hrama su bili katehizam.\n\n"
-            ."Zato je važno da na freske ne gledamo kao na muzej.\n\n"
-            ."One su pre svega deo molitvenog prostora i govore najviše kada ih posmatramo u tišini.";
-    }
-
-    private function textVladariMonasi(): string
-    {
-        return "U istoriji srpskog naroda postoji snažan motiv: vladar koji na kraju života bira monaštvo.\n\n"
-            ."To ne mora da bude “bekstvo”, već često znak zrelosti i svesti da moć nije poslednja reč.\n\n"
-            ."Kada čovek ima vlast, novac ili slavu, lako poveruje da je to smisao života.\n\n"
-            ."Monaški put, naprotiv, uči čoveka da se odrekne viška i da živi jednostavno.\n\n"
-            ."U tradiciji Nemanjića vidimo ovaj motiv jasno: od državničkih odluka do duhovnog zaveta.\n\n"
-            ."Prelazak iz palate u keliju nije samo promena adrese; to je promena srca.\n\n"
-            ."Monah se uči poslušanju, a to je često teže nego komandovanje.\n\n"
-            ."Zanimljivo je da narod ovakve ličnosti pamti ne samo po političkim pobedama nego po zadužbinama i duhovnom tragu.\n\n"
-            ."Zadužbina nije samo građevina; ona je svedočanstvo vere i želje da se nešto ostavi za dobro mnogih.\n\n"
-            ."Ove priče nas podsećaju da se vrednost čoveka ne meri samo uspehom, nego i sposobnošću da se smiri i promeni.";
-    }
-
-    private function textSkriveni(): string
-    {
-        return "Mnogi manastiri u Srbiji nalaze se u šumama, klisurama ili daleko od glavnih puteva.\n\n"
-            ."To je delom posledica istorije: ratovi, seobe i opasnosti često su terali monahe da biraju skrovita mesta.\n\n"
-            ."Ali postoji i duhovni razlog: tišina pomaže čoveku da čuje sebe i da se usredsredi na molitvu.\n\n"
-            ."U gradu je lako izgubiti ritam, jer sve traži našu pažnju.\n\n"
-            ."U prirodi, posebno u planinama, ritam je jednostavniji i sporiji.\n\n"
-            ."Skrovitost manastira tako postaje “škola” unutrašnjeg života.\n\n"
-            ."Još jedna praktična stvar: voda.\n\n"
-            ."Mnogi manastiri su podizani blizu izvora ili reka, jer je to bilo neophodno za život.\n\n"
-            ."Zato kada danas dođeš u manastir i osetiš mir, često je to posledica prostora koji je građen baš za sabranost.\n\n"
-            ."Skrovito mesto ne znači izolaciju od ljudi, već zaštitu od buke i rasutosti.";
-    }
-
-    private function textZvona(): string
-    {
-        return "Zvona u pravoslavnoj tradiciji nisu samo “signal” da služba počinje.\n\n"
-            ."Zvuk zvona je poziv na sabranje, ali i podsetnik da postoji vreme za molitvu.\n\n"
-            ."Različiti praznici mogu imati različit način zvonjenja.\n\n"
-            ."Ponekad se čuje svečanije i duže, ponekad tiše i kraće.\n\n"
-            ."U nekim krajevima zvona prate liturgijski ritam cele godine.\n\n"
-            ."Zanimljivo je da ljudi često osete promenu raspoloženja kad čuju zvona.\n\n"
-            ."To je zato što zvuk “seče” svakodnevicu i podseća nas na nešto više.\n\n"
-            ."Zvona su i zajednički glas: čuju ih i oni koji ne mogu da dođu u hram.\n\n"
-            ."Tako zvono postaje tiha propoved bez reči.\n\n"
-            ."I kad nisi spremna za molitvu, zvono te bar nakratko seti da zastaneš.";
-    }
-
-    private function textStajanje(): string
-    {
-        return "Mnogi prvi put primete da se u pravoslavnim hramovima uglavnom stoji.\n\n"
-            ."Stajanje je znak poštovanja, ali i budnosti.\n\n"
-            ."U starini, stajanje je bilo uobičajeno i u drugim javnim prilikama.\n\n"
-            ."U crkvi, stajanje simbolično govori: mi smo pred Bogom, a ne u učionici.\n\n"
-            ."Naravno, stariji, bolesni i oni koji ne mogu — uvek mogu da sednu.\n\n"
-            ."Bog ne traži napor radi napora.\n\n"
-            ."Suština je unutrašnje učešće.\n\n"
-            ."Ako stojiš, a misli su ti daleko, propuštaš smisao.\n\n"
-            ."Ako sediš, a moliš se sabrano, ti si već “unutra” u službi.\n\n"
-            ."Zato je najvažnije razumeti da pravilo postoji da pomogne, a ne da slomi čoveka.";
-    }
-
-    private function textTamjan(): string
-    {
-        return "Tamjan je u hrišćanskoj tradiciji simbol molitve koja se uzdiže.\n\n"
-            ."Dim tamjana podseća na ono što ne možemo da uhvatimo rukama, ali možemo da osetimo: prisustvo svetinje.\n\n"
-            ."U bogosluženju, kadenje označava poštovanje prema oltaru, ikonama i narodu.\n\n"
-            ."Zanimljivo je da se kadi i čovek, jer je pozvan da bude “hram Duha Svetoga”.\n\n"
-            ."Miris takođe ima ulogu: pomaže sabranosti.\n\n"
-            ."Neki ljudi imaju utisak da ih tamjan smiruje.\n\n"
-            ."To je spoj simbolike i psihologije: miris veže iskustvo, stvara osećaj pripadnosti i pomaže da uđemo u molitvu.\n\n"
-            ."Najlepše je kada tamjan ne doživljavamo kao “miris”, već kao deo jezika Liturgije.";
-    }
-
-    private function textMonah(): string
-    {
-        return "Život monaha često se idealizuje ili pogrešno shvata.\n\n"
-            ."U stvarnosti, manastir je mesto rada, discipline i stalnog učenja.\n\n"
-            ."Dan obično počinje rano, molitvom.\n\n"
-            ."Zatim sledi poslušanje: rad u kuhinji, bašti, ikonopisanju, gostoprimstvu, biblioteci.\n\n"
-            ."Molitva i rad se smenjuju, jer čovek nije samo “duh”, nego i telo.\n\n"
-            ."Tišina je važna, ali nije cilj sama po sebi.\n\n"
-            ."Tišina postoji da bi čovek bolje čuo Boga i sebe.\n\n"
-            ."Monah ne beži od sveta iz mržnje prema ljudima.\n\n"
-            ."On, naprotiv, često nosi ljude u molitvi.\n\n"
-            ."Zato mnogi posetioci osete mir: u manastiru se živi sporije i sabranije.\n\n"
-            ."To je lekcija i za nas u svetu: da usporimo, uredimo misli i vratimo se suštini.";
-    }
-
-    private function textIkone(): string
-    {
-        return "Kada pravoslavni hrišćanin celiva ikonu, on ne obožava drvo i boju.\n\n"
-            ."Poštovanje se upućuje ličnosti koja je na ikoni prikazana.\n\n"
-            ."Ikona je prozor, ne zid.\n\n"
-            ."Zato je i način slikanja drugačiji: cilj nije realistična fotografija, nego duhovna poruka.\n\n"
-            ."Ikone nas uče da svet nije samo materija.\n\n"
-            ."One podsećaju da su svetitelji naši prijatelji i uzori.\n\n"
-            ."Celivanje ikone je znak ljubavi i poštovanja, kao kada celivamo ruku majci ili baku — ne zbog “ruke”, nego zbog osobe.\n\n"
-            ."Važno je i da se ikone ne tretiraju kao amajlije.\n\n"
-            ."One imaju smisla u veri, molitvi i crkvenom životu.";
-    }
-
-    private function textPost(): string
-    {
-        return "Post u pravoslavlju je mnogo širi od jelovnika.\n\n"
-            ."Naravno, hrana je vidljivi deo, ali suština je unutrašnja promena.\n\n"
-            ."Post nas uči da ne moramo odmah da zadovoljimo svaku želju.\n\n"
-            ."To je škola slobode: da mi upravljamo navikama, a ne navike nama.\n\n"
-            ."Tokom posta, posebno se naglašavaju praštanje, milostinja i smirenje.\n\n"
-            ."Ako čovek posti, a pritom se svađa, osuđuje i prezire druge — promašio je suštinu.\n\n"
-            ."Zato se često kaže: bolje je jesti skromnije i biti miran, nego “strogo postiti” i biti grub.\n\n"
-            ."Post tako postaje vreme čišćenja: reči, misli, dela.\n\n"
-            ."I kada se tako razume, post donosi stvarnu radost, a ne pritisak.";
-    }
-
-    private function textTriPrsta(): string
-    {
-        return "Krštenje sa tri prsta je jedan mali gest, ali nosi veliku poruku.\n\n"
-            ."Tri spojena prsta ispovedaju veru u Svetu Trojicu: Oca, Sina i Svetoga Duha.\n\n"
-            ."Dva savijena prsta podsećaju na dve prirode Hrista: božansku i čovečansku.\n\n"
-            ."Tako se u jednom pokretu čuva osnovna vera.\n\n"
-            ."Smer krštenja u pravoslavlju takođe prati predanje.\n\n"
-            ."Ali najvažnije je da krštenje ne bude mehanički pokret.\n\n"
-            ."Ako se krstimo, a pritom mislimo na deset stvari, gubi se smisao.\n\n"
-            ."Bolje je prekrstiti se sporije, sa kratkom molitvom u sebi.";
-    }
-
-    private function textKupole(): string
-    {
-        return "Kupola na pravoslavnom hramu nije samo arhitektonska lepota.\n\n"
-            ."Ona simboliše nebo koje se nadvija nad vernim narodom.\n\n"
-            ."Kada uđeš u hram i pogledaš gore, prostor te “podiže”.\n\n"
-            ."To je fizički način da se čovek podseti na uzvišenost molitve.\n\n"
-            ."Kupole često utiču i na akustiku: pojanje dobija punoću.\n\n"
-            ."Svetlost u kupoli takođe ima smisla: prozori i raspored svetla stvaraju doživljaj mekoće.\n\n"
-            ."Zato pravoslavni hramovi deluju mirno i svečano čak i kad su prazni.\n\n"
-            ."Arhitektura je, na neki način, teologija u kamenu.";
-    }
-
-    private function textMitIstina(): string
-    {
-        return "Mnogi crkveni običaji žive u narodu, ali ponekad se vremenom izvitopere.\n\n"
-            ."Neko kaže: “mora ovako”, ali ne zna zašto.\n\n"
-            ."Prva zabluda je da je forma važnija od smisla.\n\n"
-            ."Ako čovek dođe u hram sa skrušenošću, Bog neće odbaciti molitvu zato što nije znao “pravilo marame”.\n\n"
-            ."Druga zabluda je da sve deluje kao magija: zapali sveću pa će se sve rešiti.\n\n"
-            ."U pravoslavlju ništa nije magijski automatizam.\n\n"
-            ."Sve ima smisla samo u odnosu sa Bogom i u životu vere.\n\n"
-            ."Treća zabluda je osuđivanje drugih: “ti nisi pravi jer ne radiš kao ja”.\n\n"
-            ."Pravoslavna tradicija uči smirenju, a ne takmičenju.\n\n"
-            ."Najzdravije je pitati sveštenika ili nekog iskusnog vernika, bez stida.\n\n"
-            ."Jer cilj nije da budemo “tačni”, nego da budemo bliži Bogu.";
-    }
-
-    private function textZnanje(): string
-    {
-        return "U prošlosti su manastiri bili mnogo više od mesta molitve.\n\n"
-            ."U njima su se prepisivale knjige, čuvali letopisi i prenosilo znanje.\n\n"
-            ."Kada je narod prolazio kroz teška vremena, manastiri su često bili utočište kulture.\n\n"
-            ."Tamo su nastajali rukopisi, prevodi, hronike.\n\n"
-            ."Zadužbine su imale i škole, biblioteke, radionice.\n\n"
-            ."Zato se može reći da su manastiri čuvali pamćenje naroda.\n\n"
-            ."Danas, kada sve deluje dostupno na internetu, lako je zaboraviti koliko je teško bilo sačuvati jednu knjigu.\n\n"
-            ."Ali baš zato je važno poštovati tu ulogu.\n\n"
-            ."Manastir nije samo “turističko mesto”, nego i istorijski arhiv živog naroda.";
-    }
-
-    private function textMir(): string
-    {
-        return "Mnogi ljudi kažu da u manastiru osećaju mir koji ne osećaju u gradu.\n\n"
-            ."To nije slučajno.\n\n"
-            ."Prvo, priroda utiče na čoveka: tišina, drveće, voda, planina.\n\n"
-            ."Drugo, ritam manastira je sporiji.\n\n"
-            ."Nema stalne buke, žurbe i prekidanja.\n\n"
-            ."Treće, molitva “menja vazduh” — ne kao magija, već kao atmosfera sabranosti.\n\n"
-            ."Kada dođeš na takvo mesto, i tvoje misli polako usporavaju.\n\n"
-            ."Tada čovek prvi put primeti koliko je inače rasut.\n\n"
-            ."Manastirski mir je poziv da taj mir poneseš kući.\n\n"
-            ."Ne da postaneš monah, nego da u svom životu napraviš prostor za tišinu.\n\n"
-            ."Jer mir nije mesto — mir je stanje srca koje se uči.";
+        DB::table('curiosities')->insert($items);
     }
 }

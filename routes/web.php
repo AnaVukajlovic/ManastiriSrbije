@@ -7,6 +7,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FavoriteController;
 
 use App\Http\Controllers\MapController;
+use App\Http\Controllers\MapAiController;
 use App\Http\Controllers\MonasteryController;
 use App\Http\Controllers\KtitorController;
 
@@ -16,6 +17,7 @@ use App\Http\Controllers\PravoslavniCalendarController;
 use App\Http\Controllers\CuriosityController;
 use App\Http\Controllers\VaskrsController;
 use App\Http\Controllers\EdukacijaController;
+use App\Http\Controllers\AiController;
 
 use App\Http\Controllers\Admin\MonasteryReviewController;
 use App\Http\Controllers\Admin\ImportReviewController;
@@ -25,7 +27,13 @@ use App\Http\Controllers\Admin\ImportReviewController;
 | Public
 |--------------------------------------------------------------------------
 */
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/', function () {
+    if (auth()->check()) {
+        return app(\App\Http\Controllers\HomeController::class)->index(request());
+    }
+
+    return view('welcome');
+})->name('home');
 
 /*
 |--------------------------------------------------------------------------
@@ -34,17 +42,16 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 */
 Route::get('/map', [MapController::class, 'index'])->name('map.index');
 Route::get('/map/{slug}', [MapController::class, 'show'])->name('map.show');
-Route::get('/mapa', fn () => redirect()->route('map.index')); // alias bez name
+Route::get('/mapa', fn () => redirect()->route('map.index'));
 
 /*
 |--------------------------------------------------------------------------
-| Pravoslavni sadržaj (index + specifične rute)
-| VAŽNO: specifične rute moraju biti PRE /pravoslavni/{slug}
+| Pravoslavni sadržaj
 |--------------------------------------------------------------------------
 */
 Route::get('/pravoslavni', [PravoslavniController::class, 'index'])->name('pravoslavni.index');
 
-/* KALENDAR (index + show) */
+/* Kalendar */
 Route::get('/pravoslavni/kalendar', [PravoslavniCalendarController::class, 'index'])
     ->name('pravoslavni.kalendar.index');
 
@@ -52,7 +59,7 @@ Route::get('/pravoslavni/kalendar/{date}', [PravoslavniCalendarController::class
     ->where('date', '\d{4}-\d{2}-\d{2}')
     ->name('pravoslavni.kalendar.show');
 
-/* Osnovni koncepti (statičan view) */
+/* Osnovni koncepti */
 Route::get('/pravoslavni/osnovni-koncepti', function () {
     return view('pages.pravoslavni.modules.osnovni-koncepti');
 })->name('pravoslavni.osnovni-koncepti');
@@ -64,36 +71,52 @@ Route::get('/pravoslavni/osnovni-koncepti', function () {
 */
 Route::prefix('pravoslavni')->group(function () {
 
-    /* ---------------- Zanimljivosti ---------------- */
+    /* Zanimljivosti */
     Route::get('/zanimljivosti', [CuriosityController::class, 'index'])
         ->name('curiosities.index');
+
     Route::get('/zanimljivosti/{slug}', [CuriosityController::class, 'show'])
         ->name('curiosities.show');
 
-    /* ---------------- Datum Vaskrsa ---------------- */
+    /* Datum Vaskrsa */
     Route::get('/datum-vaskrsa', [VaskrsController::class, 'index'])
         ->name('vaskrs.index');
+
     Route::get('/datum-vaskrsa/{slug}', [VaskrsController::class, 'show'])
         ->name('vaskrs.show');
 
-    /* ---------------- Edukacija: interaktivno (PRVO) ---------------- */
+    /* Edukacija: specifične rute prvo */
+    Route::get('/edukacija/ucenje-interakcija', [EdukacijaController::class, 'ucenjeInterakcija'])
+        ->name('edukacija.ucenje-interakcija');
+
+    Route::get('/edukacija/porodicno-stablo', [EdukacijaController::class, 'porodicnoStablo'])
+        ->name('edukacija.porodicno-stablo');
+
     Route::get('/edukacija/timeline', [EdukacijaController::class, 'timeline'])
         ->name('edukacija.timeline');
 
-    Route::get('/edukacija/kviz-istorija', [EdukacijaController::class, 'quizHistory'])
-        ->name('edukacija.quiz.history');
-    Route::post('/edukacija/kviz-istorija', [EdukacijaController::class, 'quizHistorySubmit'])
-        ->name('edukacija.quiz.history.submit');
+    Route::get('/edukacija/quiz-history', [EdukacijaController::class, 'quizHistory'])
+        ->name('edukacija.quiz-history');
 
-    Route::get('/edukacija/kviz-pravoslavlje', [EdukacijaController::class, 'quizOrthodox'])
-        ->name('edukacija.quiz.orthodox');
-    Route::post('/edukacija/kviz-pravoslavlje', [EdukacijaController::class, 'quizOrthodoxSubmit'])
-        ->name('edukacija.quiz.orthodox.submit');
+    Route::post('/edukacija/quiz-history', [EdukacijaController::class, 'quizHistorySubmit'])
+        ->name('edukacija.quiz-history.submit');
+
+    Route::get('/edukacija/quiz-orthodox', [EdukacijaController::class, 'quizOrthodox'])
+        ->name('edukacija.quiz-orthodox');
+
+    Route::post('/edukacija/quiz-orthodox', [EdukacijaController::class, 'quizOrthodoxSubmit'])
+        ->name('edukacija.quiz-orthodox.submit');
 
     Route::get('/edukacija/ai', [EdukacijaController::class, 'ai'])
         ->name('edukacija.ai');
 
-    /* ---------------- Edukacija: index + slug (NA KRAJU) ---------------- */
+    Route::post('/edukacija/ai/chat', [EdukacijaController::class, 'aiChat'])
+        ->name('edukacija.ai.chat');
+
+    Route::post('/ai/timeline', [AiController::class, 'chat'])
+        ->name('ai.timeline');
+
+    /* Edukacija index + slug na kraju */
     Route::get('/edukacija', [EdukacijaController::class, 'index'])
         ->name('edukacija.index');
 
@@ -103,7 +126,7 @@ Route::prefix('pravoslavni')->group(function () {
 
 /*
 |--------------------------------------------------------------------------
-| Redirect starih /edukacija/* URL-ova na NOVI /pravoslavni/edukacija
+| Redirect starih /edukacija/* URL-ova
 |--------------------------------------------------------------------------
 */
 Route::get('/edukacija', fn () => redirect()->route('edukacija.index'));
@@ -112,7 +135,7 @@ Route::get('/edukacija/{any}', fn () => redirect()->route('edukacija.index'))
 
 /*
 |--------------------------------------------------------------------------
-| GENERIČKI SLUG (uvek NA KRAJU)
+| Generički slug za /pravoslavni/{slug} - UVEK na kraju pravoslavnih ruta
 |--------------------------------------------------------------------------
 */
 Route::get('/pravoslavni/{slug}', [PravoslavniController::class, 'show'])
@@ -120,7 +143,7 @@ Route::get('/pravoslavni/{slug}', [PravoslavniController::class, 'show'])
 
 /*
 |--------------------------------------------------------------------------
-| Statične stranice (ostalo)
+| Statične stranice
 |--------------------------------------------------------------------------
 */
 Route::view('/ture', 'pages.tours')->name('tours.index');
@@ -128,7 +151,7 @@ Route::view('/ai', 'pages.ai')->name('ai.index');
 
 /*
 |--------------------------------------------------------------------------
-| Alias rute (kompatibilnost)
+| Alias rute
 |--------------------------------------------------------------------------
 */
 Route::get('/map-alias', fn () => redirect()->route('map.index'))->name('map');
@@ -155,57 +178,64 @@ Route::prefix('ktitori')->name('ktitors.')->group(function () {
 
 /*
 |--------------------------------------------------------------------------
-| Dashboard ne koristiš
+| Dashboard redirect
 |--------------------------------------------------------------------------
 */
 Route::redirect('/dashboard', '/');
 
 /*
 |--------------------------------------------------------------------------
-| Nalog / profil (Breeze) + Omiljeni
+| Nalog / profil / omiljeni
 |--------------------------------------------------------------------------
 */
 Route::middleware('auth')->group(function () {
 
-    // Profil
+    /* Profil */
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // Moj nalog (placeholder)
+    /* Moj nalog */
     Route::view('/nalog', 'pages.account.index')->name('account.index');
 
-    // Omiljeni
+    /* Omiljeni */
     Route::get('/omiljeni', [FavoriteController::class, 'index'])->name('favorites.index');
 
-    // Toggle omiljeni (slug)
     Route::post('/omiljeni/{monastery:slug}/toggle', [FavoriteController::class, 'toggle'])
         ->name('favorites.toggle');
 });
 
 /*
 |--------------------------------------------------------------------------
+| AI za mapu
+|--------------------------------------------------------------------------
+*/
+Route::post('/map/ai/recommend-by-city', [MapAiController::class, 'recommendByCity'])
+    ->name('map.ai.recommendByCity');
+
+/*
+|--------------------------------------------------------------------------
 | Admin
 |--------------------------------------------------------------------------
 */
-Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
 
-    // Moderacija manastira
+    Route::get('/', function () {
+        return view('admin.dashboard');
+    })->name('dashboard');
+
+    /* Moderacija manastira */
     Route::get('/monasteries', [MonasteryReviewController::class, 'index'])->name('monasteries.index');
     Route::post('/monasteries/{monastery}/approve', [MonasteryReviewController::class, 'approve'])->name('monasteries.approve');
     Route::post('/monasteries/{monastery}/reject', [MonasteryReviewController::class, 'reject'])->name('monasteries.reject');
     Route::post('/monasteries/{monastery}/reset', [MonasteryReviewController::class, 'resetStatus'])->name('monasteries.reset');
 
-    // Import review
+    /* Import review */
     Route::get('/import', [ImportReviewController::class, 'index'])->name('import.index');
     Route::post('/import/approve', [ImportReviewController::class, 'approve'])->name('import.approve');
     Route::post('/import/reject', [ImportReviewController::class, 'reject'])->name('import.reject');
     Route::post('/import/pending', [ImportReviewController::class, 'pending'])->name('import.pending');
     Route::post('/import/delete', [ImportReviewController::class, 'delete'])->name('import.delete');
 });
-
-
-Route::get('/edukacija/ai', [EdukacijaController::class, 'ai'])->name('edukacija.ai');
-Route::post('/edukacija/ai/chat', [EdukacijaController::class, 'aiChat'])->name('edukacija.ai.chat');
 
 require __DIR__ . '/auth.php';

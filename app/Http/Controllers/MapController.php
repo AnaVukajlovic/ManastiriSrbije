@@ -10,80 +10,109 @@ class MapController extends Controller
 {
     public function index(Request $request)
     {
-        $q       = trim((string) $request->query('q', ''));
-        $region  = trim((string) $request->query('region', ''));
-        $eparchy = trim((string) $request->query('eparchy', '')); // slug eparhije
-        $onlyGeo = (int) $request->query('only_geo', 0) === 1;
-
-        // radi i ako budeš kasnije punila lat/lng
-        $latExpr = DB::raw('COALESCE(monasteries.latitude, monasteries.lat) as lat');
-        $lngExpr = DB::raw('COALESCE(monasteries.longitude, monasteries.lng) as lng');
+        $q = trim((string) $request->query('q', ''));
+        $region = trim((string) $request->query('region', ''));
+        $eparchy = trim((string) $request->query('eparchy', ''));
 
         $query = Monastery::query()
-            ->leftJoin('eparchies', 'monasteries.eparchy_id', '=', 'eparchies.id')
             ->select([
-                'monasteries.slug',
-                'monasteries.name',
-                'monasteries.region',
-                'monasteries.city',
-                'monasteries.image_url',
-                'eparchies.name as eparchy_name',
-                'eparchies.slug as eparchy_slug',
-                $latExpr,
-                $lngExpr,
+                'id',
+                'slug',
+                'name',
+                'region',
+                'city',
+                'image',
+                'image_url',
+                'eparchy_id',
+                'latitude',
+                'longitude',
+                'lat',
+                'lng',
             ]);
 
         if ($q !== '') {
             $query->where(function ($w) use ($q) {
-                $w->where('monasteries.name', 'like', "%{$q}%")
-                  ->orWhere('monasteries.city', 'like', "%{$q}%")
-                  ->orWhere('monasteries.region', 'like', "%{$q}%")
-                  ->orWhere('eparchies.name', 'like', "%{$q}%");
+                $w->where('name', 'like', "%{$q}%")
+                  ->orWhere('city', 'like', "%{$q}%")
+                  ->orWhere('region', 'like', "%{$q}%");
             });
         }
 
         if ($region !== '') {
-            $query->where('monasteries.region', $region);
+            $query->where('region', $region);
         }
 
         if ($eparchy !== '') {
-            $query->where('eparchies.slug', $eparchy);
+            $epId = DB::table('eparchies')
+                ->where('slug', $eparchy)
+                ->value('id');
+
+            if ($epId) {
+                $query->where('eparchy_id', $epId);
+            } else {
+                $query->whereRaw('1 = 0');
+            }
         }
 
-        if ($onlyGeo) {
-            $query->whereNotNull('monasteries.latitude')
-                  ->whereNotNull('monasteries.longitude');
-        }
+        $monasteries = $query
+            ->orderBy('name')
+            ->get();
+
+        $eparchyMap = DB::table('eparchies')
+            ->pluck('name', 'id');
 
         $regions = Monastery::query()
-            ->whereNotNull('region')->where('region','!=','')
-            ->distinct()->orderBy('region')->pluck('region')->values();
+            ->whereNotNull('region')
+            ->where('region', '!=', '')
+            ->distinct()
+            ->orderBy('region')
+            ->pluck('region')
+            ->values();
 
         $eparchies = DB::table('eparchies')
-            ->select('name','slug')
-            ->orderBy('name')->get();
-
-        // ✅ UVEK vrati listu (bez limita) – imaš samo 268
-        $monasteries = $query->orderBy('monasteries.name')->get();
-
-        // points: samo oni sa koordinatama
-        $points = $monasteries
-            ->filter(fn($m) => is_numeric($m->lat) && is_numeric($m->lng))
-            ->map(fn($m) => [
-                'slug' => $m->slug,
-                'name' => $m->name,
-                'lat' => (float)$m->lat,
-                'lng' => (float)$m->lng,
-                'city' => $m->city,
-                'region' => $m->region,
-                'eparchy' => $m->eparchy_name,
-            ])->values();
+            ->select('name', 'slug')
+            ->orderBy('name')
+            ->get();
 
         $eparchyName = null;
         if ($eparchy !== '') {
-            $ep = $eparchies->firstWhere('slug', $eparchy);
-            $eparchyName = $ep?->name;
+            $eparchyName = $eparchies->firstWhere('slug', $eparchy)?->name;
         }
+
+        $points = $monasteries->map(function ($m) use ($eparchyMap) {
+            $latRaw = $m->latitude ?? $m->lat ?? null;
+            $lngRaw = $m->longitude ?? $m->lng ?? null;
+
+            $lat = is_string($latRaw) ? str_replace(',', '.', trim($latRaw)) : $latRaw;
+            $lng = is_string($lngRaw) ? str_replace(',', '.', trim($lngRaw)) : $lngRaw;
+
+            if ($lat === null || $lng === null || $lat === '' || $lng === '') {
+                return null;
+            }
+
+            if (!is_numeric($lat) || !is_numeric($lng)) {
+                return null;
+            }
+
+            $lat = (float) $lat;
+            $lng = (float) $lng;
+
+            if ($lat < -90 || $lat > 90 || $lng < -180 || $lng > 180) {
+                return null;
+            }
+
+            return [
+                'slug' => $m->slug,
+                'name' => $m->name,
+                'lat' => $lat,
+                'lng' => $lng,
+                'city' => $m->city,
+                'region' => $m->region,
+                'eparchy' => $m->eparchy_id ? ($eparchyMap[$m->eparchy_id] ?? null) : null,
+            ];
+        })->filter()->values();
+
+        $geoTotal = $points->count();
 
         return view('map.index', [
             'q' => $q,
@@ -95,7 +124,7 @@ class MapController extends Controller
             'monasteries' => $monasteries,
             'points' => $points,
             'total' => $monasteries->count(),
-            'geo_total' => $points->count(),
+            'geo_total' => $geoTotal,
         ]);
     }
 

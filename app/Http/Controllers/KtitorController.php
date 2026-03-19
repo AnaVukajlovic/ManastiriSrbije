@@ -2,79 +2,84 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ktitor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-use App\Models\Ktitor;
 
 class KtitorController extends Controller
 {
     public function index(Request $request)
     {
         $q = trim((string) $request->query('q', ''));
+        $normalizedQ = $this->normalizeSearch($q);
 
-        $query = Ktitor::query()
-            ->with(['mainImage']); // ✅ slika na kartici (bez N+1)
+        $ktitors = Ktitor::query()
+            ->with(['mainImage', 'images'])
+            ->when($q !== '', function ($query) use ($q, $normalizedQ) {
+                $query->where(function ($sub) use ($q, $normalizedQ) {
+                    // obično pretraživanje
+                    $sub->where('name', 'like', "%{$q}%")
+                        ->orWhere('bio', 'like', "%{$q}%")
+                        ->orWhere('slug', 'like', "%{$q}%");
 
-        if ($q !== '') {
-            $query->where(function ($qq) use ($q) {
-                $qq->where('name', 'like', "%{$q}%")
-                   ->orWhere('bio', 'like', "%{$q}%");
-            });
-        }
-
-        $ktitors = $query
+                    // pretraga bez dijakritika
+                    $sub->orWhereRaw($this->sqliteNormalizeExpression('name') . ' LIKE ?', ["%{$normalizedQ}%"])
+                        ->orWhereRaw($this->sqliteNormalizeExpression('bio') . ' LIKE ?', ["%{$normalizedQ}%"])
+                        ->orWhereRaw($this->sqliteNormalizeExpression('slug') . ' LIKE ?', ["%{$normalizedQ}%"]);
+                });
+            })
             ->orderBy('name')
             ->paginate(12)
             ->withQueryString();
 
-        return view('pages.ktitors.index', compact('ktitors', 'q'));
+        return view('pages.ktitors.index', [
+            'ktitors' => $ktitors,
+            'q' => $q,
+        ]);
     }
 
     public function show(string $slug)
     {
-        $ktitor = Ktitor::query()
-            ->with(['images', 'mainImage']) // ✅ da show.blade vidi slike
+        $ktitor = Ktitor::with(['mainImage', 'images'])
             ->where('slug', $slug)
             ->firstOrFail();
 
-        // Ako imaš relaciju monasteries() – super. Ako nemaš, neće puknuti.
-        $monasteries = method_exists($ktitor, 'monasteries')
-            ? $ktitor->monasteries()->orderBy('name')->get()
-            : collect();
-
-        return view('pages.ktitors.show', compact('ktitor', 'monasteries'));
+        return view('pages.ktitors.show', compact('ktitor'));
     }
 
-    // ASK AI
     public function askAi(Request $request, string $slug)
     {
         $ktitor = Ktitor::query()
+            ->with(['mainImage', 'images'])
             ->where('slug', $slug)
             ->firstOrFail();
 
         $question = trim((string) $request->input('question', ''));
+
         if ($question === '') {
-            return response()->json(['error' => 'Unesi pitanje.'], 422);
+            return response()->json([
+                'error' => 'Unesi pitanje.',
+            ], 422);
         }
 
-        // 1) OLLAMA podešavanja iz .env
-        $baseUrl = rtrim(config('services.ollama.base_url', env('OLLAMA_BASE_URL', 'http://127.0.0.1:11434')), '/');
-        $model   = config('services.ollama.model', env('OLLAMA_MODEL', 'llama3.1:latest'));
+        $baseUrl = rtrim(
+            config('services.ollama.base_url', env('OLLAMA_BASE_URL', 'http://127.0.0.1:11434')),
+            '/'
+        );
 
-        // 2) Kontekst iz baze
+        $model = config('services.ollama.model', env('OLLAMA_MODEL', 'llama3.1:latest'));
+
         $years = ($ktitor->born_year || $ktitor->died_year)
             ? (($ktitor->born_year ?? '—') . ' – ' . ($ktitor->died_year ?? '—'))
             : '—';
 
         $dbBio = trim((string) ($ktitor->bio ?? ''));
 
-        // 3) Wikipedia (opciono)
         $wikiText = '';
         $wikiEnabled = filter_var(env('AI_WIKI_ENABLED', true), FILTER_VALIDATE_BOOL);
 
         if ($wikiEnabled) {
             try {
-                // Direktan summary po imenu (nekad radi odmah)
                 $summary = Http::timeout(10)
                     ->acceptJson()
                     ->get('https://sr.wikipedia.org/api/rest_v1/page/summary/' . rawurlencode($ktitor->name));
@@ -83,7 +88,6 @@ class KtitorController extends Controller
                     $wikiText = (string) ($summary->json('extract') ?? '');
                 }
 
-                // fallback: search -> summary po naslovu
                 if (trim($wikiText) === '') {
                     $search = Http::timeout(10)
                         ->acceptJson()
@@ -97,6 +101,7 @@ class KtitorController extends Controller
 
                     if ($search->ok()) {
                         $title = $search->json('query.search.0.title');
+
                         if ($title) {
                             $summary2 = Http::timeout(10)
                                 ->acceptJson()
@@ -113,7 +118,6 @@ class KtitorController extends Controller
             }
         }
 
-        // 4) Finalni kontekst (baza + wiki)
         $contextParts = [];
         $contextParts[] = "Ime: {$ktitor->name}";
         $contextParts[] = "Godine: {$years}";
@@ -125,15 +129,15 @@ class KtitorController extends Controller
 
         $context = implode("\n", $contextParts);
 
-        // 5) Prompt
         $prompt = <<<PROMPT
 Ti si istoričar-asistent za srpske pravoslavne ktitore.
 
 PRAVILA:
 - Primarno koristi "Biografija (baza)".
 - Wikipedia koristi samo kao pomoć i naglasi ako nešto nije sigurno.
-- Ne izmišljaj činjenice. Ako nema dovoljno informacija, napiši: "Nemam dovoljno pouzdanih podataka da odgovorim tačno." i reci šta treba dopuniti u bazi.
-- Odgovor 6–10 rečenica, jasno i informativno.
+- Ne izmišljaj činjenice.
+- Ako nema dovoljno informacija, napiši: "Nemam dovoljno pouzdanih podataka da odgovorim tačno." i reci šta treba dopuniti u bazi.
+- Odgovor treba da bude 6–10 rečenica, jasno i informativno.
 
 KONTEKST:
 {$context}
@@ -144,7 +148,6 @@ PITANJE:
 ODGOVOR:
 PROMPT;
 
-        // 6) Poziv Ollama
         try {
             $resp = Http::timeout(60)
                 ->acceptJson()
@@ -160,7 +163,7 @@ PROMPT;
 
             if (!$resp->ok()) {
                 return response()->json([
-                    'error' => 'Ollama greška',
+                    'error' => 'Ollama greška.',
                     'details' => $resp->body(),
                 ], 502);
             }
@@ -168,13 +171,40 @@ PROMPT;
             $answer = (string) ($resp->json('response') ?? '');
             $answer = trim($answer) !== '' ? trim($answer) : 'Nema odgovora.';
 
-            return response()->json(['answer' => $answer]);
-
+            return response()->json([
+                'answer' => $answer,
+            ]);
         } catch (\Throwable $e) {
             return response()->json([
-                'error' => 'Ne mogu da kontaktiram Ollamu',
+                'error' => 'Ne mogu da kontaktiram Ollamu.',
                 'details' => $e->getMessage(),
             ], 502);
         }
+    }
+
+    private function normalizeSearch(string $value): string
+    {
+        $value = mb_strtolower($value, 'UTF-8');
+
+        return str_replace(
+            ['š', 'č', 'ć', 'ž', 'đ'],
+            ['s', 'c', 'c', 'z', 'dj'],
+            $value
+        );
+    }
+
+    private function sqliteNormalizeExpression(string $column): string
+    {
+        return "lower(
+            replace(
+                replace(
+                    replace(
+                        replace(
+                            replace($column, 'š', 's'),
+                        'č', 'c'),
+                    'ć', 'c'),
+                'ž', 'z'),
+            'đ', 'dj')
+        )";
     }
 }

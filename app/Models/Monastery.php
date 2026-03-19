@@ -96,4 +96,18 @@ public function eparchy()
 {
     return $this->belongsTo(\App\Models\Eparchy::class);
 }
+protected $appends = ['lat','lng'];
+public function getLatAttribute()
+{
+    return $this->attributes['latitude'] ?? null;
+}
+
+public function getLngAttribute()
+{
+    return $this->attributes['longitude'] ?? null;
+}
+
+
+
+
 }

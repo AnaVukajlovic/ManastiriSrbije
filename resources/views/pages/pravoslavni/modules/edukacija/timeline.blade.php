@@ -1,264 +1,358 @@
 @extends('layouts.site')
 
-@section('title','Timeline — Edukacija')
-@section('nav_edu','active')
+@section('title', 'Timeline — Edukacija')
+@section('nav_edukacija', 'active')
 
 @section('content')
-<section class="section">
+<style>
+/* ===== TIMELINE HERO FIX ===== */
+
+.tl-page .container{
+  width:min(1560px, calc(100% - 34px)) !important;
+  max-width:none !important;
+}
+
+.tl-page .tl-hero{
+  display:grid !important;
+  grid-template-columns:1fr auto !important;
+  grid-template-areas:
+    "kicker actions"
+    "title  actions"
+    "text   text"
+    "chips  chips" !important;
+  gap:14px 24px !important;
+  align-items:start !important;
+
+  margin-bottom:24px !important;
+  padding:26px !important;
+  border-radius:26px !important;
+  border:1px solid rgba(197,162,74,.18) !important;
+  background:
+    radial-gradient(circle at top left, rgba(197,162,74,.08), transparent 28%),
+    linear-gradient(180deg, rgba(255,255,255,.025), rgba(255,255,255,.012)),
+    rgba(20,12,12,.78) !important;
+  box-shadow:0 18px 42px rgba(0,0,0,.24) !important;
+}
+
+.tl-page .tl-hero__left{
+  display:contents !important;
+}
+
+.tl-page .tl-kicker{
+  grid-area:kicker !important;
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  width:max-content !important;
+  padding:8px 12px !important;
+  margin:0 !important;
+  border-radius:999px !important;
+  border:1px solid rgba(197,162,74,.22) !important;
+  background:rgba(197,162,74,.08) !important;
+  color:#e2c26a !important;
+  font-size:.86rem !important;
+  font-weight:700 !important;
+  line-height:1 !important;
+}
+
+.tl-page .tl-hero h1{
+  grid-area:title !important;
+  margin:0 !important;
+  font-size:clamp(1.75rem, 2.35vw, 2.35rem) !important;
+  line-height:1.06 !important;
+  letter-spacing:-.02em !important;
+  font-weight:800 !important;
+  color:#c5a24a !important;
+  text-shadow:0 0 14px rgba(197,162,74,.18) !important;
+}
+
+.tl-page .tl-hero__left > p{
+  grid-area:text !important;
+  display:block !important;
+  width:100% !important;
+  max-width:none !important;
+  margin:0 !important;
+  color:rgba(255,255,255,.86) !important;
+  font-size:1rem !important;
+  line-height:1.9 !important;
+  text-align:justify !important;
+  text-justify:inter-word !important;
+}
+
+.tl-page .tl-hero__chips{
+  grid-area:chips !important;
+  display:flex !important;
+  flex-wrap:wrap !important;
+  gap:10px !important;
+  margin:0 !important;
+}
+
+.tl-page .tl-hero__chips span{
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  padding:8px 12px !important;
+  border-radius:999px !important;
+  border:1px solid rgba(255,255,255,.08) !important;
+  background:rgba(255,255,255,.03) !important;
+  color:#f0d78f !important;
+  font-size:.84rem !important;
+  font-weight:700 !important;
+  line-height:1 !important;
+}
+
+.tl-page .tl-hero__right{
+  grid-area:actions !important;
+  display:flex !important;
+  gap:10px !important;
+  flex-wrap:wrap !important;
+  justify-content:flex-end !important;
+  align-self:start !important;
+}
+
+.tl-page .tl-back{
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  min-height:44px !important;
+  padding:0 16px !important;
+  border-radius:14px !important;
+  text-decoration:none !important;
+  font-weight:700 !important;
+  color:#fff !important;
+  border:1px solid rgba(255,255,255,.10) !important;
+  background:rgba(255,255,255,.03) !important;
+  transition:all .2s ease !important;
+}
+
+.tl-page .tl-back:hover{
+  transform:translateY(-1px) !important;
+  border-color:rgba(197,162,74,.35) !important;
+  background:rgba(197,162,74,.10) !important;
+  color:#f0d78f !important;
+}
+
+.tl-page .tl-switcher__note{
+  width:100% !important;
+  max-width:none !important;
+  text-align:justify !important;
+  text-justify:inter-word !important;
+  line-height:1.9 !important;
+  color:rgba(255,255,255,.84) !important;
+}
+
+@media (max-width: 900px){
+  .tl-page .tl-hero{
+    grid-template-columns:1fr !important;
+    grid-template-areas:
+      "kicker"
+      "title"
+      "actions"
+      "text"
+      "chips" !important;
+  }
+
+  .tl-page .tl-hero__right{
+    justify-content:flex-start !important;
+  }
+}
+
+@media (max-width: 640px){
+  .tl-page .container{
+    width:min(100%, calc(100% - 22px)) !important;
+  }
+
+  .tl-page .tl-hero{
+    padding:18px !important;
+    border-radius:22px !important;
+  }
+
+  .tl-page .tl-hero h1{
+    font-size:clamp(1.55rem, 7vw, 1.95rem) !important;
+  }
+
+  .tl-page .tl-back{
+    width:100% !important;
+  }
+}
+</style>
+
+<section class="section tl-page">
   <div class="container">
 
-    <div style="display:flex;justify-content:space-between;gap:14px;align-items:flex-end;flex-wrap:wrap;margin-bottom:16px;">
-      <div>
-        <h1 style="margin:0;font-size:40px;letter-spacing:.2px;">Timeline</h1>
-        <p class="muted" style="margin:8px 0 0;max-width:820px;line-height:1.7;">
-          Vremenske linije ključnih događaja — Nemanjići, istorija SPC i Srbija pod Turcima.
-          Ovo je “pravi” timeline sa linijom, markerima i karticama.
+    <div class="tl-hero">
+      <div class="tl-hero__left">
+        <span class="tl-kicker">Istorijski pregled</span>
+        <h1>Vremenska linija</h1>
+        <p>
+          Pregled najvažnijih događaja kroz tri velike celine: dinastija Nemanjić, istorija Srpske pravoslavne crkve
+          i period Srbije pod turskom vlašću. Posebno mesto zauzimaju Nemanjići, jer njihova vladavina predstavlja
+          jedno od najznačajnijih razdoblja u srpskoj srednjovekovnoj istoriji, obeleženo jačanjem države, razvojem
+          duhovnosti, zadužbinarstvom i oblikovanjem trajnog kulturnog i verskog identiteta srpskog naroda.
         </p>
+
+        <div class="tl-hero__chips">
+          <span>Nemanjići</span>
+          <span>istorija SPC</span>
+          <span>osmanski period</span>
+          <span>dodatna objašnjenja</span>
+        </div>
       </div>
 
-      <div style="display:flex;gap:10px;flex-wrap:wrap;">
-        <a class="btn btn--ghost" href="{{ route('edukacija.index') }}">← Edukacija</a>
-        <a class="btn btn--ghost" href="{{ route('edukacija.show','ucenje-interakcija') }}">Učenje i interakcija</a>
+      <div class="tl-hero__right">
+        <a href="{{ route('edukacija.index') }}" class="tl-back">← Edukacija</a>
+        <a href="{{ route('edukacija.ucenje-interakcija') }}" class="tl-back">Učenje i interakcija</a>
       </div>
     </div>
 
-    {{-- TABOVI --}}
-    <div class="ps-card" style="margin-bottom:14px;">
-      <h3 style="margin:0 0 10px;">Izaberi liniju</h3>
+    <div class="tl-switcher">
+      <h3>Izaberi oblast</h3>
+
       <div class="tl-tabs">
-        <button class="tl-tab active" type="button" data-tab="nemanjici">Nemanjići</button>
-        <button class="tl-tab" type="button" data-tab="spc">Istorija SPC</button>
-        <button class="tl-tab" type="button" data-tab="turci">Srbija pod Turcima</button>
+        <button class="tl-tab active" type="button" data-target="nemanjici">Nemanjići</button>
+        <button class="tl-tab" type="button" data-target="spc">Istorija SPC</button>
+        <button class="tl-tab" type="button" data-target="turci">Srbija pod Turcima</button>
       </div>
-      <div class="muted" style="margin-top:10px;line-height:1.7;">
-        Na desktopu skroluješ horizontalno (kao infografik). Na telefonu se automatski slaže vertikalno.
-      </div>
+
+      <p class="tl-switcher__note">
+        Na vremenskoj liniji prikazani su najvažniji događaji sa kratkim objašnjenjem.
+        Klikom na dugme <strong>„Objasni”</strong> dobijaš dodatni, sažeti prikaz događaja i njegovog značaja.
+      </p>
     </div>
 
-    {{-- TIMELINES --}}
     @foreach($timelines as $key => $items)
-      <section class="tl-panel {{ $key === 'nemanjici' ? 'show' : '' }}" data-panel="{{ $key }}">
-        <div class="tl-wrap">
-          <div class="tl-line" aria-hidden="true"></div>
+      <div class="tl-panel {{ $loop->first ? 'active' : '' }}" id="tl-{{ $key }}">
+        <div class="tl-vertical">
+          @foreach($items as $index => $item)
+            <article class="tl-item">
+              <div class="tl-item__year">{{ $item['year'] }}</div>
 
-          @foreach($items as $i => $it)
-            @php $pos = ($i % 2 === 0) ? 'top' : 'bottom'; @endphp
+              <div class="tl-item__dot"></div>
 
-            <article class="tl-item tl-{{ $pos }}">
-              <div class="tl-dot" aria-hidden="true"></div>
+              <div class="tl-item__card">
+                <div class="tl-item__tag">{{ $item['tag'] ?? 'događaj' }}</div>
+                <h3>{{ $item['title'] }}</h3>
 
-              <div class="tl-card">
-                <div class="tl-year">{{ $it['year'] }}</div>
-                <div class="tl-title">{{ $it['title'] }}</div>
-                <div class="tl-text">{{ $it['text'] }}</div>
+                <p class="tl-item__summary">{{ $item['text'] }}</p>
 
-                {{-- kasnije: link ka članku --}}
-                <div class="tl-actions">
-                  <span class="tl-chip">ključni događaj</span>
-                  <span class="tl-chip tl-chip--muted">u izradi: “pročitaj više”</span>
+                <div class="tl-item__actions">
+                  <button
+                    type="button"
+                    class="tl-ai-btn"
+                    data-year="{{ $item['year'] }}"
+                    data-title="{{ $item['title'] }}"
+                    data-text="{{ $item['text'] }}"
+                    data-context="{{ $item['context'] ?? '' }}"
+                    data-area="{{ $key }}"
+                    data-target="tl-ai-{{ $key }}-{{ $index }}"
+                  >
+                    Objasni
+                  </button>
+                </div>
+
+                <div class="tl-ai-box" id="tl-ai-{{ $key }}-{{ $index }}" hidden>
+                  <div class="tl-ai-box__label">Detaljnije objašnjenje</div>
+                  <div class="tl-ai-box__content"></div>
                 </div>
               </div>
             </article>
           @endforeach
-
         </div>
-      </section>
+      </div>
     @endforeach
 
   </div>
 </section>
 
-<style>
-/* panel show/hide */
-.tl-panel{ display:none; }
-.tl-panel.show{ display:block; }
-
-/* tabs */
-.tl-tabs{ display:flex; gap:10px; flex-wrap:wrap; }
-.tl-tab{
-  border:1px solid rgba(255,255,255,.14);
-  background:rgba(0,0,0,.22);
-  color:rgba(255,255,255,.92);
-  padding:10px 12px;
-  border-radius:999px;
-  cursor:pointer;
-  font-weight:900;
-}
-.tl-tab.active{
-  border-color: rgba(197,162,74,.55);
-  background: rgba(197,162,74,.12);
-}
-
-/* timeline canvas */
-.tl-wrap{
-  position:relative;
-  border:1px solid rgba(255,255,255,.10);
-  border-radius:18px;
-  background:rgba(255,255,255,.03);
-  padding:26px 18px;
-  overflow:auto;               /* horizontal scroll */
-  white-space:nowrap;
-}
-
-/* central line */
-.tl-line{
-  position:absolute;
-  left:18px;
-  right:18px;
-  top:50%;
-  height:2px;
-  background:linear-gradient(90deg,
-    rgba(197,162,74,.0),
-    rgba(197,162,74,.55),
-    rgba(197,162,74,.0)
-  );
-  transform:translateY(-50%);
-  pointer-events:none;
-}
-
-/* items: inline-block along x axis */
-.tl-item{
-  position:relative;
-  display:inline-block;
-  width:320px;                 /* card width */
-  min-height:260px;
-  margin-right:22px;
-  vertical-align:top;
-}
-
-/* dot anchored on the center line */
-.tl-dot{
-  position:absolute;
-  left:50%;
-  top:50%;
-  width:14px;
-  height:14px;
-  border-radius:999px;
-  transform:translate(-50%,-50%);
-  background:rgba(197,162,74,.95);
-  box-shadow:
-    0 0 0 6px rgba(197,162,74,.12),
-    0 0 0 1px rgba(255,255,255,.10);
-}
-
-/* connector */
-.tl-item::before{
-  content:"";
-  position:absolute;
-  left:50%;
-  width:2px;
-  background:rgba(197,162,74,.35);
-  transform:translateX(-50%);
-}
-.tl-top::before{ top:22px; bottom:50%; }
-.tl-bottom::before{ top:50%; bottom:22px; }
-
-/* card positioning top/bottom */
-.tl-card{
-  width:100%;
-  max-width:320px;
-  padding:14px 14px 12px;
-  border-radius:18px;
-  border:1px solid rgba(255,255,255,.12);
-  background:
-    radial-gradient(1200px 260px at 0% 0%, rgba(197,162,74,.10), transparent 60%),
-    rgba(0,0,0,.18);
-  box-shadow: 0 18px 45px rgba(0,0,0,.35);
-  white-space:normal; /* allow text wrap inside */
-}
-
-.tl-top .tl-card{ margin-top:0; }
-.tl-bottom .tl-card{ margin-top:150px; } /* pushes card below center line */
-.tl-top .tl-card{ margin-top:0; }
-.tl-top{ padding-top:0; }
-.tl-bottom{ padding-top:0; }
-
-/* content */
-.tl-year{
-  font-weight:950;
-  letter-spacing:.3px;
-  color: rgba(197,162,74,.95);
-  margin-bottom:6px;
-}
-.tl-title{ font-weight:950; margin-bottom:8px; }
-.tl-text{ opacity:.90; line-height:1.75; font-size:14px; }
-
-.tl-actions{ display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
-.tl-chip{
-  font-size:12px;
-  padding:6px 10px;
-  border-radius:999px;
-  border:1px solid rgba(197,162,74,.45);
-  background: rgba(197,162,74,.10);
-  opacity:.95;
-}
-.tl-chip--muted{
-  border-color: rgba(255,255,255,.12);
-  background: rgba(255,255,255,.04);
-  opacity:.78;
-}
-
-/* nicer scrollbar (optional) */
-.tl-wrap::-webkit-scrollbar{ height:10px; }
-.tl-wrap::-webkit-scrollbar-thumb{
-  background: rgba(255,255,255,.12);
-  border-radius:999px;
-}
-.tl-wrap::-webkit-scrollbar-track{
-  background: rgba(0,0,0,.15);
-  border-radius:999px;
-}
-
-/* MOBILE: switch to vertical timeline */
-@media (max-width: 780px){
-  .tl-wrap{
-    white-space:normal;
-    overflow:visible;
-    padding:18px 14px;
-  }
-  .tl-line{
-    left:22px; right:auto;
-    top:18px; bottom:18px;
-    width:2px; height:auto;
-    transform:none;
-    background:linear-gradient(180deg,
-      rgba(197,162,74,.0),
-      rgba(197,162,74,.55),
-      rgba(197,162,74,.0)
-    );
-  }
-  .tl-item{
-    display:block;
-    width:auto;
-    min-height:auto;
-    margin:0 0 14px 0;
-    padding-left:36px;
-  }
-  .tl-dot{
-    left:22px;
-    top:22px;
-    transform:translate(-50%,-50%);
-  }
-  .tl-item::before{ display:none; }
-  .tl-card{ max-width:none; }
-  .tl-bottom .tl-card{ margin-top:0; }
-}
-</style>
-
 <script>
-document.querySelectorAll('.tl-tab').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.tl-tab').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
+document.addEventListener('DOMContentLoaded', function () {
+  const tabs = document.querySelectorAll('.tl-tab');
+  const panels = document.querySelectorAll('.tl-panel');
 
-    const tab = btn.getAttribute('data-tab');
-    document.querySelectorAll('.tl-panel').forEach(p => p.classList.remove('show'));
-    const panel = document.querySelector(`.tl-panel[data-panel="${tab}"]`);
-    if(panel) panel.classList.add('show');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const target = tab.dataset.target;
 
-    // reset scroll when switching
-    const wrap = panel?.querySelector('.tl-wrap');
-    if (wrap) wrap.scrollLeft = 0;
+      tabs.forEach(t => t.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+
+      tab.classList.add('active');
+
+      const panel = document.getElementById('tl-' + target);
+      if (panel) panel.classList.add('active');
+    });
+  });
+
+  const aiButtons = document.querySelectorAll('.tl-ai-btn');
+
+  aiButtons.forEach(btn => {
+    btn.addEventListener('click', async () => {
+      if (btn.disabled) return;
+
+      const year = (btn.dataset.year || '').trim();
+      const title = (btn.dataset.title || '').trim();
+      const text = (btn.dataset.text || '').trim();
+      const area = (btn.dataset.area || '').trim();
+      const targetId = btn.dataset.target;
+      const extraContext = (btn.dataset.context || '').trim();
+
+      const box = document.getElementById(targetId);
+      if (!box) return;
+
+      const content = box.querySelector('.tl-ai-box__content');
+      if (!content) return;
+
+      box.hidden = false;
+      content.textContent = 'Priprema se dodatno objašnjenje...';
+
+      btn.disabled = true;
+      btn.classList.add('is-loading');
+
+      let oblastNaziv = 'istorija';
+      if (area === 'nemanjici') oblastNaziv = 'dinastija Nemanjić';
+      if (area === 'spc') oblastNaziv = 'istorija Srpske pravoslavne crkve';
+      if (area === 'turci') oblastNaziv = 'Srbija pod osmanskom vlašću';
+
+      try {
+        const instruction = 'Objasni događaj sažeto i jasno na osnovu dostavljenog konteksta.';
+        const context =
+          'OBLAST: ' + oblastNaziv + '\n' +
+          'GODINA: ' + year + '\n' +
+          'DOGAĐAJ: ' + title + '\n' +
+          'KRATAK OPIS: ' + text + '\n' +
+          (extraContext ? ('DODATNI KONTEKST: ' + extraContext) : '');
+
+        const response = await fetch('{{ route('edukacija.ai.chat') }}', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            question: instruction,
+            instruction: instruction,
+            context: context,
+            max_tokens: 160,
+            mode: 'timeline_explain'
+          })
+        });
+
+        const data = await response.json().catch(() => ({}));
+
+        const aiText =
+          (data.answer || data.reply || data.message || data.response || '').trim();
+
+        content.innerHTML = aiText
+          ? aiText.replace(/\n/g, '<br>')
+          : 'Dodatno objašnjenje trenutno nije dostupno.';
+      } catch (error) {
+        content.textContent = 'Došlo je do greške pri komunikaciji sa modulom za objašnjenje.';
+      } finally {
+        btn.disabled = false;
+        btn.classList.remove('is-loading');
+      }
+    });
   });
 });
 </script>

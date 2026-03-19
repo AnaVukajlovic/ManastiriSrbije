@@ -11,12 +11,6 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
-    public function __construct()
-    {
-        // Profil rute treba da budu dostupne samo ulogovanom korisniku
-        $this->middleware('auth');
-    }
-
     /**
      * Prikaz forme za izmenu profila.
      */
@@ -28,30 +22,27 @@ class ProfileController extends Controller
     }
 
     /**
-     * Ažuriranje osnovnih podataka profila (ime/email).
+     * Ažuriranje osnovnih podataka profila.
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $user = $request->user();
+        $request->user()->fill($request->validated());
 
-        $user->fill($request->validated());
-
-        // Ako je promenjen email, resetuj verifikaciju
-        if ($user->isDirty('email')) {
-            $user->email_verified_at = null;
+        if ($request->user()->isDirty('email')) {
+            $request->user()->email_verified_at = null;
         }
 
-        $user->save();
+        $request->user()->save();
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
     /**
-     * Brisanje naloga (zahteva potvrdu lozinke).
+     * Brisanje korisničkog naloga.
      */
     public function destroy(Request $request): RedirectResponse
     {
-        $request->validateWithBag('userDeletion', [
+        $request->validate([
             'password' => ['required', 'current_password'],
         ]);
 
@@ -61,7 +52,6 @@ class ProfileController extends Controller
 
         $user->delete();
 
-        // Bezbedno zatvaranje sesije
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
