@@ -21,9 +21,7 @@ COPY . .
 RUN composer install --no-dev --optimize-autoloader
 
 # Laravel optimizations
-RUN php artisan config:cache || true
-RUN php artisan route:cache || true
-RUN php artisan view:cache || true
+
 
 EXPOSE 10000
 
