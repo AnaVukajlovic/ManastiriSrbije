@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 use App\Models\Monastery;
 use App\Services\WikidataService;
 
-class ImportWikidataMonasteries extends Command
+class ImportWikidataImages extends Command
 {
     protected $signature = 'wikidata:import-monasteries {--limit=200}';
     protected $description = 'Import monasteries/churches from Wikidata into monasteries table';
