@@ -37,10 +37,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   osm.addTo(map);
 
-  L.control.zoom({
-    position: "topleft"
-  }).addTo(map);
-
   L.control.layers(
     {
       "Mapa": osm,
@@ -71,7 +67,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let userLocationCircle = null;
 
   function parseCoord(value) {
-    if (value === null || value === undefined || value === "") return NaN;
+    if (value === null || value === undefined) return NaN;
     return parseFloat(String(value).replace(",", ".").trim());
   }
 
@@ -83,12 +79,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const gmUrl = `https://www.google.com/maps?q=${encodeURIComponent(lat + "," + lng)}`;
 
     return `
-      <div class="map-popup">
-        <div class="map-popup__title">${esc(name)}</div>
-        ${meta ? `<div class="map-popup__meta">${esc(meta)}</div>` : ""}
-        <div class="map-popup__actions">
-          <a class="map-popup__link" href="${gmUrl}" target="_blank" rel="noopener">Google Maps</a>
-          ${detailsUrl ? `<a class="map-popup__link" href="${detailsUrl}">Detalji</a>` : ""}
+      <div class="mappopup">
+        <div class="mappopup__title">${esc(name)}</div>
+        ${meta ? `<div class="mappopup__meta">${esc(meta)}</div>` : ""}
+        <div class="mappopup__actions">
+          <a class="mappopup__btn" href="${gmUrl}" target="_blank" rel="noopener">Google Maps</a>
+          ${detailsUrl ? `<a class="mappopup__btn mappopup__btn--ghost" href="${detailsUrl}">Detalji</a>` : ""}
         </div>
       </div>
     `;
@@ -98,7 +94,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const lat = parseCoord(p.latitude ?? p.lat);
     const lng = parseCoord(p.longitude ?? p.lng);
 
-    if (!Number.isFinite(lat) || !Number.isFinite(lng)) continue;
+    if (!isFinite(lat) || !isFinite(lng)) continue;
 
     const name = p.name || "Manastir";
     const marker = L.marker([lat, lng]);
@@ -130,24 +126,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  function refreshMapSizeAndBounds() {
-    setTimeout(() => {
-      map.invalidateSize();
-      fitMapToBounds();
-    }, 250);
-  }
-
-  refreshMapSizeAndBounds();
-
-  window.addEventListener("load", function () {
-    refreshMapSizeAndBounds();
-  });
-
-  window.addEventListener("resize", function () {
-    setTimeout(() => {
-      map.invalidateSize();
-    }, 120);
-  });
+  fitMapToBounds();
 
   function toggleLegend(forceState = null) {
     const legend = document.querySelector("[data-map-legend]");
@@ -181,16 +160,10 @@ document.addEventListener("DOMContentLoaded", function () {
   function showUserLocation(lat, lng, accuracy = null) {
     clearUserLocation();
 
-    userLocationMarker = L.circleMarker([lat, lng], {
-      radius: 8,
-      weight: 2,
-      opacity: 1,
-      fillOpacity: 0.9
-    }).addTo(map);
-
+    userLocationMarker = L.marker([lat, lng]).addTo(map);
     userLocationMarker.bindPopup("<strong>Tvoja lokacija</strong>").openPopup();
 
-    if (accuracy && Number.isFinite(accuracy)) {
+    if (accuracy && isFinite(accuracy)) {
       userLocationCircle = L.circle([lat, lng], {
         radius: accuracy
       }).addTo(map);
@@ -215,10 +188,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const lng = parseCoord(btn.getAttribute("data-lng"));
     const title = btn.getAttribute("data-title") || "Lokacija";
 
-    if (!Number.isFinite(lat) || !Number.isFinite(lng)) return;
+    if (!isFinite(lat) || !isFinite(lng)) return;
 
     map.setView([lat, lng], Math.max(map.getZoom(), 12), { animate: true });
-
     L.popup()
       .setLatLng([lat, lng])
       .setContent(`<strong>${esc(title)}</strong>`)

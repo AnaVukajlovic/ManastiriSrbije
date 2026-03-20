@@ -32,24 +32,19 @@
     ];
   }
 
-  $fallbackImages = [
-    asset('images/sample/djurdjevi.jpg'),
-    asset('images/sample/gracanica.jpg'),
-    asset('images/sample/mileseva.jpg'),
-    asset('images/sample/sopocani.jpg'),
-    asset('images/sample/studenica.jpg'),
-    asset('images/sample/zica.jpg'),
+  $fallback = [
+    ['name' => 'Đurđevi Stupovi', 'slug' => null, 'img' => asset('images/sample/djurdjevi.jpg'), 'meta' => '—'],
+    ['name' => 'Gračanica',       'slug' => null, 'img' => asset('images/sample/gracanica.jpg'), 'meta' => '—'],
+    ['name' => 'Mileševa',        'slug' => null, 'img' => asset('images/sample/mileseva.jpg'), 'meta' => '—'],
+    ['name' => 'Sopoćani',        'slug' => null, 'img' => asset('images/sample/sopocani.jpg'), 'meta' => '—'],
+    ['name' => 'Studenica',       'slug' => null, 'img' => asset('images/sample/studenica.jpg'), 'meta' => '—'],
+    ['name' => 'Žiča',            'slug' => null, 'img' => asset('images/sample/zica.jpg'), 'meta' => '—'],
   ];
 
   $cards = [];
-  $usedSlugs = [];
 
   if (!empty($featured) && count($featured) > 0) {
     foreach ($featured as $m) {
-      if (empty($m->slug) || in_array($m->slug, $usedSlugs, true)) {
-        continue;
-      }
-
       $img = !empty($m->image_url) ? $m->image_url : null;
 
       if (!$img && !empty($m->slug)) {
@@ -57,69 +52,28 @@
       }
 
       if (!$img) {
-        $img = $fallbackImages[count($cards) % count($fallbackImages)];
+        $img = $fallback[count($cards) % count($fallback)]['img'];
       }
 
       $regionLabel = (!empty($m->region) && $m->region !== 'Nepoznato') ? $m->region : null;
       $cityLabel   = (!empty($m->city) && $m->city !== 'Nepoznato') ? $m->city : null;
 
       $meta = trim(($regionLabel ?? '') . ($regionLabel && $cityLabel ? ' • ' : '') . ($cityLabel ?? ''));
-      if ($meta === '') {
-        $meta = 'Srbija';
-      }
+      if ($meta === '') $meta = '—';
 
       $cards[] = [
         'name' => $m->name ?? 'Manastir',
-        'slug' => $m->slug,
+        'slug' => $m->slug ?? null,
         'img'  => $img,
         'meta' => $meta,
       ];
 
-      $usedSlugs[] = $m->slug;
-
-      if (count($cards) >= 4) {
-        break;
-      }
+      if (count($cards) >= 4) break;
     }
   }
 
-  if (count($cards) < 4 && !empty($allMonasteries) && count($allMonasteries) > 0) {
-    foreach ($allMonasteries as $m) {
-      if (empty($m->slug) || in_array($m->slug, $usedSlugs, true)) {
-        continue;
-      }
-
-      $img = !empty($m->image_url) ? $m->image_url : null;
-
-      if (!$img && !empty($m->slug)) {
-        $img = asset('images/monasteries/' . $m->slug . '.jpg');
-      }
-
-      if (!$img) {
-        $img = $fallbackImages[count($cards) % count($fallbackImages)];
-      }
-
-      $regionLabel = (!empty($m->region) && $m->region !== 'Nepoznato') ? $m->region : null;
-      $cityLabel   = (!empty($m->city) && $m->city !== 'Nepoznato') ? $m->city : null;
-
-      $meta = trim(($regionLabel ?? '') . ($regionLabel && $cityLabel ? ' • ' : '') . ($cityLabel ?? ''));
-      if ($meta === '') {
-        $meta = 'Srbija';
-      }
-
-      $cards[] = [
-        'name' => $m->name ?? 'Manastir',
-        'slug' => $m->slug,
-        'img'  => $img,
-        'meta' => $meta,
-      ];
-
-      $usedSlugs[] = $m->slug;
-
-      if (count($cards) >= 4) {
-        break;
-      }
-    }
+  while (count($cards) < 4) {
+    $cards[] = $fallback[count($cards) % count($fallback)];
   }
 @endphp
 
@@ -146,13 +100,13 @@
     margin-bottom:18px;
   }
 
-  .home-page .sectionhead h2{
-    margin:0;
-    font-size:clamp(1.65rem, 2.3vw, 2.35rem);
-    line-height:1.08;
-    letter-spacing:-.025em;
-    font-weight:800;
-  }
+.home-page .sectionhead h2{
+  margin:0;
+  font-size:clamp(1.65rem, 2.3vw, 2.35rem);
+  line-height:1.08;
+  letter-spacing:-.025em;
+  font-weight:800;
+}
 
   .home-page .sectionhead .muted{
     color:var(--home-muted);
@@ -166,6 +120,7 @@
     text-shadow:0 0 18px rgba(197,162,74,.14);
   }
 
+  /* HERO */
   .hero{
     position:relative;
     overflow:hidden;
@@ -222,15 +177,15 @@
     font-weight:700;
   }
 
-  .hero h1{
-    margin:0 0 12px;
-    font-size:clamp(2.15rem, 4.2vw, 4rem);
-    line-height:1.02;
-    letter-spacing:-.035em;
-    color:var(--home-gold);
-    text-shadow:0 0 18px rgba(197,162,74,.14);
-    font-weight:800;
-  }
+.hero h1{
+  margin:0 0 12px;
+  font-size:clamp(2.15rem, 4.2vw, 4rem);
+  line-height:1.02;
+  letter-spacing:-.035em;
+  color:var(--home-gold);
+  text-shadow:0 0 18px rgba(197,162,74,.14);
+  font-weight:800;
+}
 
   .hero__lead{
     margin:0 0 18px;
@@ -342,12 +297,12 @@
     margin-bottom:12px;
   }
 
-  .asidecard__title{
-    font-size:1.05rem;
-    font-weight:800;
-    color:var(--home-gold);
-    text-shadow:0 0 12px rgba(197,162,74,.10);
-  }
+.asidecard__title{
+  font-size:1.05rem;
+  font-weight:800;
+  color:var(--home-gold);
+  text-shadow:0 0 12px rgba(197,162,74,.10);
+}
 
   .asidecard__badge{
     padding:7px 12px;
@@ -394,6 +349,7 @@
     color:var(--home-muted);
   }
 
+  /* FEATURED */
   .cardgrid{
     display:grid;
     grid-template-columns:repeat(4, minmax(0, 1fr));
@@ -466,6 +422,7 @@
     font-size:.95rem;
   }
 
+  /* QUICK */
   .quickgrid{
     display:grid;
     grid-template-columns:repeat(3, minmax(0, 1fr));
@@ -506,29 +463,20 @@
     font-size:1.25rem;
   }
 
-  .quick__title{
-    margin-bottom:8px;
-    font-size:1.12rem;
-    font-weight:800;
-    color:var(--home-gold);
-    line-height:1.15;
-    text-shadow:0 0 12px rgba(197,162,74,.10);
-  }
+.quick__title{
+  margin-bottom:8px;
+  font-size:1.12rem;
+  font-weight:800;
+  color:var(--home-gold);
+  line-height:1.15;
+  text-shadow:0 0 12px rgba(197,162,74,.10);
+}
 
   .quick__text{
     color:rgba(255,255,255,.76);
     line-height:1.65;
     text-align:justify;
     text-justify:inter-word;
-  }
-
-  .home-empty-note{
-    grid-column:1 / -1;
-    padding:24px;
-    border-radius:22px;
-    border:1px solid rgba(255,255,255,.08);
-    background:linear-gradient(135deg, rgba(29,18,17,.96), rgba(12,8,9,.96));
-    color:rgba(255,255,255,.82);
   }
 
   @media (max-width: 1180px){
@@ -666,8 +614,13 @@
       </div>
 
       <div class="cardgrid">
-        @forelse($cards as $c)
-          <a class="mcard" href="{{ route('monasteries.show', $c['slug']) }}" aria-label="Otvori manastir: {{ $c['name'] }}">
+        @foreach($cards as $c)
+          @php
+            $href  = $c['slug'] ? route('monasteries.show', $c['slug']) : route('monasteries.index');
+            $label = $c['slug'] ? "Otvori manastir: {$c['name']}" : "Otvori listu manastira";
+          @endphp
+
+          <a class="mcard" href="{{ $href }}" aria-label="{{ $label }}">
             <div class="mcard__img" aria-hidden="true" style="background-image:url('{{ $c['img'] }}');"></div>
             <div class="mcard__shade" aria-hidden="true"></div>
 
@@ -676,11 +629,7 @@
               <div class="mcard__meta">{{ $c['meta'] }}</div>
             </div>
           </a>
-        @empty
-          <div class="home-empty-note">
-            Trenutno nema izdvojenih manastira za prikaz.
-          </div>
-        @endforelse
+        @endforeach
       </div>
     </div>
   </section>
