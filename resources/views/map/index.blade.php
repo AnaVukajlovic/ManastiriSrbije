@@ -540,6 +540,116 @@
           height:180px;
         }
       }
+
+      #map,
+      .leaflet-container{
+        width:100%;
+        height:100%;
+      }
+
+      .leaflet-container{
+        background:#16100f;
+        border-radius:18px;
+      }
+
+      .leaflet-control-zoom a{
+        background:rgba(24,16,15,.94) !important;
+        color:#f4e7c3 !important;
+        border-bottom:1px solid rgba(255,255,255,.08) !important;
+      }
+
+      .leaflet-popup-content-wrapper{
+        background:rgba(24,16,15,.98);
+        color:#f4eee7;
+        border:1px solid rgba(197,162,74,.14);
+        border-radius:16px;
+      }
+
+      .leaflet-popup-tip{
+        background:rgba(24,16,15,.98);
+      }
+
+      .leaflet-popup-content{
+        margin:12px 14px;
+        line-height:1.6;
+      }
+
+      .map-popup__title{
+        font-weight:800;
+        color:#f2d16b;
+        margin-bottom:4px;
+      }
+
+      .map-popup__meta{
+        color:rgba(255,255,255,.74);
+        font-size:.92rem;
+        margin-bottom:8px;
+      }
+
+      .map-popup__link{
+        color:#f4e5bc;
+        font-weight:700;
+        text-decoration:none;
+      }
+
+      .map-popup__link:hover{
+        color:#fff1c8;
+      }
+      #map,
+      .leaflet-container{
+        width:100%;
+        height:100%;
+      }
+
+      .leaflet-container{
+        background:#16100f;
+        border-radius:18px;
+      }
+
+      .leaflet-popup-content-wrapper{
+        background:rgba(24,16,15,.98);
+        color:#f4eee7;
+        border:1px solid rgba(197,162,74,.14);
+        border-radius:16px;
+      }
+
+      .leaflet-popup-tip{
+        background:rgba(24,16,15,.98);
+      }
+
+      .leaflet-popup-content{
+        margin:12px 14px;
+        line-height:1.6;
+      }
+
+      .map-popup__title{
+        font-weight:800;
+        color:#f2d16b;
+        margin-bottom:4px;
+      }
+
+      .map-popup__meta{
+        color:rgba(255,255,255,.74);
+        font-size:.92rem;
+        margin-bottom:8px;
+      }
+
+      .map-popup__actions{
+        display:flex;
+        flex-wrap:wrap;
+        gap:8px;
+      }
+
+      .map-popup__link{
+        color:#f4e5bc;
+        font-weight:700;
+        text-decoration:none;
+      }
+
+      .map-popup__link:hover{
+        color:#fff1c8;
+      }
+
     </style>
 
     <div class="sectionhead sectionhead--map">

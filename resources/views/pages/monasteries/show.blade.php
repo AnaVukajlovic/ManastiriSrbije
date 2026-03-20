@@ -33,6 +33,8 @@
 
     $regionLabel = (!empty($monastery->region) && $monastery->region !== 'Nepoznato') ? $monastery->region : null;
     $cityLabel = (!empty($monastery->city) && $monastery->city !== 'Nepoznato') ? $monastery->city : null;
+
+    $hasCoords = !empty($monastery->lat) && !empty($monastery->lng);
 @endphp
 
 @section('content')
@@ -42,35 +44,49 @@
         <a class="btn2 monPro__back" href="{{ route('monasteries.index') }}">← Nazad na listu</a>
 
         <div class="monHeaderCard">
-            <h1 class="monHeaderCard__title">{{ $monastery->name ?? 'Manastir' }}</h1>
+            <div class="monHeaderCard__inner">
+                <div class="monHeaderCard__content">
+                    <h1 class="monHeaderCard__title">{{ $monastery->name ?? 'Manastir' }}</h1>
 
-            <div class="monHeaderCard__meta">
-                @if($regionLabel)
-                    <span class="tag">{{ $regionLabel }}</span>
-                @endif
+                    <div class="monHeaderCard__meta">
+                        @if($regionLabel)
+                            <span class="tag">{{ $regionLabel }}</span>
+                        @endif
 
-                @if($cityLabel)
-                    <span class="tag">{{ $cityLabel }}</span>
-                @endif
+                        @if($cityLabel)
+                            <span class="tag">{{ $cityLabel }}</span>
+                        @endif
 
-                @if(!empty($eparchyName))
-                    <span class="tag">{{ $eparchyName }}</span>
-                @endif
-            </div>
+                        @if(!empty($eparchyName))
+                            <span class="tag">{{ $eparchyName }}</span>
+                        @endif
+                    </div>
 
-            <div class="monHeaderCard__actions">
-                @if(!empty($monastery->lat) && !empty($monastery->lng))
-                    <a
-                        class="btn2"
-                        target="_blank"
-                        rel="noopener"
-                        href="https://www.google.com/maps?q={{ $monastery->lat }},{{ $monastery->lng }}"
+                    <div class="monHeaderCard__actions">
+                        @if($hasCoords)
+                            <a
+                                class="btn2"
+                                target="_blank"
+                                rel="noopener"
+                                href="https://www.google.com/maps?q={{ $monastery->lat }},{{ $monastery->lng }}"
+                            >
+                                Otvori na mapi
+                            </a>
+                        @endif
+
+                        <a class="btn2 btn2--ghost" href="#sadrzaj">Sadržaj</a>
+                    </div>
+                </div>
+
+                <div class="monHeaderCard__imageWrap">
+                    <img
+                        src="{{ $img }}"
+                        alt="Fotografija manastira {{ $monastery->name }}"
+                        class="monHeaderCard__image"
+                        loading="lazy"
+                        onerror="this.src='{{ $fallbackImg }}'"
                     >
-                        Otvori na mapi
-                    </a>
-                @endif
-
-                <a class="btn2 btn2--ghost" href="#sadrzaj">Sadržaj</a>
+                </div>
             </div>
         </div>
 
@@ -265,6 +281,15 @@
 
             <aside class="monSide">
                 <div class="card monSide__card">
+                    <div class="monSide__photo">
+                        <img
+                            src="{{ $img }}"
+                            alt="Fotografija manastira {{ $monastery->name }}"
+                            loading="lazy"
+                            onerror="this.src='{{ $fallbackImg }}'"
+                        >
+                    </div>
+
                     <h3 class="monSide__title">Informacije</h3>
 
                     <div class="monKV">
@@ -294,7 +319,7 @@
                     </div>
 
                     <div class="monSide__actions">
-                        @if(!empty($monastery->lat) && !empty($monastery->lng))
+                        @if($hasCoords)
                             <a
                                 class="btn2 btn2--wide"
                                 target="_blank"

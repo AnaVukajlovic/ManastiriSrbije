@@ -11252,4 +11252,361 @@ footer a {
 
 
 
+/* =========================================
+   MONASTERY SHOW PAGE
+========================================= */
+
+.monPro {
+    padding-top: 34px;
+    padding-bottom: 48px;
+}
+
+.monPro__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.monHeaderCard {
+    margin-bottom: 24px;
+    padding: 0;
+    overflow: hidden;
+    border-radius: 30px;
+    border: 1px solid rgba(212, 175, 55, 0.14);
+    background:
+        radial-gradient(circle at top left, rgba(197,162,74,.12), transparent 26%),
+        linear-gradient(135deg, rgba(30,18,17,.96), rgba(12,8,9,.96));
+    box-shadow: 0 18px 46px rgba(0,0,0,.24);
+}
+
+.monHeaderCard__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(280px, 420px);
+    align-items: stretch;
+    gap: 0;
+}
+
+.monHeaderCard__content {
+    padding: 30px 30px 28px;
+}
+
+.monHeaderCard__title {
+    margin: 0 0 14px;
+    font-size: clamp(2rem, 4vw, 3.4rem);
+    line-height: 1.03;
+    color: #f7ead2;
+    font-weight: 800;
+    text-shadow: 0 0 18px rgba(197,162,74,.14);
+}
+
+.monHeaderCard__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.monHeaderCard__meta .tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: rgba(197,162,74,.12);
+    border: 1px solid rgba(197,162,74,.20);
+    color: #f0d486;
+    font-weight: 700;
+}
+
+.monHeaderCard__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.monHeaderCard__imageWrap {
+    position: relative;
+    min-height: 100%;
+    background: rgba(255,255,255,.03);
+}
+
+.monHeaderCard__imageWrap::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(12,8,9,.08) 0%, rgba(12,8,9,.00) 22%, rgba(12,8,9,.14) 100%);
+    pointer-events: none;
+}
+
+.monHeaderCard__image {
+    width: 100%;
+    height: 100%;
+    min-height: 260px;
+    object-fit: cover;
+    display: block;
+}
+
+.monGrid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.55fr) minmax(300px, .8fr);
+    gap: 24px;
+    align-items: start;
+}
+
+.monMain.card,
+.monSide__card.card {
+    border-radius: 28px;
+    border: 1px solid rgba(255,255,255,.07);
+    background:
+        linear-gradient(135deg, rgba(30,18,17,.96), rgba(12,8,9,.96));
+    box-shadow: 0 18px 46px rgba(0,0,0,.22);
+}
+
+.monMain {
+    padding: 28px;
+}
+
+.monSide__card {
+    padding: 22px;
+    position: sticky;
+    top: 110px;
+}
+
+.monSide__photo {
+    margin: -2px -2px 18px;
+    border-radius: 22px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,.06);
+    background: rgba(255,255,255,.03);
+}
+
+.monSide__photo img {
+    display: block;
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+}
+
+.monSide__title {
+    margin: 0 0 16px;
+    color: #f2d16b;
+    font-size: 1.2rem;
+    font-weight: 800;
+}
+
+.monKV {
+    display: grid;
+    gap: 10px;
+}
+
+.monKV__row {
+    display: grid;
+    grid-template-columns: 108px 1fr;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+}
+
+.monKV__k {
+    color: rgba(255,255,255,.62);
+    font-weight: 600;
+}
+
+.monKV__v {
+    color: #f6efe7;
+    line-height: 1.6;
+}
+
+.monSide__actions {
+    display: grid;
+    gap: 12px;
+    margin-top: 20px;
+    margin-bottom: 24px;
+}
+
+.monTocDesktop__label,
+.monTocMobile__label {
+    margin-bottom: 10px;
+    color: rgba(255,255,255,.62);
+    font-weight: 700;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    font-size: .84rem;
+}
+
+.monTocDesktop__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.monTocDesktop__list li + li {
+    margin-top: 8px;
+}
+
+.monTocDesktop__list a,
+.monTocMobile__links a {
+    color: #f4e5bc;
+    text-decoration: none;
+}
+
+.monTocDesktop__list a:hover,
+.monTocMobile__links a:hover {
+    color: #fff1c8;
+}
+
+.monTocMobile {
+    display: none;
+    margin-bottom: 22px;
+    padding: 16px 18px;
+    border-radius: 18px;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.06);
+}
+
+.monTocMobile__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 14px;
+}
+
+.monSec + .monSec {
+    margin-top: 28px;
+}
+
+.monSec h2 {
+    margin-bottom: 14px;
+    color: #f7ead2;
+    font-size: 1.6rem;
+}
+
+.monSec p {
+    color: #f4eee7;
+    line-height: 1.9;
+    margin-bottom: 1rem;
+}
+
+.monIntroSplit {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(260px, .85fr);
+    gap: 22px;
+    align-items: start;
+    margin-bottom: 16px;
+}
+
+.monInlinePhoto {
+    border-radius: 24px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,.07);
+    background: rgba(255,255,255,.03);
+    box-shadow: 0 10px 24px rgba(0,0,0,.20);
+}
+
+.monInlinePhoto img {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+    min-height: 260px;
+}
+
+.monTextBlock {
+    margin-bottom: 20px;
+    padding: 18px 20px;
+    border-radius: 20px;
+    background: rgba(255,255,255,.03);
+    border: 1px solid rgba(255,255,255,.06);
+}
+
+.monTextBlock h3 {
+    margin: 0 0 10px;
+    color: #f2d16b;
+    font-size: 1.1rem;
+}
+
+.monTextBlock p {
+    margin: 0;
+}
+
+.monSources {
+    margin-top: 26px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,.08);
+}
+
+.monSources h3 {
+    margin-bottom: 12px;
+    color: #f2d16b;
+}
+
+.monSources ul {
+    margin: 0;
+    padding-left: 18px;
+}
+
+.monSources li,
+.monSources a {
+    color: #f4eee7;
+    line-height: 1.8;
+}
+
+.monSources a:hover {
+    color: #fff1c8;
+}
+
+@media (max-width: 1100px) {
+    .monHeaderCard__inner {
+        grid-template-columns: 1fr;
+    }
+
+    .monHeaderCard__image {
+        min-height: 240px;
+        max-height: 340px;
+    }
+
+    .monGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .monSide__card {
+        position: static;
+    }
+
+    .monTocMobile {
+        display: block;
+    }
+
+    .monTocDesktop {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .monMain {
+        padding: 20px;
+    }
+
+    .monSide__card {
+        padding: 18px;
+    }
+
+    .monIntroSplit {
+        grid-template-columns: 1fr;
+    }
+
+    .monKV__row {
+        grid-template-columns: 1fr;
+        gap: 6px;
+    }
+
+    .monHeaderCard__content {
+        padding: 22px 20px;
+    }
+
+    .monHeaderCard__actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+
+
 
