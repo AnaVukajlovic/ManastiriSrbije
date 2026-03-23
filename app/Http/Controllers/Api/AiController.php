@@ -42,17 +42,11 @@ class AiController extends Controller
             ], 422);
         }
 
-        $baseUrl = rtrim((string) env('OLLAMA_URL', 'http://127.0.0.1:11434'), '/');
-        $model = (string) env('OLLAMA_MODEL', 'qwen2.5:3b');
-
         $maxTokens = (int) $request->input('max_tokens', 160);
         $maxTokens = max(80, min($maxTokens, 220));
 
         $dbContext = $this->buildDatabaseContext($question);
-
-        $finalContext = $dbContext !== ''
-            ? $dbContext
-            : $userContext;
+        $finalContext = $dbContext !== '' ? $dbContext : $userContext;
 
         if ($mode === 'timeline_explain') {
             $answer = $this->buildTimelineExplanation($finalContext);
@@ -71,50 +65,57 @@ class AiController extends Controller
             ]);
         }
 
-        $system = $this->buildSystemPrompt($finalContext !== '', $mode);
+        $useOllama = filter_var(env('AI_USE_OLLAMA', false), FILTER_VALIDATE_BOOL);
 
-        try {
-            $answer = $this->callOllama(
-                $baseUrl,
-                $model,
-                $system,
-                $question,
-                $finalContext,
-                $maxTokens
-            );
+        if ($useOllama) {
+            $baseUrl = rtrim((string) env('OLLAMA_URL', 'http://127.0.0.1:11434'), '/');
+            $model = (string) env('OLLAMA_MODEL', 'qwen2.5:3b');
+            $system = $this->buildSystemPrompt($finalContext !== '', $mode);
 
-            $answer = $this->normalizeAnswer($answer);
+            try {
+                $answer = $this->callOllama(
+                    $baseUrl,
+                    $model,
+                    $system,
+                    $question,
+                    $finalContext,
+                    $maxTokens
+                );
 
-            if ($answer === '') {
-                return response()->json([
-                    'ok' => false,
-                    'error' => 'AI nije vratio odgovor.',
-                    'answer' => '',
-                    'reply' => '',
-                ], 502);
+                $answer = $this->normalizeAnswer($answer);
+
+                if ($answer !== '') {
+                    return response()->json([
+                        'ok' => true,
+                        'answer' => $answer,
+                        'reply' => $answer,
+                        'meta' => [
+                            'used_db_context' => $dbContext !== '',
+                            'generated_locally' => false,
+                            'used_ollama' => true,
+                        ],
+                    ]);
+                }
+            } catch (\Throwable $e) {
+                Log::warning('Ollama nedostupna, prelazim na lokalni odgovor', [
+                    'msg' => $e->getMessage(),
+                ]);
             }
-
-            return response()->json([
-                'ok' => true,
-                'answer' => $answer,
-                'reply' => $answer,
-                'meta' => [
-                    'used_db_context' => $dbContext !== '',
-                ],
-            ]);
-        } catch (\Throwable $e) {
-            Log::error('AI exception', [
-                'msg' => $e->getMessage(),
-                'trace' => substr($e->getTraceAsString(), 0, 2000),
-            ]);
-
-            return response()->json([
-                'ok' => false,
-                'error' => 'Ne mogu da kontaktiram Ollama: ' . $e->getMessage(),
-                'answer' => '',
-                'reply' => '',
-            ], 502);
         }
+
+        $answer = $this->buildLocalAnswer($question, $dbContext, $userContext, $mode);
+        $answer = $this->normalizeAnswer($answer);
+
+        return response()->json([
+            'ok' => true,
+            'answer' => $answer,
+            'reply' => $answer,
+            'meta' => [
+                'used_db_context' => $dbContext !== '',
+                'generated_locally' => true,
+                'used_ollama' => false,
+            ],
+        ]);
     }
 
     private function buildSystemPrompt(bool $hasContext, string $mode = ''): string
@@ -131,31 +132,14 @@ OBAVEZNA PRAVILA:
 - Odgovaraj isključivo na standardnom srpskom jeziku.
 - Koristi ekavicu i latinicu.
 - Piši prirodno, jasno i onako kako se normalno govori i piše na srpskom jeziku.
-- Koristi isključivo ekavske oblike, na primer: ovde, gde, uvek, oduvek, sledeći, vreme, vrednost, posledice.
+- Koristi isključivo ekavske oblike.
 - Ne mešaj jezike.
-- Ne koristi čudne, neprirodne, zastarele, prevedene ili rogobatne izraze.
-- Ne izmišljaj činjenice, institucije, posledice, istorijske procese ni tumačenja.
+- Ne koristi čudne, neprirodne ili rogobatne izraze.
+- Ne izmišljaj činjenice.
 - Ne dopisuj ono čega nema u kontekstu.
 {$contextRule}
 - Piši najviše 3 kratke i povezane rečenice.
-- Svaka rečenica mora govoriti direktno o događaju.
-- Objasni samo: šta se desilo i zašto je događaj važan.
-- Ne dodaj opšte komentare o istoriji, politici ili društvu.
-- Ne koristi nabrajanja.
-- Ne koristi preuveličavanja.
 - Ako kontekst nije dovoljan, reci samo: "Nemam dovoljno pouzdanih podataka u dostavljenom kontekstu."
-
-NE KORISTI izraze:
-- povijest
-- tisuća
-- svećenik
-- oduvijek
-
-KORISTI izraze:
-- istorija
-- hiljada
-- sveštenik
-- oduvek
 SYS;
         }
 
@@ -165,31 +149,182 @@ Ti si pouzdan i sažet AI asistent za aplikaciju "Pravoslavni Svetionik".
 OBAVEZNA PRAVILA:
 - Odgovaraj isključivo na standardnom srpskom jeziku.
 - Koristi ekavicu i latinicu.
-- Koristi isključivo ekavske oblike, na primer: ovde, gde, uvek, oduvek, sledeći, vreme, vrednost, posledice.
 - Ne mešaj jezike.
-- Piši prirodno, jasno, gramatički ispravno i bez preterivanja.
-- Ne izmišljaj činjenice, datume, titule, događaje, izvore ili biografske detalje.
+- Piši prirodno, jasno i gramatički ispravno.
+- Ne izmišljaj činjenice, datume, titule ni događaje.
 - Ne nagađaj.
 {$contextRule}
 - Odgovor napiši kao jedan kratak pasus ili najviše dva kratka povezana pasusa.
-- Nemoj pisati liste osim ako korisnik to izričito traži.
-- Odgovaraj direktno, bez suvišnog uvoda.
-- Ako korisnik traži poređenje, poredi samo ono što je zaista poznato iz konteksta.
-- Ako korisnik traži objašnjenje, objasni kratko i jasno.
-- Ako pitanje nije jasno, traži kratko pojašnjenje u jednoj rečenici.
-
-NE KORISTI izraze:
-- povijest
-- tisuća
-- svećenik
-- oduvijek
-
-KORISTI izraze:
-- istorija
-- hiljada
-- sveštenik
-- oduvek
+- Ne koristi liste osim ako korisnik to izričito traži.
 SYS;
+    }
+
+    private function buildLocalAnswer(string $question, string $dbContext, string $userContext = '', string $mode = ''): string
+    {
+        if ($mode === 'timeline_explain') {
+            return $this->buildTimelineExplanation($dbContext !== '' ? $dbContext : $userContext);
+        }
+
+        $normalized = Str::lower($this->cleanText($question));
+
+        $monasteries = $this->findRelevantMonasteries($question);
+        $ktitors = $this->findRelevantKtitors($question);
+
+        if ($monasteries->isNotEmpty()) {
+            $m = $monasteries->first();
+            return $this->buildMonasteryAnswer($m, $normalized);
+        }
+
+        if ($ktitors->isNotEmpty()) {
+            $k = $ktitors->first();
+            return $this->buildKtitorAnswer($k, $normalized);
+        }
+
+        if ($dbContext !== '') {
+            return $this->buildGenericContextAnswer($dbContext);
+        }
+
+        if ($userContext !== '') {
+            return 'Na osnovu dostavljenog konteksta mogu da kažem sledeće: ' . $this->limitText($userContext, 350);
+        }
+
+        return 'Trenutno nemam dovoljno pouzdanih podataka za to pitanje u bazi aplikacije. Pokušaj da pitaš konkretnije, na primer o određenom manastiru, ktitoru ili temi iz edukacije.';
+    }
+
+    private function buildMonasteryAnswer(Monastery $m, string $question): string
+    {
+        $name = $m->name ?: 'Ovaj manastir';
+        $pieces = [];
+
+        if (
+            str_contains($question, 'gde') ||
+            str_contains($question, 'nalazi') ||
+            str_contains($question, 'lokacij')
+        ) {
+            $loc = [];
+            if (!empty($m->city)) $loc[] = $m->city;
+            if (!empty($m->region)) $loc[] = $m->region;
+            if (!empty($m->eparchy?->name)) $loc[] = 'u okviru ' . $m->eparchy->name;
+
+            if (!empty($loc)) {
+                return $name . ' se nalazi ' . implode(', ', $loc) . '.';
+            }
+        }
+
+        if (str_contains($question, 'istorij')) {
+            if (!empty($m->history)) {
+                return $name . ': ' . $this->limitText($m->history, 420);
+            }
+        }
+
+        if (str_contains($question, 'arhitektur')) {
+            if (!empty($m->architecture)) {
+                return $name . ': ' . $this->limitText($m->architecture, 360);
+            }
+        }
+
+        if (str_contains($question, 'umetnost') || str_contains($question, 'fresk') || str_contains($question, 'slikar')) {
+            if (!empty($m->art)) {
+                return $name . ': ' . $this->limitText($m->art, 360);
+            }
+        }
+
+        if (str_contains($question, 'duhovn') || str_contains($question, 'život')) {
+            if (!empty($m->spiritual_life)) {
+                return $name . ': ' . $this->limitText($m->spiritual_life, 360);
+            }
+        }
+
+        if (str_contains($question, 'poset') || str_contains($question, 'obilazak') || str_contains($question, 'radno vreme')) {
+            if (!empty($m->visiting)) {
+                return $name . ': ' . $this->limitText($m->visiting, 300);
+            }
+        }
+
+        if (!empty($m->excerpt)) {
+            $pieces[] = $this->limitText($m->excerpt, 220);
+        } elseif (!empty($m->description)) {
+            $pieces[] = $this->limitText($m->description, 260);
+        }
+
+        if (!empty($m->history)) {
+            $pieces[] = 'Iz dostupnih podataka može se izdvojiti i sledeće iz njegove istorije: ' . $this->limitText($m->history, 180);
+        }
+
+        if (empty($pieces)) {
+            return 'Za manastir ' . $name . ' trenutno nemam dovoljno detaljnih podataka u bazi aplikacije.';
+        }
+
+        return implode(' ', $pieces);
+    }
+
+    private function buildKtitorAnswer(Ktitor $k, string $question): string
+    {
+        $name = $k->name ?: 'Ovaj ktitor';
+
+        if (str_contains($question, 'ko je') || str_contains($question, 'ktitor')) {
+            $parts = [$name];
+            if (!empty($k->bio)) {
+                return $name . ' je ličnost o kojoj baza sadrži sledeće podatke: ' . $this->limitText($k->bio, 380);
+            }
+            return $name . ' je evidentiran u bazi aplikacije kao ktitor.';
+        }
+
+        if (str_contains($question, 'kada je rođen') || str_contains($question, 'rođen')) {
+            if (!empty($k->born_year)) {
+                return $name . ' je, prema podacima u bazi, rođen ' . $k->born_year . '. godine.';
+            }
+        }
+
+        if (str_contains($question, 'kada je umro') || str_contains($question, 'smrt') || str_contains($question, 'umro')) {
+            if (!empty($k->died_year)) {
+                return $name . ' je, prema podacima u bazi, preminuo ' . $k->died_year . '. godine.';
+            }
+        }
+
+        if (!empty($k->bio)) {
+            $answer = $name . ': ' . $this->limitText($k->bio, 420);
+
+            if (!empty($k->born_year) || !empty($k->died_year)) {
+                $range = [];
+                if (!empty($k->born_year)) $range[] = 'rođen ' . $k->born_year . '.';
+                if (!empty($k->died_year)) $range[] = 'preminuo ' . $k->died_year . '.';
+                $answer .= ' ' . ucfirst(implode(' ', $range));
+            }
+
+            return $answer;
+        }
+
+        return 'Za ktitora ' . $name . ' trenutno nemam dovoljno detaljnih podataka u bazi aplikacije.';
+    }
+
+    private function buildGenericContextAnswer(string $context): string
+    {
+        $lines = preg_split("/\r\n|\r|\n/", $context);
+        $lines = array_values(array_filter(array_map(fn ($line) => trim($line), $lines)));
+
+        if (empty($lines)) {
+            return 'Nemam dovoljno pouzdanih podataka u dostavljenom kontekstu.';
+        }
+
+        $useful = [];
+        foreach ($lines as $line) {
+            if (
+                !Str::startsWith($line, 'MANASTIR') &&
+                !Str::startsWith($line, 'KTITOR')
+            ) {
+                $useful[] = $line;
+            }
+            if (count($useful) >= 4) {
+                break;
+            }
+        }
+
+        if (empty($useful)) {
+            return 'Pronašla sam relevantne podatke u bazi, ali pitanje traži preciznije usmerenje. Pokušaj da pitaš konkretnije.';
+        }
+
+        return implode(' ', $useful);
     }
 
     private function buildDatabaseContext(string $question): string
@@ -209,97 +344,87 @@ SYS;
         return trim(implode("\n\n", array_filter($parts)));
     }
 
-   private function buildTimelineExplanation(string $context): string
-{
-    $parsed = $this->parseTimelineContext($context);
+    private function buildTimelineExplanation(string $context): string
+    {
+        $parsed = $this->parseTimelineContext($context);
 
-    $year = $parsed['year'] ?? '';
-    $title = $parsed['title'] ?? '';
-    $summary = $parsed['summary'] ?? '';
-    $area = $parsed['area'] ?? '';
-    $extra = $parsed['extra'] ?? '';
+        $year = $parsed['year'] ?? '';
+        $title = $parsed['title'] ?? '';
+        $summary = $parsed['summary'] ?? '';
+        $area = $parsed['area'] ?? '';
+        $extra = $parsed['extra'] ?? '';
 
-    if ($title === '' && $summary === '') {
-        return 'Nemam dovoljno pouzdanih podataka u dostavljenom kontekstu.';
-    }
-
-    $sentences = [];
-
-    // 1. Uvodna rečenica
-    $intro = $this->buildTimelineIntroSentence($title, $year, $summary, $extra);
-    if ($intro !== '') {
-        $sentences[] = $intro;
-    }
-
-    // 2. Sažetak događaja
-    $normalizedSummary = $this->normalizeTimelineSentence($summary);
-    if ($normalizedSummary !== '' && !$this->isSameMeaningAsIntro($intro, $normalizedSummary)) {
-        $sentences[] = $normalizedSummary;
-    }
-
-    // 3. Dodatni kontekst, ali samo ako nije isti kao summary
-    $normalizedExtra = $this->normalizeTimelineSentence($extra);
-    if (
-        $normalizedExtra !== '' &&
-        $normalizedExtra !== $normalizedSummary &&
-        !$this->isSameMeaningAsIntro($intro, $normalizedExtra)
-    ) {
-        $sentences[] = $normalizedExtra;
-    }
-
-    // 4. Značaj događaja
-    $importance = $this->buildTimelineImportanceSentence($title, $summary, $extra, $area);
-    if ($importance !== '') {
-        $sentences[] = $importance;
-    }
-
-    // Čišćenje
-    $sentences = array_values(array_filter(array_map(
-        fn ($s) => $this->cleanTimelineSentence($s),
-        $sentences
-    )));
-
-    // Uklanjanje duplikata
-    $sentences = array_values(array_unique($sentences));
-
-    // Ako imamo samo 1 rečenicu, pokušaj da dodaš još jednu opštu,
-    // da objašnjenje ne bude prekratko.
-    if (count($sentences) === 1) {
-        $fallback = $this->buildTimelineFallbackSentence($title, $area);
-        if ($fallback !== '') {
-            $sentences[] = $fallback;
+        if ($title === '' && $summary === '') {
+            return 'Nemam dovoljno pouzdanih podataka u dostavljenom kontekstu.';
         }
+
+        $sentences = [];
+
+        $intro = $this->buildTimelineIntroSentence($title, $year, $summary, $extra);
+        if ($intro !== '') {
+            $sentences[] = $intro;
+        }
+
+        $normalizedSummary = $this->normalizeTimelineSentence($summary);
+        if ($normalizedSummary !== '' && !$this->isSameMeaningAsIntro($intro, $normalizedSummary)) {
+            $sentences[] = $normalizedSummary;
+        }
+
+        $normalizedExtra = $this->normalizeTimelineSentence($extra);
+        if (
+            $normalizedExtra !== '' &&
+            $normalizedExtra !== $normalizedSummary &&
+            !$this->isSameMeaningAsIntro($intro, $normalizedExtra)
+        ) {
+            $sentences[] = $normalizedExtra;
+        }
+
+        $importance = $this->buildTimelineImportanceSentence($title, $summary, $extra, $area);
+        if ($importance !== '') {
+            $sentences[] = $importance;
+        }
+
+        $sentences = array_values(array_filter(array_map(
+            fn ($s) => $this->cleanTimelineSentence($s),
+            $sentences
+        )));
+
+        $sentences = array_values(array_unique($sentences));
+
+        if (count($sentences) === 1) {
+            $fallback = $this->buildTimelineFallbackSentence($title, $area);
+            if ($fallback !== '') {
+                $sentences[] = $fallback;
+            }
+        }
+
+        $sentences = array_slice($sentences, 0, 4);
+
+        if (empty($sentences)) {
+            return 'Nemam dovoljno pouzdanih podataka u dostavljenom kontekstu.';
+        }
+
+        return implode(' ', $sentences);
     }
 
-    // Najviše 4 rečenice
-    $sentences = array_slice($sentences, 0, 4);
+    private function buildTimelineFallbackSentence(string $title, string $area): string
+    {
+        $source = Str::lower($title . ' ' . $area);
 
-    if (empty($sentences)) {
-        return 'Nemam dovoljno pouzdanih podataka u dostavljenom kontekstu.';
+        if (str_contains($source, 'nemanji')) {
+            return 'Ovaj događaj ima posebno mesto u istoriji dinastije Nemanjić i razvoju srednjovekovne Srbije.';
+        }
+
+        if (str_contains($source, 'spc') || str_contains($source, 'crk')) {
+            return 'Značaj ovog događaja ogleda se u razvoju Srpske pravoslavne crkve i njenog mesta u narodnom životu.';
+        }
+
+        if (str_contains($source, 'tur')) {
+            return 'Ovaj događaj je važan za razumevanje položaja Srbije u periodu osmanske vlasti.';
+        }
+
+        return 'Ovaj događaj imao je važnu ulogu u istorijskom razvoju Srbije.';
     }
-
-    return implode(' ', $sentences);
-}
-
-private function buildTimelineFallbackSentence(string $title, string $area): string
-{
-    $source = Str::lower($title . ' ' . $area);
-
-    if (str_contains($source, 'nemanji')) {
-        return 'Ovaj događaj ima posebno mesto u istoriji dinastije Nemanjić i razvoju srednjovekovne Srbije.';
-    }
-
-    if (str_contains($source, 'spc') || str_contains($source, 'crk')) {
-        return 'Značaj ovog događaja ogleda se u razvoju Srpske pravoslavne crkve i njenog mesta u narodnom životu.';
-    }
-
-    if (str_contains($source, 'tur')) {
-        return 'Ovaj događaj je važan za razumevanje položaja Srbije u periodu osmanske vlasti.';
-    }
-
-    return 'Ovaj događaj imao je važnu ulogu u istorijskom razvoju Srbije.';
-}
-
 
     private function buildTimelineIntroSentence(
         string $title,
@@ -353,23 +478,13 @@ private function buildTimelineFallbackSentence(string $title, string $area): str
                 . '.';
         }
 
-        if (str_contains($titleLower, 'uspon')) {
-            return ($year !== '' ? trim($year) . '. godine ' : '') . $title . '.';
-        }
-
-        if (str_contains($titleLower, 'dolazak')) {
-            return ($year !== '' ? trim($year) . '. godine ' : '') . $title . '.';
-        }
-
-        if (str_contains($titleLower, 'krunisanje')) {
-            return ($year !== '' ? trim($year) . '. godine ' : '') . $title . '.';
-        }
-
-        if (str_contains($titleLower, 'autokefalnost')) {
-            return ($year !== '' ? trim($year) . '. godine ' : '') . $title . '.';
-        }
-
-        if (str_contains($titleLower, 'osnivanje')) {
+        if (
+            str_contains($titleLower, 'uspon') ||
+            str_contains($titleLower, 'dolazak') ||
+            str_contains($titleLower, 'krunisanje') ||
+            str_contains($titleLower, 'autokefalnost') ||
+            str_contains($titleLower, 'osnivanje')
+        ) {
             return ($year !== '' ? trim($year) . '. godine ' : '') . $title . '.';
         }
 
@@ -550,7 +665,7 @@ private function buildTimelineFallbackSentence(string $title, string $area): str
     {
         $normalizedQuestion = Str::lower($question);
 
-        $all = Monastery::with(['profile', 'eparchy'])
+        return Monastery::with(['profile', 'eparchy'])
             ->select([
                 'id',
                 'name',
@@ -572,26 +687,25 @@ private function buildTimelineFallbackSentence(string $title, string $area): str
                 $q->where('is_approved', true)
                     ->orWhereNull('is_approved');
             })
-            ->get();
+            ->get()
+            ->filter(function ($monastery) use ($normalizedQuestion) {
+                $name = Str::lower((string) $monastery->name);
+                $slug = Str::lower((string) $monastery->slug);
 
-        $matches = $all->filter(function ($monastery) use ($normalizedQuestion) {
-            $name = Str::lower((string) $monastery->name);
-            $slug = Str::lower((string) $monastery->slug);
-
-            return (
-                ($name !== '' && str_contains($normalizedQuestion, $name))
-                || ($slug !== '' && str_contains($normalizedQuestion, $slug))
-            );
-        })->take(2);
-
-        return $matches;
+                return (
+                    ($name !== '' && str_contains($normalizedQuestion, $name))
+                    || ($slug !== '' && str_contains($normalizedQuestion, $slug))
+                );
+            })
+            ->take(2)
+            ->values();
     }
 
     private function findRelevantKtitors(string $question)
     {
         $normalizedQuestion = Str::lower($question);
 
-        $all = Ktitor::query()
+        return Ktitor::query()
             ->select([
                 'id',
                 'name',
@@ -600,19 +714,18 @@ private function buildTimelineFallbackSentence(string $title, string $area): str
                 'died_year',
                 'bio',
             ])
-            ->get();
+            ->get()
+            ->filter(function ($ktitor) use ($normalizedQuestion) {
+                $name = Str::lower((string) $ktitor->name);
+                $slug = Str::lower((string) $ktitor->slug);
 
-        $matches = $all->filter(function ($ktitor) use ($normalizedQuestion) {
-            $name = Str::lower((string) $ktitor->name);
-            $slug = Str::lower((string) $ktitor->slug);
-
-            return (
-                ($name !== '' && str_contains($normalizedQuestion, $name))
-                || ($slug !== '' && str_contains($normalizedQuestion, $slug))
-            );
-        })->take(2);
-
-        return $matches;
+                return (
+                    ($name !== '' && str_contains($normalizedQuestion, $name))
+                    || ($slug !== '' && str_contains($normalizedQuestion, $slug))
+                );
+            })
+            ->take(2)
+            ->values();
     }
 
     private function formatMonasteryContext(Monastery $monastery): string

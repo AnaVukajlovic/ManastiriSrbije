@@ -15,7 +15,7 @@ use App\Http\Controllers\PravoslavniCalendarController;
 use App\Http\Controllers\CuriosityController;
 use App\Http\Controllers\VaskrsController;
 use App\Http\Controllers\EdukacijaController;
-use App\Http\Controllers\AiController;
+use App\Http\Controllers\Api\AiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +23,14 @@ use App\Http\Controllers\AiController;
 |--------------------------------------------------------------------------
 */
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+/*
+|--------------------------------------------------------------------------
+| AI
+|--------------------------------------------------------------------------
+*/
+Route::post('/api/ai/chat', [AiController::class, 'chat'])->name('api.ai.chat');
+Route::post('/ai/timeline', [AiController::class, 'chat'])->name('ai.timeline');
 
 /*
 |--------------------------------------------------------------------------
@@ -101,9 +109,6 @@ Route::prefix('pravoslavni')->group(function () {
 
     Route::post('/edukacija/ai/chat', [EdukacijaController::class, 'aiChat'])
         ->name('edukacija.ai.chat');
-
-    Route::post('/ai/timeline', [AiController::class, 'chat'])
-        ->name('ai.timeline');
 
     /* Edukacija index + slug na kraju */
     Route::get('/edukacija', [EdukacijaController::class, 'index'])

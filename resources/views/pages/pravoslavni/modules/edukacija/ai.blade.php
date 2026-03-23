@@ -15,7 +15,7 @@
           Ovde AI nije “samo pitanja”. Koristi ga kao alat:
           <span>sažetak</span>, <span>objašnjenje</span>, <span>glosar</span>, <span>kviz</span> —
           posebno korisno za učenje istorije, SPC i kulture.
-Model: <strong>{{ env('OLLAMA_MODEL','qwen2.5:3b') }}</strong>
+          Režim: <strong>{{ env('AI_USE_OLLAMA', false) ? 'Ollama + baza' : 'Pametni odgovor iz baze' }}</strong>
         </p>
       </div>
 
@@ -407,6 +407,102 @@ Model: <strong>{{ env('OLLAMA_MODEL','qwen2.5:3b') }}</strong>
     min-height:280px;
   }
 }
+
+
+
+/* ===== AI radionica – estetski patch ===== */
+
+.ai-edu-page{
+  padding-top: 10px;
+}
+
+.ai-grid{
+  align-items: stretch;
+}
+
+.ai-card{
+  padding: 22px 22px 20px;
+  min-width: 0;
+}
+
+.ai-head{
+  margin-bottom: 18px;
+}
+
+.ai-section-title{
+  font-size: clamp(1.7rem, 2vw, 2.1rem);
+  line-height: 1.15;
+  margin: 0 0 4px;
+  word-break: break-word;
+}
+
+.ai-section-sub{
+  margin-top: 4px;
+}
+
+.ai-modes{
+  margin: 14px 0 18px;
+}
+
+.ai-row{
+  margin-bottom: 14px;
+}
+
+.ai-input{
+  min-height: 230px;
+}
+
+.ai-output{
+  min-height: 430px;
+}
+
+.ai-footer{
+  margin-top: 14px;
+}
+
+.ai-page-head{
+  margin-bottom: 22px;
+}
+
+.ai-page-head__actions{
+  align-items: center;
+}
+
+.ai-page-sub{
+  max-width: 980px;
+}
+
+.ai-page-sub strong{
+  white-space: nowrap;
+}
+
+@media (max-width: 1100px){
+  .ai-grid{
+    grid-template-columns: 1fr;
+  }
+
+  .ai-output{
+    min-height: 300px;
+  }
+}
+
+@media (max-width: 700px){
+  .ai-card{
+    padding: 18px 16px 16px;
+  }
+
+  .ai-section-title{
+    font-size: 1.45rem;
+  }
+
+  .ai-input{
+    min-height: 190px;
+  }
+
+  .ai-output{
+    min-height: 240px;
+  }
+}
 </style>
 
 <script>
@@ -536,7 +632,7 @@ Model: <strong>{{ env('OLLAMA_MODEL','qwen2.5:3b') }}</strong>
     outEl.textContent = '⏳ Obrada u toku...';
 
     try{
-      const res = await fetch("{{ route('edukacija.ai.chat') }}", {
+      const res = await fetch("{{ route('api.ai.chat') }}", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
