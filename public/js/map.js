@@ -58,9 +58,10 @@ document.addEventListener("DOMContentLoaded", function () {
       "'": "&#039;"
     }[m]));
 
-  const markerLayer = useCluster && typeof L.markerClusterGroup === "function"
-    ? L.markerClusterGroup()
-    : L.layerGroup();
+  const markerLayer =
+    useCluster && typeof L.markerClusterGroup === "function"
+      ? L.markerClusterGroup()
+      : L.layerGroup();
 
   const bounds = [];
   let userLocationMarker = null;
@@ -126,7 +127,31 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  function refreshMapSize() {
+    setTimeout(() => {
+      map.invalidateSize(true);
+    }, 100);
+
+    setTimeout(() => {
+      map.invalidateSize(true);
+    }, 300);
+
+    setTimeout(() => {
+      map.invalidateSize(true);
+    }, 600);
+  }
+
   fitMapToBounds();
+  refreshMapSize();
+
+  window.addEventListener("load", function () {
+    refreshMapSize();
+    fitMapToBounds();
+  });
+
+  window.addEventListener("resize", function () {
+    refreshMapSize();
+  });
 
   function toggleLegend(forceState = null) {
     const legend = document.querySelector("[data-map-legend]");
@@ -134,15 +159,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (forceState === true) {
       legend.hidden = false;
+      refreshMapSize();
       return;
     }
 
     if (forceState === false) {
       legend.hidden = true;
+      refreshMapSize();
       return;
     }
 
     legend.hidden = !legend.hidden;
+    refreshMapSize();
   }
 
   function clearUserLocation() {
@@ -170,6 +198,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     map.setView([lat, lng], 12, { animate: true });
+    refreshMapSize();
   }
 
   map.on("locationfound", function (e) {
@@ -191,10 +220,13 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!isFinite(lat) || !isFinite(lng)) return;
 
     map.setView([lat, lng], Math.max(map.getZoom(), 12), { animate: true });
+
     L.popup()
       .setLatLng([lat, lng])
       .setContent(`<strong>${esc(title)}</strong>`)
       .openOn(map);
+
+    refreshMapSize();
   });
 
   document.addEventListener("click", function (e) {
@@ -214,6 +246,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       case "fit":
         fitMapToBounds();
+        refreshMapSize();
         break;
 
       case "legend":

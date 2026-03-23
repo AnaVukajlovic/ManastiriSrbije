@@ -77,16 +77,6 @@
                         <a class="btn2 btn2--ghost" href="#sadrzaj">Sadržaj</a>
                     </div>
                 </div>
-
-                <div class="monHeaderCard__imageWrap">
-                    <img
-                        src="{{ $img }}"
-                        alt="Fotografija manastira {{ $monastery->name }}"
-                        class="monHeaderCard__image"
-                        loading="lazy"
-                        onerror="this.src='{{ $fallbackImg }}'"
-                    >
-                </div>
             </div>
         </div>
 
@@ -281,15 +271,6 @@
 
             <aside class="monSide">
                 <div class="card monSide__card">
-                    <div class="monSide__photo">
-                        <img
-                            src="{{ $img }}"
-                            alt="Fotografija manastira {{ $monastery->name }}"
-                            loading="lazy"
-                            onerror="this.src='{{ $fallbackImg }}'"
-                        >
-                    </div>
-
                     <h3 class="monSide__title">Informacije</h3>
 
                     <div class="monKV">

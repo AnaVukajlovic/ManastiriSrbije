@@ -3,8 +3,6 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\FavoriteController;
 
 use App\Http\Controllers\MapController;
 use App\Http\Controllers\MapAiController;
@@ -19,21 +17,12 @@ use App\Http\Controllers\VaskrsController;
 use App\Http\Controllers\EdukacijaController;
 use App\Http\Controllers\AiController;
 
-use App\Http\Controllers\Admin\MonasteryReviewController;
-use App\Http\Controllers\Admin\ImportReviewController;
-
 /*
 |--------------------------------------------------------------------------
 | Public
 |--------------------------------------------------------------------------
 */
-Route::get('/', function () {
-    if (auth()->check()) {
-        return app(\App\Http\Controllers\HomeController::class)->index(request());
-    }
-
-    return view('welcome');
-})->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 /*
 |--------------------------------------------------------------------------
@@ -185,57 +174,8 @@ Route::redirect('/dashboard', '/');
 
 /*
 |--------------------------------------------------------------------------
-| Nalog / profil / omiljeni
-|--------------------------------------------------------------------------
-*/
-Route::middleware('auth')->group(function () {
-
-    /* Profil */
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
-    /* Moj nalog */
-    Route::view('/nalog', 'pages.account.index')->name('account.index');
-
-    /* Omiljeni */
-    Route::get('/omiljeni', [FavoriteController::class, 'index'])->name('favorites.index');
-
-    Route::post('/omiljeni/{monastery:slug}/toggle', [FavoriteController::class, 'toggle'])
-        ->name('favorites.toggle');
-});
-
-/*
-|--------------------------------------------------------------------------
 | AI za mapu
 |--------------------------------------------------------------------------
 */
 Route::post('/map/ai/recommend-by-city', [MapAiController::class, 'recommendByCity'])
     ->name('map.ai.recommendByCity');
-
-/*
-|--------------------------------------------------------------------------
-| Admin
-|--------------------------------------------------------------------------
-*/
-Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
-
-    Route::get('/', function () {
-        return view('admin.dashboard');
-    })->name('dashboard');
-
-    /* Moderacija manastira */
-    Route::get('/monasteries', [MonasteryReviewController::class, 'index'])->name('monasteries.index');
-    Route::post('/monasteries/{monastery}/approve', [MonasteryReviewController::class, 'approve'])->name('monasteries.approve');
-    Route::post('/monasteries/{monastery}/reject', [MonasteryReviewController::class, 'reject'])->name('monasteries.reject');
-    Route::post('/monasteries/{monastery}/reset', [MonasteryReviewController::class, 'resetStatus'])->name('monasteries.reset');
-
-    /* Import review */
-    Route::get('/import', [ImportReviewController::class, 'index'])->name('import.index');
-    Route::post('/import/approve', [ImportReviewController::class, 'approve'])->name('import.approve');
-    Route::post('/import/reject', [ImportReviewController::class, 'reject'])->name('import.reject');
-    Route::post('/import/pending', [ImportReviewController::class, 'pending'])->name('import.pending');
-    Route::post('/import/delete', [ImportReviewController::class, 'delete'])->name('import.delete');
-});
-
-require __DIR__ . '/auth.php';
