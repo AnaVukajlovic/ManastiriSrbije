@@ -13,7 +13,7 @@
         <h1 class="ai-page-title">AI radionica</h1>
         <p class="ai-page-sub">
           Ovde AI nije “samo pitanja”. Koristi ga kao alat:
-          <span>sažetak</span>, <span>objašnjenje</span>, <span>glosar</span>, <span>kviz</span> —
+          <span>sažetak</span>, <span>objašnjenje</span>, <span>rečnik</span>, <span>kviz</span> —
           posebno korisno za učenje istorije, SPC i kulture.
           Režim: <strong>{{ env('AI_USE_OLLAMA', false) ? 'Ollama + baza' : 'Pametni odgovor iz baze' }}</strong>
         </p>
@@ -40,7 +40,7 @@
         <div class="ai-modes" role="tablist" aria-label="AI alati">
           <button class="ai-mode active" type="button" data-mode="summarize" role="tab" aria-selected="true">Sažmi</button>
           <button class="ai-mode" type="button" data-mode="explain" role="tab" aria-selected="false">Objasni</button>
-          <button class="ai-mode" type="button" data-mode="glossary" role="tab" aria-selected="false">Glosar</button>
+          <button class="ai-mode" type="button" data-mode="glossary" role="tab" aria-selected="false">Rečnik</button>
           <button class="ai-mode" type="button" data-mode="quiz" role="tab" aria-selected="false">Kviz</button>
         </div>
 
@@ -585,7 +585,7 @@
         `Ne dodaj pitanja na kraju.`,
 
       glossary:
-        `Zadatak: Napravi glosar iz datog teksta. ${commonRules} ` +
+        `Zadatak: Napravi rečnik iz datog teksta. ${commonRules} ` +
         `Nivo objašnjenja: ${level}. ` +
         `Izvuci od 5 do 8 najvažnijih pojmova samo iz datog sadržaja. ` +
         `Za svaki pojam napiši tačno jedan red u formatu: Pojam — kratko objašnjenje. ` +

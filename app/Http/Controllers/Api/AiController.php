@@ -43,7 +43,7 @@ class AiController extends Controller
         }
 
         $maxTokens = (int) $request->input('max_tokens', 160);
-        $maxTokens = max(80, min($maxTokens, 220));
+        $maxTokens = max(80, min($maxTokens, 320));
 
         $dbContext = $this->buildDatabaseContext($question);
         $finalContext = $dbContext !== '' ? $dbContext : $userContext;
@@ -57,9 +57,9 @@ class AiController extends Controller
                 'answer' => $answer,
                 'reply' => $answer,
                 'meta' => [
-                    'used_db_context' => false,
+                    'used_db_context' => $dbContext !== '',
                     'generated_locally' => true,
-                    'used_ollama_refinement' => false,
+                    'used_ollama' => false,
                     'mode' => 'timeline_explain',
                 ],
             ]);
@@ -69,7 +69,7 @@ class AiController extends Controller
 
         if ($useOllama) {
             $baseUrl = rtrim((string) env('OLLAMA_URL', 'http://127.0.0.1:11434'), '/');
-            $model = (string) env('OLLAMA_MODEL', 'qwen2.5:3b');
+            $model = (string) env('OLLAMA_MODEL', 'qwen2.5:7b');
             $system = $this->buildSystemPrompt($finalContext !== '', $mode);
 
             try {
@@ -84,7 +84,7 @@ class AiController extends Controller
 
                 $answer = $this->normalizeAnswer($answer);
 
-                if ($answer !== '') {
+                if ($this->isUsefulAiAnswer($answer, $mode)) {
                     return response()->json([
                         'ok' => true,
                         'answer' => $answer,
@@ -93,6 +93,7 @@ class AiController extends Controller
                             'used_db_context' => $dbContext !== '',
                             'generated_locally' => false,
                             'used_ollama' => true,
+                            'mode' => $mode,
                         ],
                     ]);
                 }
@@ -114,6 +115,7 @@ class AiController extends Controller
                 'used_db_context' => $dbContext !== '',
                 'generated_locally' => true,
                 'used_ollama' => false,
+                'mode' => $mode,
             ],
         ]);
     }
@@ -131,15 +133,57 @@ Ti si pouzdan i veoma jasan AI asistent za aplikaciju "Pravoslavni Svetionik".
 OBAVEZNA PRAVILA:
 - Odgovaraj isključivo na standardnom srpskom jeziku.
 - Koristi ekavicu i latinicu.
-- Piši prirodno, jasno i onako kako se normalno govori i piše na srpskom jeziku.
-- Koristi isključivo ekavske oblike.
+- Piši prirodno, jasno i sažeto.
 - Ne mešaj jezike.
-- Ne koristi čudne, neprirodne ili rogobatne izraze.
 - Ne izmišljaj činjenice.
 - Ne dopisuj ono čega nema u kontekstu.
 {$contextRule}
-- Piši najviše 3 kratke i povezane rečenice.
-- Ako kontekst nije dovoljan, reci samo: "Nemam dovoljno pouzdanih podataka u dostavljenom kontekstu."
+- Piši najviše 3 do 4 kratke i povezane rečenice.
+- Objasni samo događaj i njegov značaj.
+SYS;
+        }
+
+        if ($mode === 'summarize') {
+            return <<<SYS
+Ti si sažet i precizan AI asistent.
+
+OBAVEZNA PRAVILA:
+- Odgovaraj isključivo na standardnom srpskom jeziku, ekavica, latinica.
+- Ne izmišljaj činjenice.
+{$contextRule}
+- Napravi sažetak u sledećem formatu:
+1) kratak naslov,
+2) jedan pregledan pasus,
+3) do 3 ključne stavke.
+SYS;
+        }
+
+        if ($mode === 'glossary') {
+            return <<<SYS
+Ti si AI asistent koji pravi glosar.
+
+OBAVEZNA PRAVILA:
+- Odgovaraj isključivo na standardnom srpskom jeziku, ekavica, latinica.
+- Ne izmišljaj činjenice.
+{$contextRule}
+- Izdvoji 5 do 8 važnih pojmova iz sadržaja.
+- Piši svaki red u formatu: Pojam — kratko objašnjenje.
+- Bez uvoda i bez dodatnih komentara.
+SYS;
+        }
+
+        if ($mode === 'quiz') {
+            return <<<SYS
+Ti si AI asistent koji pravi kratak kviz.
+
+OBAVEZNA PRAVILA:
+- Odgovaraj isključivo na standardnom srpskom jeziku, ekavica, latinica.
+- Ne izmišljaj činjenice.
+{$contextRule}
+- Napravi 5 pitanja ukupno:
+  - 3 pitanja sa ponuđenim odgovorima A), B), C)
+  - 2 kratka pitanja
+- Na kraju napiši odvojeno: Tačni odgovori.
 SYS;
         }
 
@@ -155,14 +199,31 @@ OBAVEZNA PRAVILA:
 - Ne nagađaj.
 {$contextRule}
 - Odgovor napiši kao jedan kratak pasus ili najviše dva kratka povezana pasusa.
-- Ne koristi liste osim ako korisnik to izričito traži.
 SYS;
     }
 
     private function buildLocalAnswer(string $question, string $dbContext, string $userContext = '', string $mode = ''): string
     {
+        $sourceText = $this->cleanText($userContext !== '' ? $userContext : $dbContext);
+
         if ($mode === 'timeline_explain') {
             return $this->buildTimelineExplanation($dbContext !== '' ? $dbContext : $userContext);
+        }
+
+        if ($mode === 'summarize') {
+            return $this->buildSummaryAnswer($sourceText);
+        }
+
+        if ($mode === 'explain') {
+            return $this->buildExplainAnswer($sourceText, $question);
+        }
+
+        if ($mode === 'glossary') {
+            return $this->buildGlossaryAnswer($sourceText);
+        }
+
+        if ($mode === 'quiz') {
+            return $this->buildQuizAnswer($sourceText);
         }
 
         $normalized = Str::lower($this->cleanText($question));
@@ -185,10 +246,257 @@ SYS;
         }
 
         if ($userContext !== '') {
-            return 'Na osnovu dostavljenog konteksta mogu da kažem sledeće: ' . $this->limitText($userContext, 350);
+            return 'Na osnovu dostavljenog konteksta mogu da kažem sledeće: ' . $this->limitText($userContext, 420);
         }
 
         return 'Trenutno nemam dovoljno pouzdanih podataka za to pitanje u bazi aplikacije. Pokušaj da pitaš konkretnije, na primer o određenom manastiru, ktitoru ili temi iz edukacije.';
+    }
+
+    private function buildSummaryAnswer(string $text): string
+{
+    $text = $this->cleanText($text);
+
+    if ($text === '') {
+        return 'Nema dovoljno teksta za sažetak.';
+    }
+
+    $sentences = $this->splitSentences($text);
+
+    if (empty($sentences)) {
+        return $this->limitText($text, 380);
+    }
+
+    $keywords = $this->extractKeywords($text, 4);
+    $bestSentences = $this->pickBestSummarySentences($sentences, $keywords, 3);
+
+    $title = !empty($keywords)
+        ? 'Sažetak: ' . implode(', ', array_slice($keywords, 0, 2))
+        : 'Sažetak teme';
+
+    $body = implode(' ', $bestSentences);
+
+    $lines = [
+        $title,
+        '',
+        $body,
+    ];
+
+    if (!empty($keywords)) {
+        $lines[] = '';
+        foreach ($keywords as $kw) {
+            $lines[] = '• ' . $kw;
+        }
+    }
+
+    return implode("\n", $lines);
+}
+    private function buildExplainAnswer(string $text, string $question = ''): string
+    {
+        $text = $this->cleanText($text);
+
+        if ($text === '') {
+            $monasteries = $this->findRelevantMonasteries($question);
+            if ($monasteries->isNotEmpty()) {
+                return $this->buildMonasteryAnswer($monasteries->first(), Str::lower($question));
+            }
+
+            $ktitors = $this->findRelevantKtitors($question);
+            if ($ktitors->isNotEmpty()) {
+                return $this->buildKtitorAnswer($ktitors->first(), Str::lower($question));
+            }
+
+            return 'Nema dovoljno podataka za objašnjenje.';
+        }
+
+        $sentences = $this->splitSentences($text);
+
+        if (count($sentences) <= 3) {
+            return $this->limitText($text, 450);
+        }
+
+        return implode(' ', array_slice($sentences, 0, 3));
+    }
+
+private function buildGlossaryAnswer(string $text): string
+{
+    $text = $this->cleanText($text);
+
+    if ($text === '') {
+        return 'Nema dovoljno teksta za glosar.';
+    }
+
+    $keywords = $this->extractKeywords($text, 6);
+
+    if (empty($keywords)) {
+        return 'Ne mogu da izdvojim dovoljno važnih pojmova iz dostavljenog teksta.';
+    }
+
+    $sentences = $this->splitSentences($text);
+    $lines = [];
+
+    foreach ($keywords as $kw) {
+        $definition = 'važan pojam iz dostavljenog sadržaja';
+
+        foreach ($sentences as $sentence) {
+            if (str_contains(Str::lower($sentence), Str::lower($kw))) {
+                $definition = $this->limitText($sentence, 140);
+                break;
+            }
+        }
+
+        $lines[] = $kw . ' — ' . $definition;
+    }
+
+    return implode("\n", $lines);
+}
+
+    private function buildQuizAnswer(string $text): string
+    {
+        $text = $this->cleanText($text);
+
+        if ($text === '') {
+            return 'Nema dovoljno teksta za pravljenje kviza.';
+        }
+
+        $keywords = $this->extractKeywords($text, 5);
+        $sentences = $this->splitSentences($text);
+
+        $topic = $this->formatKeyword($keywords[0] ?? 'obrađena tema');
+        $q1 = $this->formatKeyword($keywords[0] ?? 'glavna tema');
+        $q2 = $this->formatKeyword($keywords[1] ?? 'važan događaj');
+        $q3 = $this->formatKeyword($keywords[2] ?? 'istorijski značaj');
+
+        $short1 = $sentences[0] ?? 'Objasni svojim rečima glavni sadržaj teksta.';
+        $short2 = $sentences[1] ?? 'Navedi zašto je tema važna.';
+
+        return
+            "Kviz — {$topic}\n\n" .
+            "1. Šta je centralna tema datog teksta?\n" .
+            "A) {$q1}\n" .
+            "B) Sporedna napomena\n" .
+            "C) Nepovezana oblast\n\n" .
+
+            "2. Koji pojam je posebno važan u ovom sadržaju?\n" .
+            "A) Nasumičan pojam\n" .
+            "B) {$q2}\n" .
+            "C) Geografski podatak bez značaja\n\n" .
+
+            "3. Šta se može izdvojiti kao važan element teme?\n" .
+            "A) {$q3}\n" .
+            "B) Nevažan detalj\n" .
+            "C) Potpuno druga tema\n\n" .
+
+            "4. Kratko objasni sledeće:\n{$short1}\n\n" .
+            "5. Zašto je ova tema važna?\n{$short2}\n\n" .
+
+            "Tačni odgovori:\n" .
+            "1. A\n" .
+            "2. B\n" .
+            "3. A";
+    }
+
+   private function extractKeywords(string $text, int $limit = 5): array
+{
+    $text = $this->cleanText($text);
+
+    if ($text === '') {
+        return [];
+    }
+
+    $keywords = [];
+
+    $preferredPhrases = $this->extractPreferredPhrases($text);
+    foreach ($preferredPhrases as $phrase) {
+        $keywords[] = $phrase;
+    }
+
+    $normalized = Str::lower($text);
+    $normalized = preg_replace('/[^\p{L}\p{N}\s]+/u', ' ', $normalized);
+    $words = preg_split('/\s+/u', $normalized, -1, PREG_SPLIT_NO_EMPTY);
+
+    $stop = [
+        'i','u','je','se','na','da','su','za','od','po','sa','kao','koji','koja','koje',
+        'ili','to','ta','te','a','ali','o','iz','do','kod','što','kroz','tokom','već',
+        'bio','bila','bili','biti','ima','imaju','njegov','njena','njihov','ovaj','ova',
+        'ovo','jedan','jedna','jedno','njih','njega','njim','zbog','takođe','veoma',
+        'važan','važna','važni','godine','godina','perioda','mesto','uloga','kroz',
+        'tokom','ovog','ovom','ovaj','ovih','ovde','gde','kada','koji','kojem','kojim',
+        'dobio','dobila','dobili','bavio','bavila','bavili','njegovim','njenim',
+        'srpski','srpske','srpska','srbije','srbija','narod','naroda'
+    ];
+
+    $freq = [];
+    foreach ($words as $word) {
+        if (mb_strlen($word) < 5) continue;
+        if (in_array($word, $stop, true)) continue;
+
+        $freq[$word] = ($freq[$word] ?? 0) + 1;
+    }
+
+    arsort($freq);
+
+    foreach (array_keys($freq) as $word) {
+        $formatted = $this->formatKeyword($word);
+
+        if (!$this->containsKeyword($keywords, $formatted)) {
+            $keywords[] = $formatted;
+        }
+
+        if (count($keywords) >= $limit) {
+            break;
+        }
+    }
+
+    return array_slice($keywords, 0, $limit);
+}
+
+    private function splitSentences(string $text): array
+    {
+        $sentences = preg_split('/(?<=[.!?])\s+/u', $text, -1, PREG_SPLIT_NO_EMPTY);
+        return array_values(array_filter(array_map(fn ($s) => trim($s), $sentences)));
+    }
+
+   private function formatKeyword(string $keyword): string
+{
+    $keyword = trim($keyword);
+
+    if ($keyword === '') {
+        return '';
+    }
+
+    $keyword = preg_replace('/\s+/u', ' ', $keyword);
+
+    $smallWords = ['i', 'u', 'na', 'sa', 'od', 'do'];
+
+    $parts = explode(' ', $keyword);
+    $parts = array_map(function ($part) use ($smallWords) {
+        $lower = mb_strtolower($part);
+        if (in_array($lower, $smallWords, true)) {
+            return $lower;
+        }
+        return mb_strtoupper(mb_substr($lower, 0, 1)) . mb_substr($lower, 1);
+    }, $parts);
+
+    return implode(' ', $parts);
+}
+
+    private function isUsefulAiAnswer(string $answer, string $mode = ''): bool
+    {
+        $answer = $this->cleanText($answer);
+
+        if ($answer === '') {
+            return false;
+        }
+
+        if ($mode === 'quiz') {
+            return str_contains(Str::lower($answer), 'tačni odgovori');
+        }
+
+        if ($mode === 'glossary') {
+            return str_contains($answer, '—') || str_contains($answer, '-');
+        }
+
+        return mb_strlen($answer) >= 40;
     }
 
     private function buildMonasteryAnswer(Monastery $m, string $question): string
@@ -258,12 +566,122 @@ SYS;
         return implode(' ', $pieces);
     }
 
+
+    private function extractPreferredPhrases(string $text): array
+{
+    $phrases = [];
+
+    $patterns = [
+        '/\bSveti Sava\b/u',
+        '/\bStefan Nemanja\b/u',
+        '/\bSrpska pravoslavna crkva\b/u',
+        '/\bpravoslavna crkva\b/u',
+        '/\bduhovni i kulturni identitet\b/u',
+        '/\bduhovni identitet\b/u',
+        '/\bkulturni identitet\b/u',
+        '/\bcrkvena uprava\b/u',
+        '/\bautokefalnost\b/u',
+        '/\bautokefalna\b/u',
+        '/\bNemanjić[a-zčćšđž]*\b/iu',
+        '/\bHilandar\b/u',
+        '/\bStudenica\b/u',
+        '/\bŽiča\b/u',
+        '/\bRaška škola\b/u',
+        '/\bmanastir[a-zčćšđž]*\b/iu',
+        '/\bzakonopravilo\b/iu',
+        '/\bprosvetitelj\b/iu',
+        '/\bdiplomatska uloga\b/iu',
+        '/\bpis[a-zčćšđž]* i kultur[a-zčćšđž]*\b/iu',
+    ];
+
+    foreach ($patterns as $pattern) {
+        if (preg_match_all($pattern, $text, $matches)) {
+            foreach ($matches[0] as $match) {
+                $match = $this->formatKeyword($match);
+                if (!$this->containsKeyword($phrases, $match)) {
+                    $phrases[] = $match;
+                }
+            }
+        }
+    }
+
+    return $phrases;
+}
+
+private function containsKeyword(array $keywords, string $candidate): bool
+{
+    $candidateNorm = Str::lower(trim($candidate));
+
+    foreach ($keywords as $existing) {
+        $existingNorm = Str::lower(trim($existing));
+
+        if ($existingNorm === $candidateNorm) {
+            return true;
+        }
+
+        if (str_contains($existingNorm, $candidateNorm) || str_contains($candidateNorm, $existingNorm)) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+private function pickBestSummarySentences(array $sentences, array $keywords, int $limit = 3): array
+{
+    if (empty($sentences)) {
+        return [];
+    }
+
+    $scored = [];
+
+    foreach ($sentences as $index => $sentence) {
+        $score = 0;
+        $sentenceNorm = Str::lower($sentence);
+
+        foreach ($keywords as $kw) {
+            if (str_contains($sentenceNorm, Str::lower($kw))) {
+                $score += 3;
+            }
+        }
+
+        $len = mb_strlen($sentence);
+        if ($len >= 60 && $len <= 260) {
+            $score += 2;
+        }
+
+        if ($index === 0) {
+            $score += 2;
+        }
+
+        $scored[] = [
+            'index' => $index,
+            'sentence' => trim($sentence),
+            'score' => $score,
+        ];
+    }
+
+    usort($scored, function ($a, $b) {
+        if ($a['score'] === $b['score']) {
+            return $a['index'] <=> $b['index'];
+        }
+        return $b['score'] <=> $a['score'];
+    });
+
+    $picked = array_slice($scored, 0, $limit);
+
+    usort($picked, fn ($a, $b) => $a['index'] <=> $b['index']);
+
+    return array_map(fn ($row) => $row['sentence'], $picked);
+}
+
+
+
     private function buildKtitorAnswer(Ktitor $k, string $question): string
     {
         $name = $k->name ?: 'Ovaj ktitor';
 
         if (str_contains($question, 'ko je') || str_contains($question, 'ktitor')) {
-            $parts = [$name];
             if (!empty($k->bio)) {
                 return $name . ' je ličnost o kojoj baza sadrži sledeće podatke: ' . $this->limitText($k->bio, 380);
             }
