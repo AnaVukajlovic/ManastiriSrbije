@@ -34,4 +34,4 @@ RUN chmod +x /app/start-render.sh
 
 EXPOSE 10000
 
-CMD ["/app/start-render.sh"]
+CMD sh -c "php artisan migrate --force && php artisan db:seed --class=MonasteriesCsvSeeder --force && php artisan optimize:clear && php artisan serve --host=0.0.0.0 --port=10000"
