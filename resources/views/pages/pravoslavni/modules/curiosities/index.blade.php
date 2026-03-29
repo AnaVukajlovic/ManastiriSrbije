@@ -411,9 +411,35 @@
         @endforeach
       </div>
 
-      <div class="pagination-wrap">
-        {{ $items->links() }}
+@if($items->hasPages())
+  <div class="pagination-wrap">
+    <div class="ps-pagination-wrap">
+      <div class="ps-pagination">
+
+        @if($items->onFirstPage())
+          <span class="ps-page ps-disabled">← Prethodna</span>
+        @else
+          <a class="ps-page" href="{{ $items->previousPageUrl() }}">← Prethodna</a>
+        @endif
+
+        @foreach($items->getUrlRange(1, $items->lastPage()) as $page => $url)
+          @if($page == $items->currentPage())
+            <span class="ps-page is-active">{{ $page }}</span>
+          @else
+            <a class="ps-page" href="{{ $url }}">{{ $page }}</a>
+          @endif
+        @endforeach
+
+        @if($items->hasMorePages())
+          <a class="ps-page" href="{{ $items->nextPageUrl() }}">Sledeća →</a>
+        @else
+          <span class="ps-page ps-disabled">Sledeća →</span>
+        @endif
+
       </div>
+    </div>
+  </div>
+@endif
     @endif
 
   </div>

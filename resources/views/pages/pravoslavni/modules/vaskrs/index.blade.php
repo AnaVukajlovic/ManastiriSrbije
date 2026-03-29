@@ -477,9 +477,9 @@
           <span class="muted">Rezultat</span>
           <strong class="vaskrs-badge" id="ve-date">—</strong>
         </div>
-
+<br><br>
         <div class="vaskrs-mini muted">
-          Napomena: za godine 1900–2099 razlika julijanski → gregorijanski je 13 dana (posle 2100 je 14).
+         Napomena: za godine 1900–2099 razlika julijanski → gregorijanski je 13 dana (posle 2100 je 14).
         </div>
       </div>
 

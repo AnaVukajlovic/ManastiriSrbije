@@ -24,43 +24,39 @@
       pokajanje i nada Vaskrsenja — korak po korak, svakog dana.
     </p>
 
-    <div class="ps-hero__quick">
+    <div class="ps-quickgrid ps-quickgrid--top">
+      <a class="ps-quick" href="#vera">
+        <div class="ps-quick__k">3</div>
+        <div class="ps-quick__v">Ličnosti — jedan Bog</div>
+      </a>
 
-      <div class="ps-quickgrid">
-        <a class="ps-quick" href="#trosjstvo">
-          <div class="ps-quick__k">3</div>
-          <div class="ps-quick__v">Ličnosti — jedan Bog</div>
-        </a>
+      <a class="ps-quick" href="#zapovesti">
+        <div class="ps-quick__k">10</div>
+        <div class="ps-quick__v">Zapovesti — put savesti</div>
+      </a>
 
-        <a class="ps-quick" href="#zapovesti">
-          <div class="ps-quick__k">10</div>
-          <div class="ps-quick__v">Zapovesti — put savesti</div>
-        </a>
+      <a class="ps-quick" href="#liturgija">
+        <div class="ps-quick__k">1</div>
+        <div class="ps-quick__v">Srce svega — Liturgija</div>
+      </a>
+    </div>
 
-        <a class="ps-quick" href="#liturgija">
-          <div class="ps-quick__k">1</div>
-          <div class="ps-quick__v">Srce svega — Liturgija</div>
-        </a>
+    <div class="ps-hero__tocInline">
+      <div class="ps-toc__label">SADRŽAJ</div>
+
+      <div class="ps-toc">
+        <a class="ps-chip" href="#pravoslavlje">Šta je pravoslavlje</a>
+        <a class="ps-chip" href="#vera">Ispovedanje vere</a>
+        <a class="ps-chip" href="#crkva">Crkva i Predanje</a>
+        <a class="ps-chip" href="#liturgija">Liturgija</a>
+        <a class="ps-chip" href="#molitva">Molitva</a>
+        <a class="ps-chip" href="#zapovesti">10 zapovesti</a>
+        <a class="ps-chip" href="#post">Post</a>
+        <a class="ps-chip" href="#ispovest">Ispovest &amp; Pričešće</a>
       </div>
+    </div>
 
-      <div class="ps-hero__toc">
-        <div class="ps-toc__label">Sadržaj</div>
-
-        <div class="ps-toc">
-          <a class="ps-chip" href="#sta-je-pravoslavlje">Šta je pravoslavlje</a>
-          <a class="ps-chip" href="#ispovedanje-vere">Ispovedanje vere</a>
-          <a class="ps-chip" href="#crkva-i-predanje">Crkva i Predanje</a>
-          <a class="ps-chip" href="#liturgija">Liturgija</a>
-          <a class="ps-chip" href="#molitva">Molitva</a>
-          <a class="ps-chip" href="#zapovesti">10 zapovesti</a>
-          <a class="ps-chip" href="#post">Post</a>
-          <a class="ps-chip" href="#ispovest-pricesce">Ispovest &amp; Pričešće</a>
-        </div>
-      </div>
-
-    </div><!-- /.ps-hero__quick -->
-
-  </div><!-- /.container.ps-hero__inner -->
+  </div>
 </header>
 
 <section class="ps-wrap ps-wow">
