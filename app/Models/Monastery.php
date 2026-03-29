@@ -56,6 +56,16 @@ class Monastery extends Model
         'denomination_qid',
         'is_spc',
         'is_spc_guess',
+
+
+        'description_short',
+'ktitor',
+'godina_izgradnje',
+'napomena_podaci',
+'status',
+'coord_source',
+'coord_url',
+'coord_status',
     ];
 
     public function getRouteKeyName(): string
