@@ -2436,3 +2436,81 @@ body.page-home .home-ref__head p{
   }
 }
 
+/* ===== MANASTIRI PAGINACIJA ===== */
+.ps-pagination-wrap{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:14px;
+  margin:34px 0 10px;
+}
+
+.ps-pagination-info{
+  color:rgba(255,255,255,.72);
+  font-size:15px;
+  text-align:center;
+}
+
+.ps-pagination{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  align-items:center;
+  gap:10px;
+}
+
+.ps-page{
+  min-width:44px;
+  height:44px;
+  padding:0 14px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:14px;
+  text-decoration:none;
+  font-weight:700;
+  font-size:16px;
+  line-height:1;
+  color:#f3e7c2;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(197,162,74,.28);
+  box-shadow:0 8px 24px rgba(0,0,0,.18);
+  transition:all .2s ease;
+}
+
+.ps-page:hover{
+  transform:translateY(-2px);
+  color:#fff7dc;
+  border-color:rgba(226,194,106,.75);
+  background:rgba(197,162,74,.14);
+}
+
+.ps-page.is-active{
+  color:#1a120c;
+  background:linear-gradient(135deg,#c5a24a,#e2c26a);
+  border-color:#e2c26a;
+  box-shadow:0 10px 24px rgba(197,162,74,.30);
+}
+
+.ps-page.ps-disabled{
+  opacity:.38;
+  pointer-events:none;
+}
+
+@media (max-width: 640px){
+  .ps-pagination-wrap{
+    margin-top:26px;
+  }
+
+  .ps-page{
+    min-width:40px;
+    height:40px;
+    border-radius:12px;
+    font-size:15px;
+  }
+
+  .ps-pagination-info{
+    font-size:14px;
+  }
+}

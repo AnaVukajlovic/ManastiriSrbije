@@ -437,7 +437,35 @@
       </div>
 
       <div class="monIndexPagination">
-        {{ $monasteries->links() }}
+@if ($monasteries->hasPages())
+    <div class="ps-pagination-wrap">
+        <div class="ps-pagination-info">
+            Prikazano {{ $monasteries->firstItem() }}–{{ $monasteries->lastItem() }} od {{ $monasteries->total() }} manastira
+        </div>
+
+        <nav class="ps-pagination">
+            @if ($monasteries->onFirstPage())
+                <span class="ps-page ps-disabled">‹</span>
+            @else
+                <a class="ps-page" href="{{ $monasteries->previousPageUrl() }}">‹</a>
+            @endif
+
+            @foreach ($monasteries->getUrlRange(1, $monasteries->lastPage()) as $page => $url)
+                @if ($page == $monasteries->currentPage())
+                    <span class="ps-page is-active">{{ $page }}</span>
+                @else
+                    <a class="ps-page" href="{{ $url }}">{{ $page }}</a>
+                @endif
+            @endforeach
+
+            @if ($monasteries->hasMorePages())
+                <a class="ps-page" href="{{ $monasteries->nextPageUrl() }}">›</a>
+            @else
+                <span class="ps-page ps-disabled">›</span>
+            @endif
+        </nav>
+    </div>
+@endif
       </div>
     </div>
 
