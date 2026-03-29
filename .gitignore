@@ -22,4 +22,18 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+# dozvoli samo import folder i csv
+!storage/
+!storage/app/
+!storage/app/import/
+!storage/app/import/monasteries.csv
+
+# ali i dalje ignoriši ostalo iz storage
+/storage/*
+!/storage/app/
+!/storage/app/import/
+!/storage/app/import/monasteries.csv
+
 /storage/framework/sessions
+/storage/*.key
+/storage/pail

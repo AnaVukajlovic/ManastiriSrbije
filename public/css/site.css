@@ -2460,7 +2460,7 @@ body.page-home .home-ref__head p{
   gap:10px;
 }
 
-.ps-page{
+.ps-pagination .ps-page{
   min-width:44px;
   height:44px;
   padding:0 14px;
@@ -2479,23 +2479,40 @@ body.page-home .home-ref__head p{
   transition:all .2s ease;
 }
 
-.ps-page:hover{
+.ps-pagination .ps-page:hover{
   transform:translateY(-2px);
   color:#fff7dc;
   border-color:rgba(226,194,106,.75);
   background:rgba(197,162,74,.14);
 }
 
-.ps-page.is-active{
+.ps-pagination .ps-page.is-active{
   color:#1a120c;
   background:linear-gradient(135deg,#c5a24a,#e2c26a);
   border-color:#e2c26a;
   box-shadow:0 10px 24px rgba(197,162,74,.30);
 }
 
-.ps-page.ps-disabled{
+.ps-pagination .ps-page.ps-disabled{
   opacity:.38;
   pointer-events:none;
+}
+
+@media (max-width: 640px){
+  .ps-pagination-wrap{
+    margin-top:26px;
+  }
+
+  .ps-pagination .ps-page{
+    min-width:40px;
+    height:40px;
+    border-radius:12px;
+    font-size:15px;
+  }
+
+  .ps-pagination-info{
+    font-size:14px;
+  }
 }
 
 @media (max-width: 640px){
@@ -2513,4 +2530,103 @@ body.page-home .home-ref__head p{
   .ps-pagination-info{
     font-size:14px;
   }
+}
+
+/* =========================================
+   FIX: footer ne sme da prelazi preko sadržaja
+   ========================================= */
+
+html, body {
+  overflow-x: hidden;
+}
+
+body footer,
+.site-footer,
+footer.site-footer {
+  position: relative !important;
+  bottom: auto !important;
+  left: auto !important;
+  right: auto !important;
+  width: 100% !important;
+  transform: none !important;
+  margin-top: 48px !important;
+  z-index: 5 !important;
+}
+
+body footer::before,
+body footer::after,
+.site-footer::before,
+.site-footer::after,
+footer.site-footer::before,
+footer.site-footer::after {
+  content: none !important;
+  display: none !important;
+}
+
+main,
+.page-content,
+.section,
+.container {
+  position: relative;
+  z-index: 2;
+}
+
+/* dodatno osiguranje da ništa providno/fiksno ne prelazi preko stranice */
+.pravoslavni-hero,
+.pravoslavni-grid,
+.pravoslavni-modules,
+.pravoslavni-section {
+  position: relative;
+  z-index: 2;
+}
+
+/* =========================================
+   FINAL FIX: footer i overlay stabilizacija
+   ========================================= */
+
+html,
+body{
+  overflow-x:hidden;
+}
+
+.page{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+}
+
+.pageMain{
+  flex:1 0 auto;
+  position:relative;
+  z-index:1;
+}
+
+.footer{
+  position:relative !important;
+  left:auto !important;
+  right:auto !important;
+  top:auto !important;
+  bottom:auto !important;
+  width:100% !important;
+  margin-top:auto !important;
+  transform:none !important;
+  clear:both;
+  z-index:2;
+}
+
+.footer::before,
+.footer::after{
+  content:none !important;
+  display:none !important;
+}
+
+.ps-page{
+  position:relative;
+  display:block;
+  min-width:0;
+  height:auto;
+  padding-bottom:36px;
+  background:transparent;
+  border:0;
+  box-shadow:none;
 }

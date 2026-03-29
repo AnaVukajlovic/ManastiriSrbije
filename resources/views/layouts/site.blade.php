@@ -9,27 +9,83 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"> -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700;800;900&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="{{ asset('css/site.css') }}?v={{ time() }}">
     <link
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-      crossorigin=""
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+        crossorigin=""
     />
 
     <link
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css"
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css"
     />
     <link
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css"
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css"
     />
+
+    <style>
+        html,
+        body {
+            min-height: 100%;
+            overflow-x: hidden;
+        }
+
+        body {
+            margin: 0;
+        }
+
+        .page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            isolation: isolate;
+        }
+
+        .pageMain {
+            flex: 1 0 auto;
+            display: block;
+            position: relative;
+            z-index: 1;
+            min-height: 0;
+        }
+
+        .footer,
+        footer.footer {
+            position: relative !important;
+            left: auto !important;
+            right: auto !important;
+            bottom: auto !important;
+            top: auto !important;
+            width: 100% !important;
+            transform: none !important;
+            clear: both;
+            margin-top: 48px;
+            z-index: 2;
+        }
+
+        .footer::before,
+        .footer::after,
+        footer.footer::before,
+        footer.footer::after {
+            content: none !important;
+            display: none !important;
+        }
+
+        .topnav {
+            position: relative;
+            z-index: 20;
+        }
+
+        #mobileMenu {
+            z-index: 30;
+        }
+    </style>
 
     @stack('styles')
 </head>
@@ -339,5 +395,6 @@
             });
         })();
     </script>
+    
 </body>
 </html>
