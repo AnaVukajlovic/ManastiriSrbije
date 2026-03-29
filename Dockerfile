@@ -1,6 +1,6 @@
 FROM php:8.2-cli
 
-# Sistemске зависности + PHP zip ekstenzija
+# Sistemske zavisnosti + PHP zip ekstenzija
 RUN apt-get update && apt-get install -y \
     git \
     unzip \
@@ -25,10 +25,13 @@ RUN chmod -R 775 storage bootstrap/cache
 # PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-# Vite build za CSS/JS
+# Front build
 RUN npm install
 RUN npm run build
 
+# Start skripta
+RUN chmod +x /app/start-render.sh
+
 EXPOSE 10000
 
-CMD php artisan serve --host=0.0.0.0 --port=10000
+CMD ["/app/start-render.sh"]
