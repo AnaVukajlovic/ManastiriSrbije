@@ -34,7 +34,7 @@ class MonasteriesCsvSeeder extends Seeder
 
         $firstPhysicalLine = preg_replace('/^\xEF\xBB\xBF/', '', $firstPhysicalLine);
 
-        // Delimiter detekcija SAMO iz header reda
+        // delimiter detekcija samo iz header reda
         $delimiter = (substr_count($firstPhysicalLine, ';') > substr_count($firstPhysicalLine, ',')) ? ';' : ',';
 
         $handle = fopen($path, 'r');
@@ -58,7 +58,9 @@ class MonasteriesCsvSeeder extends Seeder
 
         $now = now();
         $insertedOrUpdated = 0;
-        $cleanStart = true;
+
+        // NE briši sve na početku
+        $cleanStart = false;
 
         $has = fn (string $col) => Schema::hasColumn('monasteries', $col);
 
@@ -68,6 +70,16 @@ class MonasteriesCsvSeeder extends Seeder
         $HAS_LONGITUDE = $has('longitude');
         $HAS_EPAR = $has('eparchy');
         $HAS_EPAR_ID = $has('eparchy_id');
+
+        // dodatna polja iz tvog CSV-a
+        $HAS_DESCRIPTION_SHORT = $has('description_short');
+        $HAS_STATUS = $has('status');
+        $HAS_KTITOR = $has('ktitor');
+        $HAS_GODINA_IZGRADNJE = $has('godina_izgradnje');
+        $HAS_NAPOMENA_PODACI = $has('napomena_podaci');
+        $HAS_COORD_SOURCE = $has('coord_source');
+        $HAS_COORD_URL = $has('coord_url');
+        $HAS_COORD_STATUS = $has('coord_status');
 
         if ($cleanStart) {
             $driver = DB::getDriverName();
@@ -105,7 +117,13 @@ class MonasteriesCsvSeeder extends Seeder
             if ($v === null) return null;
             $v = trim($v);
             if ($v === '') return null;
+
+            // pokušaj da sredi i decimalne zapise sa zarezom
             $v = str_replace(',', '.', $v);
+
+            // ukloni višak razmaka
+            $v = preg_replace('/\s+/', '', $v);
+
             return is_numeric($v) ? (float) $v : null;
         };
 
@@ -183,6 +201,7 @@ class MonasteriesCsvSeeder extends Seeder
             $latitude = $toFloat($getAny($assoc, ['latitude', 'lat']));
             $longitude = $toFloat($getAny($assoc, ['longitude', 'lng']));
 
+            $descriptionShort = $getAny($assoc, ['description_short', 'opis_kratki', 'short_description']);
             $description = $getAny($assoc, ['description', 'opis', 'excerpt']);
             $imageUrl = $getAny($assoc, ['image_url', 'image']);
             $wikipediaUrl = $getAny($assoc, ['wikipedia_url', 'wikipedia', 'wiki', 'source_url']);
@@ -194,7 +213,15 @@ class MonasteriesCsvSeeder extends Seeder
             $history = $getAny($assoc, ['history', 'istorija']);
             $source = $getAny($assoc, ['source', 'izvor']);
 
-            $reviewStatus = $getAny($assoc, ['review_status', 'status']) ?? 'pending';
+            $statusText = $getAny($assoc, ['status']);
+            $ktitor = $getAny($assoc, ['ktitor']);
+            $godinaIzgradnje = $getAny($assoc, ['godina_izgradnje']);
+            $napomenaPodaci = $getAny($assoc, ['napomena_podaci']);
+            $coordSource = $getAny($assoc, ['coord_source']);
+            $coordUrl = $getAny($assoc, ['coord_url']);
+            $coordStatus = $getAny($assoc, ['coord_status']);
+
+            $reviewStatus = $getAny($assoc, ['review_status']) ?? 'pending';
             $isApproved = $toBool($getAny($assoc, ['is_approved'])) ?? 0;
 
             $isSpc = $toBool($getAny($assoc, ['is_spc']));
@@ -227,8 +254,10 @@ class MonasteriesCsvSeeder extends Seeder
                 'review_status' => $reviewStatus,
                 'is_approved' => $isApproved,
                 'updated_at' => $now,
-                'created_at' => $now,
             ];
+
+            // created_at samo za nove zapise, ali može ostati i ovako ako nemaš problem
+            $data['created_at'] = $now;
 
             if ($HAS_LATITUDE) $data['latitude'] = $latitude;
             if ($HAS_LONGITUDE) $data['longitude'] = $longitude;
@@ -241,6 +270,38 @@ class MonasteriesCsvSeeder extends Seeder
 
             if ($HAS_EPAR_ID) {
                 $data['eparchy_id'] = $eparchyId;
+            }
+
+            if ($HAS_DESCRIPTION_SHORT) {
+                $data['description_short'] = $descriptionShort;
+            }
+
+            if ($HAS_STATUS) {
+                $data['status'] = $statusText;
+            }
+
+            if ($HAS_KTITOR) {
+                $data['ktitor'] = $ktitor;
+            }
+
+            if ($HAS_GODINA_IZGRADNJE) {
+                $data['godina_izgradnje'] = $godinaIzgradnje;
+            }
+
+            if ($HAS_NAPOMENA_PODACI) {
+                $data['napomena_podaci'] = $napomenaPodaci;
+            }
+
+            if ($HAS_COORD_SOURCE) {
+                $data['coord_source'] = $coordSource;
+            }
+
+            if ($HAS_COORD_URL) {
+                $data['coord_url'] = $coordUrl;
+            }
+
+            if ($HAS_COORD_STATUS) {
+                $data['coord_status'] = $coordStatus;
             }
 
             DB::table('monasteries')->updateOrInsert(
