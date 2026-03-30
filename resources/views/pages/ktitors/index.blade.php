@@ -127,9 +127,38 @@
     </div>
   </div>
 
+@if ($ktitors->hasPages())
   <div class="kt-pager">
-    {{ $ktitors->links('vendor.pagination.ktitors') }}
+    <div class="kt-pager__summary">
+      Prikazano {{ $ktitors->firstItem() }}–{{ $ktitors->lastItem() }} od {{ $ktitors->total() }} ktitora
+    </div>
+
+    <div class="kt-pager__list">
+      {{-- Prethodna --}}
+      @if ($ktitors->onFirstPage())
+        <span class="kt-page-btn kt-page-btn--arrow is-disabled" aria-disabled="true">‹</span>
+      @else
+        <a class="kt-page-btn kt-page-btn--arrow" href="{{ $ktitors->previousPageUrl() }}" rel="prev">‹</a>
+      @endif
+
+      {{-- Brojevi strana --}}
+      @for ($page = 1; $page <= $ktitors->lastPage(); $page++)
+        @if ($page == $ktitors->currentPage())
+          <span class="kt-page-btn is-active" aria-current="page">{{ $page }}</span>
+        @else
+          <a class="kt-page-btn" href="{{ $ktitors->url($page) }}">{{ $page }}</a>
+        @endif
+      @endfor
+
+      {{-- Sledeća --}}
+      @if ($ktitors->hasMorePages())
+        <a class="kt-page-btn kt-page-btn--arrow" href="{{ $ktitors->nextPageUrl() }}" rel="next">›</a>
+      @else
+        <span class="kt-page-btn kt-page-btn--arrow is-disabled" aria-disabled="true">›</span>
+      @endif
+    </div>
   </div>
+@endif
 @endif
 
 {{-- AI Modal --}}
@@ -646,6 +675,322 @@
   .kt-aiform input,
   .kt-aiform .btn{
     width:100%;
+  }
+}
+
+
+/* =========================
+   KTITORI PAGINATION FIX
+   ========================= */
+
+.kt-pager{
+  margin-top:34px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:16px;
+  text-align:center;
+}
+
+.kt-pager__summary{
+  color:rgba(255,255,255,.78);
+  font-size:15px;
+  line-height:1.5;
+}
+
+/* Laravel pagination wrapper */
+.kt-pager nav{
+  display:flex;
+  justify-content:center;
+  width:100%;
+}
+
+.kt-pager nav > div:first-child{
+  display:none !important;
+}
+
+/* Desktop layout */
+.kt-pager nav > div:last-child{
+  display:flex;
+  justify-content:center;
+  width:100%;
+}
+
+.kt-pager nav > div:last-child > span,
+.kt-pager nav > div:last-child > a{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+/* Linkovi i aktivna stranica */
+.kt-pager .relative.inline-flex.items-center,
+.kt-pager span[aria-current="page"] > span,
+.kt-pager a[rel="prev"],
+.kt-pager a[rel="next"]{
+  min-width:46px;
+  height:44px;
+  padding:0 14px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:15px;
+  border:1px solid rgba(197,162,74,.45);
+  background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+  color:rgba(255,255,255,.92) !important;
+  text-decoration:none !important;
+  font-weight:700;
+  font-size:18px;
+  line-height:1;
+  box-shadow:0 10px 22px rgba(0,0,0,.18);
+  transition:
+    transform .18s ease,
+    border-color .18s ease,
+    background .18s ease,
+    box-shadow .18s ease,
+    color .18s ease;
+}
+
+/* Hover */
+.kt-pager a.relative.inline-flex.items-center:hover,
+.kt-pager a[rel="prev"]:hover,
+.kt-pager a[rel="next"]:hover{
+  transform:translateY(-1px);
+  border-color:rgba(226,194,106,.75);
+  background:linear-gradient(180deg, rgba(197,162,74,.18), rgba(197,162,74,.08));
+  color:#fff !important;
+  box-shadow:0 14px 28px rgba(0,0,0,.24);
+}
+
+/* Aktivna stranica */
+.kt-pager span[aria-current="page"] > span{
+  border-color:#e2c26a !important;
+  background:linear-gradient(180deg, #e2c26a, #c5a24a) !important;
+  color:#2a1a08 !important;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.06) inset,
+    0 12px 28px rgba(197,162,74,.30);
+}
+
+/* Disabled */
+.kt-pager span[aria-disabled="true"] > span,
+.kt-pager span.relative.inline-flex.items-center.text-gray-500{
+  opacity:.38;
+  pointer-events:none;
+  cursor:default;
+}
+
+/* Strelice */
+.kt-pager a[rel="prev"],
+.kt-pager a[rel="next"],
+.kt-pager span[aria-disabled="true"] > span{
+  font-size:24px;
+  font-weight:800;
+}
+
+/* Sakrij nepotrebne tekstove sa malih ekranâ ako smetaju */
+.kt-pager .hidden.sm\\:flex-1,
+.kt-pager .sm\\:hidden{
+  display:none !important;
+}
+
+/* Ako globalni CSS kvari svg strelice */
+.kt-pager svg{
+  width:18px !important;
+  height:18px !important;
+  max-width:18px !important;
+  max-height:18px !important;
+  stroke-width:2.2;
+}
+
+/* Responsive */
+@media (max-width: 768px){
+  .kt-pager{
+    margin-top:28px;
+    gap:14px;
+  }
+
+  .kt-pager__summary{
+    font-size:14px;
+    max-width:320px;
+  }
+
+  .kt-pager .relative.inline-flex.items-center,
+  .kt-pager span[aria-current="page"] > span,
+  .kt-pager a[rel="prev"],
+  .kt-pager a[rel="next"]{
+    min-width:40px;
+    height:40px;
+    padding:0 12px;
+    border-radius:13px;
+    font-size:16px;
+  }
+
+  .kt-pager a[rel="prev"],
+  .kt-pager a[rel="next"],
+  .kt-pager span[aria-disabled="true"] > span{
+    font-size:21px;
+  }
+
+  .kt-pager nav > div:last-child > span,
+  .kt-pager nav > div:last-child > a{
+    gap:8px;
+  }
+}
+
+@media (max-width: 480px){
+  .kt-pager .relative.inline-flex.items-center,
+  .kt-pager span[aria-current="page"] > span,
+  .kt-pager a[rel="prev"],
+  .kt-pager a[rel="next"]{
+    min-width:36px;
+    height:36px;
+    padding:0 10px;
+    border-radius:11px;
+    font-size:15px;
+  }
+
+  .kt-pager a[rel="prev"],
+  .kt-pager a[rel="next"],
+  .kt-pager span[aria-disabled="true"] > span{
+    font-size:19px;
+  }
+
+  .kt-pager nav > div:last-child > span,
+  .kt-pager nav > div:last-child > a{
+    gap:6px;
+  }
+}
+
+
+/* =========================================
+   KTITORI PAGINATION — KAO KOD MANASTIRA
+   ========================================= */
+
+.kt-pager{
+  margin-top:34px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:18px;
+  text-align:center;
+}
+
+.kt-pager__summary{
+  color:rgba(255,255,255,.80);
+  font-size:15px;
+  line-height:1.5;
+}
+
+.kt-pager__list{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:10px;
+}
+
+.kt-page-btn{
+  min-width:46px;
+  height:44px;
+  padding:0 14px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:15px;
+  border:1px solid rgba(197,162,74,.45);
+  background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+  color:rgba(255,255,255,.92);
+  text-decoration:none;
+  font-weight:700;
+  font-size:18px;
+  line-height:1;
+  box-shadow:0 10px 22px rgba(0,0,0,.18);
+  transition:
+    transform .18s ease,
+    border-color .18s ease,
+    background .18s ease,
+    box-shadow .18s ease,
+    color .18s ease;
+}
+
+.kt-page-btn:hover{
+  transform:translateY(-1px);
+  border-color:rgba(226,194,106,.75);
+  background:linear-gradient(180deg, rgba(197,162,74,.18), rgba(197,162,74,.08));
+  color:#fff;
+  box-shadow:0 14px 28px rgba(0,0,0,.24);
+}
+
+.kt-page-btn.is-active{
+  border-color:#e2c26a;
+  background:linear-gradient(180deg, #e2c26a, #c5a24a);
+  color:#2a1a08;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.06) inset,
+    0 12px 28px rgba(197,162,74,.30);
+}
+
+.kt-page-btn--arrow{
+  font-size:24px;
+  font-weight:800;
+  padding-bottom:2px;
+}
+
+.kt-page-btn.is-disabled{
+  opacity:.35;
+  pointer-events:none;
+  cursor:default;
+}
+
+/* Responsive */
+@media (max-width: 768px){
+  .kt-pager{
+    margin-top:28px;
+    gap:14px;
+  }
+
+  .kt-pager__summary{
+    font-size:14px;
+    max-width:320px;
+  }
+
+  .kt-pager__list{
+    gap:8px;
+  }
+
+  .kt-page-btn{
+    min-width:40px;
+    height:40px;
+    padding:0 12px;
+    border-radius:13px;
+    font-size:16px;
+  }
+
+  .kt-page-btn--arrow{
+    font-size:21px;
+  }
+}
+
+@media (max-width: 480px){
+  .kt-pager__list{
+    gap:7px;
+  }
+
+  .kt-page-btn{
+    min-width:36px;
+    height:36px;
+    padding:0 10px;
+    border-radius:11px;
+    font-size:15px;
+  }
+
+  .kt-page-btn--arrow{
+    font-size:19px;
   }
 }
 </style>
