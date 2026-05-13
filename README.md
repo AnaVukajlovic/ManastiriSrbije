@@ -1,59 +1,58 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🏛️ Pravoslavni Svetionik
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+> **Digitalni vodič kroz pravoslavne svetinje Srbije** – Interaktivna web platforma za istraživanje duhovne, istorijske i kulturne baštine.
 
-## About Laravel
+Ovaj projekat je razvijen kao završni master rad na **Fakultetu tehničkih nauka u Čačku (Univerzitet u Kragujevcu)**. Predstavlja razvoj kompleksne Full-stack web aplikacije koja spaja tradicionalne podatke sa modernim web tehnologijama.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### 🤖 Napomena o AI integraciji (Akademski zahtev)
+> Implementacija modula veštačke inteligencije u aplikaciju nije korišćena za automatsko generisanje izvornog koda, već je predstavljala **namenski zadatak i ključni zahtev predmetnog profesora** u okviru izrade ovog master rada. 
+> 
+> Cilj ovog inženjerskog zadatka bio je demonstriranje sposobnosti povezivanja aplikacije sa eksternim AI API servisima unutar *Laravel* arhitekture, obrada ulaznih podataka i asinhrono vraćanje formata (edukativni sadržaji, sažeci, kvizovi) kroz složen interfejs nazvan **AI Vodič**.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## ✨ Ključne funkcionalnosti
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+* 🗺️ **Interaktivna mapa:** Pregled lokacija manastira u realnom vremenu uz korišćenje JS biblioteka i dinamičko učitavanje geografskih koordinata iz baze podataka.
+* 🧠 **AI Vodič:** Pametni asistent integrisan u sistem radi obrade teksta, objašnjenja istorijskih pojmova i dinamičkog kreiranja kvizova za proveru znanja.
+* 📅 **Pravoslavni kalendar i Algoritmi:** Implementiran algoritam za izračunavanje datuma Vaskrsa i složen relacioni sistem za praćenje praznika i tipika posta.
+* 👑 **Genealogija i Vremenska linija:** Vizuelni prikaz porodičnog stabla dinastije Nemanjića i interaktivna hronološka vremenska linija (Timeline).
+* 🎓 **Sistem za proveru znanja:** Backend logika za kreiranje, validaciju i bodovanje interaktivnih kvizova iz oblasti istorije i pravoslavlja.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## 🛠️ Tehnologije (Tech Stack)
 
-## Laravel Sponsors
+| Frontend | Backend | Baza Podataka | Ostalo |
+| :--- | :--- | :--- | :--- |
+| HTML5, CSS3 | PHP 8.x | SQLite | Git & GitHub |
+| JavaScript | Laravel Framework | (Preko 20 relacija) | Render Hosting |
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## 🚀 Pokretanje aplikacije lokalno
 
-### Premium Partners
+Ukoliko želite da pokrenete projekat na svom računaru, pratite sledeće korake:
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+**1. Kloniranje repozitorijuma:**
+git clone [https://github.com/AnaVukajlovic/ManastiriSrbije.git]
+(https://github.com/AnaVukajlovic/ManastiriSrbije.git)
 
-## Contributing
+**2. Instalacija, podešavanje baze i pokretanje servera:**
+Unesite sledeće komande redom u terminal kako biste podesili celokupno okruženje:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+# 3. Instalacija PHP zavisnosti (backend)
+composer install
 
-## Code of Conduct
+# 4. Instalacija Node.js zavisnosti (frontend)
+npm install
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+# 8. Kreiranje lokalnog konfiguracionog fajla
+cp .env.example .env
 
-## Security Vulnerabilities
+# 6. Generisanje sigurnosnog ključa aplikacije
+php artisan key:generate
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+# 7. Kreiranje strukture baze podataka i ubacivanje početnih podataka (seed)
+php artisan migrate --seed
 
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+# 8. Pokretanje lokalnog razvojnog servera
+php artisan serve
