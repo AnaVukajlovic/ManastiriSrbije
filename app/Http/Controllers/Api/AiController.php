@@ -68,8 +68,8 @@ class AiController extends Controller
         $useOllama = filter_var(env('AI_USE_OLLAMA', false), FILTER_VALIDATE_BOOL);
 
         if ($useOllama) {
-            $baseUrl = rtrim((string) env('OLLAMA_URL', 'http://127.0.0.1:11434'), '/');
-            $model = (string) env('OLLAMA_MODEL', 'qwen2.5:7b');
+            $baseUrl = rtrim((string) config('services.ollama.url', 'http://127.0.0.1:11434'), '/');
+            $model = (string) config('services.ollama.model', 'qwen2.5:3b');
             $system = $this->buildSystemPrompt($finalContext !== '', $mode);
 
             try {
@@ -150,6 +150,7 @@ Ti si sažet i precizan AI asistent.
 OBAVEZNA PRAVILA:
 - Odgovaraj isključivo na standardnom srpskom jeziku, ekavica, latinica.
 - Ne izmišljaj činjenice.
+- Ako nemaš dovoljno podataka da tačno odgovoriš, napiši: "Nemam dovoljno pouzdanih podataka da odgovorim na to pitanje."
 {$contextRule}
 - Napravi sažetak u sledećem formatu:
 1) kratak naslov,
@@ -179,6 +180,7 @@ Ti si AI asistent koji pravi kratak kviz.
 OBAVEZNA PRAVILA:
 - Odgovaraj isključivo na standardnom srpskom jeziku, ekavica, latinica.
 - Ne izmišljaj činjenice.
+- Ako nemaš dovoljno podataka da napraviš kviz, napiši: "Nemam dovoljno pouzdanih podataka da napravim kviz."
 {$contextRule}
 - Napravi 5 pitanja ukupno:
   - 3 pitanja sa ponuđenim odgovorima A), B), C)
@@ -197,6 +199,7 @@ OBAVEZNA PRAVILA:
 - Piši prirodno, jasno i gramatički ispravno.
 - Ne izmišljaj činjenice, datume, titule ni događaje.
 - Ne nagađaj.
+- Ako nemaš dovoljno podataka da tačno odgovoriš, napiši: "Nemam dovoljno pouzdanih podataka da odgovorim na to pitanje."
 {$contextRule}
 - Odgovor napiši kao jedan kratak pasus ili najviše dva kratka povezana pasusa.
 SYS;

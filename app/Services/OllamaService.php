@@ -23,8 +23,9 @@ class OllamaService
                 'format' => 'json',
                 'keep_alive' => $keepAlive,
                 'options' => [
-                    'temperature' => 0.2,
-                    'num_predict' => 160,
+                    'temperature' => 0.0,
+                    'num_predict' => 120,
+                    'top_p' => 0.4,
                 ],
             ]);
 

@@ -1681,7 +1681,7 @@ body.page-home .home-ref__quick-title{
   .navlinks{display:none !important;}
   .navsearch{display:none !important;}
   .acct{display:none !important;}
-  .script-switch{display:none !important;}
+  /* .script-switch{display:none !important;} */ /* Uklonjeno da bi dugme bilo vidljivo na mobilnim */
   .burger{display:inline-flex !important;}
   .mobilemenu__links{grid-template-columns:1fr !important;}
 
@@ -2052,7 +2052,7 @@ body.page-home .home-ref__quick-title{
   .navlinks{display:none !important;}
   .navsearch{display:none !important;}
   .acct{display:none !important;}
-  .script-switch{display:none !important;}
+  /* .script-switch{display:none !important;} */ /* Uklonjeno da bi dugme bilo vidljivo na mobilnim */
   .burger{display:inline-flex !important;}
   .mobilemenu__links{grid-template-columns:1fr !important;}
 
@@ -2389,7 +2389,7 @@ body.page-home .home-ref__head p{
   .navlinks{display:none !important;}
   .navsearch{display:none !important;}
   .acct{display:none !important;}
-  .script-switch{display:none !important;}
+  /* .script-switch{display:none !important;} */ /* Uklonjeno da bi dugme bilo vidljivo na tabletima */
   .burger{display:inline-flex !important;}
 
   .topnav__inner{
@@ -6518,4 +6518,60 @@ body{
     .pv-end-actions .pv-btn {
         width: 100%;
     }
+}
+
+/* Dodatni breakpoint-ovi za bolju responzivnost */
+@media (max-width: 480px) {
+  /* Mobilni telefoni (portret) */
+  .container {
+    --container: calc(100% - 20px); /* Manji padding */
+  }
+  .btn, .btn2 {
+    padding: 8px 10px; /* Manji padding za dugmad */
+    font-size: 12px;
+  }
+  .topnav {
+    font-size: 14px; /* Manji font za navigaciju */
+  }
+}
+
+@media (max-width: 360px) {
+  /* Veoma mali ekrani */
+  .container {
+    --container: calc(100% - 10px);
+  }
+  input[type="text"], textarea {
+    font-size: 12px;
+    padding: 8px 10px;
+  }
+}
+
+@media (min-width: 2560px) {
+  /* Ultra-wide ekrani */
+  .container {
+    --container: 1800px; /* Veći maksimum */
+  }
+}
+
+@media (max-width: 768px) {
+  .topnav {
+    flex-direction: column; /* Vertikalni raspored */
+    position: static; /* Ukloni sticky ako smeta */
+  }
+  .topnav ul {
+    display: none; /* Sakrij listu, dodaj hamburger */
+  }
+  .hamburger {
+    display: block; /* Dodaj hamburger dugme */
+  }
+}
+@media (max-width: 768px) {
+  :root {
+    --hero-min: min(70vh, 500px); /* Manja visina na mobilnim */
+  }
+}
+@media (max-width: 480px) {
+  input[type="text"], textarea {
+    font-size: 16px; /* Sprečava zoom na iOS */
+  }
 }
