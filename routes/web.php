@@ -184,3 +184,11 @@ Route::redirect('/dashboard', '/');
 */
 Route::post('/map/ai/recommend-by-city', [MapAiController::class, 'recommendByCity'])
     ->name('map.ai.recommendByCity');
+
+
+    
+
+    use App\Http\Controllers\AdventureController;
+
+Route::get('/avantura', [AdventureController::class, 'index'])->name('avantura.index');
+Route::get('/avantura/igra', [AdventureController::class, 'play'])->name('avantura.play');
