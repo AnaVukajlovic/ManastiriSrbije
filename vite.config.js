@@ -6,9 +6,9 @@ export default defineConfig({
         laravel({
             input: [
                 'resources/css/app.css',
-                'resources/css/avantura.css',
+                //'resources/css/avantura.css',
                 'resources/js/app.js',
-                'resources/js/avantura.js',
+                //'resources/js/avantura.js',
             ],
             refresh: true,
         }),
