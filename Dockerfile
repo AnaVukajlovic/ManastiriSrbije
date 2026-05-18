@@ -30,7 +30,7 @@ RUN npm install
 RUN npm run build
 
 # Start skripta
-RUN chmod +x /app/start-render.sh
+#RUN chmod +x /app/start-render.sh
 
 EXPOSE 10000
 
