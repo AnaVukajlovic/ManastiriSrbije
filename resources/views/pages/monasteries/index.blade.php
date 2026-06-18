@@ -30,15 +30,15 @@
         gap: 20px;
         margin-bottom: 14px;
       }
-.monIndexHero__title{
-  margin:0;
-  font-size:clamp(1.7rem, 2.2vw, 2.2rem);
-  line-height:1.08;
-  letter-spacing:-.02em;
-  font-weight:800;
-  color:var(--gold);
-  text-shadow:0 0 14px rgba(197,162,74,.15);
-}
+      .monIndexHero__title{
+        margin:0;
+        font-size:clamp(1.7rem, 2.2vw, 2.2rem);
+        line-height:1.08;
+        letter-spacing:-.02em;
+        font-weight:800;
+        color:var(--gold);
+        text-shadow:0 0 14px rgba(197,162,74,.15);
+      }
 
       .monIndexHero__subtitle{
         margin: 8px 0 0;
@@ -46,30 +46,30 @@
         color: var(--text-soft);
       }
 
-.monIndexHero__quote{
-  margin:12px 0 0;
-  font-size:.97rem;
-  font-style:italic;
-  color:rgba(255,255,255,.78);
-}
+      .monIndexHero__quote{
+        margin:12px 0 0;
+        font-size:.97rem;
+        font-style:italic;
+        color:rgba(255,255,255,.78);
+      }
 
-.monIndexHero__quote span{
-  color:var(--gold);
-  font-weight:600;
-}
+      .monIndexHero__quote span{
+        color:var(--gold);
+        font-weight:600;
+      }
 
-.monFiltersCard{
-  padding:18px;
-  border-radius:28px;
-  border:1px solid var(--stroke);
-  background:
-    radial-gradient(circle at top left, rgba(197,162,74,.09), transparent 30%),
-    linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01)),
-    linear-gradient(135deg, rgba(28,18,17,.96), rgba(12,8,9,.96));
-  box-shadow:
-    0 20px 48px rgba(0,0,0,.30),
-    inset 0 1px 0 rgba(255,255,255,.03);
-}
+      .monFiltersCard{
+        padding:18px;
+        border-radius:28px;
+        border:1px solid var(--stroke);
+        background:
+          radial-gradient(circle at top left, rgba(197,162,74,.09), transparent 30%),
+          linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01)),
+          linear-gradient(135deg, rgba(28,18,17,.96), rgba(12,8,9,.96));
+        box-shadow:
+          0 20px 48px rgba(0,0,0,.30),
+          inset 0 1px 0 rgba(255,255,255,.03);
+      }
 
       .filters__row{
         display: grid;
@@ -87,33 +87,31 @@
         position: relative;
       }
 
-.filters input,
-.filters select{
-  width:100%;
-  height:50px;
-  padding:0 16px;
-  border-radius:16px;
-  border:1px solid var(--stroke);
-  background:rgba(255,255,255,.04);
-  color:#f5f1ea;
-  font-size:.97rem;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.03);
-  transition:.25s ease;
-}
+      .filters input,
+      .filters select{
+        width:100%;
+        height:50px;
+        padding:0 16px;
+        border-radius:16px;
+        border:1px solid var(--stroke);
+        background:rgba(255,255,255,.04);
+        color:#f5f1ea;
+        font-size:.97rem;
+        box-shadow:inset 0 1px 0 rgba(255,255,255,.03);
+        transition:.25s ease;
+      }
 
-.filters input:focus,
-.filters select:focus{
-  outline:none;
-  border-color:rgba(197,162,74,.6);
-  box-shadow:0 0 0 3px rgba(197,162,74,.10);
-  background:rgba(255,255,255,.06);
-}
+      .filters input:focus,
+      .filters select:focus{
+        outline:none;
+        border-color:rgba(197,162,74,.6);
+        box-shadow:0 0 0 3px rgba(197,162,74,.10);
+        background:rgba(255,255,255,.06);
+      }
 
       .filters input::placeholder{
         color: rgba(255,255,255,.50);
       }
-
-
 
       .filters select{
         appearance: none;
@@ -185,35 +183,35 @@
         margin-top: 20px;
       }
 
-.monCard{
-  position:relative;
-  display:block;
-  min-height:330px;
-  border-radius:26px;
-  overflow:hidden;
-  text-decoration:none;
-  border:1px solid rgba(255,255,255,.08);
-  background:linear-gradient(180deg, rgba(28,18,17,.96), rgba(12,8,9,.96));
-  box-shadow:0 18px 44px rgba(0,0,0,.28);
-  transition:transform .28s ease, box-shadow .28s ease, border-color .28s ease;
-}
-.monCard::before{
-  content:"";
-  position:absolute;
-  inset:0 0 auto 0;
-  height:1px;
-  background:linear-gradient(90deg, transparent, rgba(197,162,74,.45), transparent);
-  opacity:.75;
-  z-index:3;
-  pointer-events:none;
-}
-.monCard:hover{
-  transform:translateY(-6px);
-  box-shadow:
-    0 26px 60px rgba(0,0,0,.34),
-    0 0 24px rgba(197,162,74,.08);
-  border-color:rgba(197,162,74,.22);
-}
+      .monCard{
+        position:relative;
+        display:block;
+        min-height:330px;
+        border-radius:26px;
+        overflow:hidden;
+        text-decoration:none;
+        border:1px solid rgba(255,255,255,.08);
+        background:linear-gradient(180deg, rgba(28,18,17,.96), rgba(12,8,9,.96));
+        box-shadow:0 18px 44px rgba(0,0,0,.28);
+        transition:transform .28s ease, box-shadow .28s ease, border-color .28s ease;
+      }
+      .monCard::before{
+        content:"";
+        position:absolute;
+        inset:0 0 auto 0;
+        height:1px;
+        background:linear-gradient(90deg, transparent, rgba(197,162,74,.45), transparent);
+        opacity:.75;
+        z-index:3;
+        pointer-events:none;
+      }
+      .monCard:hover{
+        transform:translateY(-6px);
+        box-shadow:
+          0 26px 60px rgba(0,0,0,.34),
+          0 0 24px rgba(197,162,74,.08);
+        border-color:rgba(197,162,74,.22);
+      }
 
       .monCard__img{
         position: absolute;
@@ -225,10 +223,10 @@
         transition: transform .35s ease;
       }
 
-.monCard:hover .monCard__img{
-  transform:scale(1.06);
-  filter:brightness(1.03) saturate(1.05);
-}
+      .monCard:hover .monCard__img{
+        transform:scale(1.06);
+        filter:brightness(1.03) saturate(1.05);
+      }
 
       .monCard__overlay{
         position: absolute;
@@ -246,23 +244,30 @@
         padding: 18px 18px 16px;
       }
 
-.monCard__title{
-  margin-bottom:8px;
-  font-size:1.28rem;
-  line-height:1.16;
-  font-weight:900;
-  color:#fff;
-  text-shadow:0 2px 10px rgba(0,0,0,.25);
-}
+      .monCard__title{
+        margin-bottom:8px;
+        font-size:1.28rem;
+        line-height:1.16;
+        font-weight:900;
+        color:#fff;
+        text-shadow:0 2px 10px rgba(0,0,0,.25);
+      }
 
-.monCard__meta{
-  display:flex;
-  flex-wrap:wrap;
-  gap:6px;
-  margin-bottom:8px;
-  font-size:.92rem;
-  color:rgba(255,255,255,.76);
-}
+      .monCard__meta{
+        display:flex;
+        flex-wrap:wrap;
+        align-items:center;
+        gap:6px;
+        margin-bottom:8px;
+        font-size:.88rem;
+        color:rgba(255,255,255,.70);
+      }
+
+      /* Poseban stil za godinu osnivanja u metapodacima */
+      .monCard__meta-year {
+        color: var(--gold2);
+        font-weight: 700;
+      }
 
       .monCard__excerpt{
         display: -webkit-box;
@@ -377,7 +382,7 @@
               <label class="sr-only" for="sort">Sortiranje</label>
               <select id="sort" name="sort">
                 <option value="popular" @selected($sort === 'popular')>Preporučeno</option>
-                <option value="name" @selected($sort === 'name')>Naziv (A–Z)</option>
+                <option value="name" @selected($sort === 'name')>Naziv (A–Š)</option>
                 <option value="new" @selected($sort === 'new')>Najnovije</option>
               </select>
             </div>
@@ -394,8 +399,10 @@
             $localImg = asset('images/monasteries/' . $m->slug . '.jpg');
             $fallbackImg = asset('images/monasteries/placeholder.jpg');
 
-            $regionLabel = (!empty($m->region) && $m->region !== 'Nepoznato') ? $m->region : null;
-            $cityLabel = (!empty($m->city) && $m->city !== 'Nepoznato') ? $m->city : null;
+            // Fleksibilno čišćenje vrednosti iz baze (provera za prazna i "nepoznato" polja bez obzira na velika/mala slova)
+            $regionLabel = (!empty($m->region) && strtolower($m->region) !== 'nepoznato') ? $m->region : null;
+            $cityLabel = (!empty($m->city) && strtolower($m->city) !== 'nepoznato') ? $m->city : null;
+            $godinaLabel = (!empty($m->godina_izgradnje) && strtolower($m->godina_izgradnje) !== 'nepoznato') ? $m->godina_izgradnje : null;
           @endphp
 
           <a class="monCard" href="{{ route('monasteries.show', $m->slug) }}">
@@ -410,8 +417,16 @@
             <div class="monCard__body">
               <div class="monCard__title">{{ $m->name }}</div>
 
-              @if($regionLabel || $cityLabel)
+              @if($godinaLabel || $regionLabel || $cityLabel)
                 <div class="monCard__meta">
+                  @if($godinaLabel)
+                    <span class="monCard__meta-year">{{ $godinaLabel }}</span>
+                  @endif
+
+                  @if($godinaLabel && ($regionLabel || $cityLabel))
+                    <span>•</span>
+                  @endif
+
                   @if($regionLabel)
                     <span>{{ $regionLabel }}</span>
                   @endif
@@ -437,35 +452,35 @@
       </div>
 
       <div class="monIndexPagination">
-@if ($monasteries->hasPages())
-    <div class="ps-pagination-wrap">
-        <div class="ps-pagination-info">
-            Prikazano {{ $monasteries->firstItem() }}–{{ $monasteries->lastItem() }} od {{ $monasteries->total() }} manastira
-        </div>
+        @if ($monasteries->hasPages())
+          <div class="ps-pagination-wrap">
+            <div class="ps-pagination-info">
+              Prikazano {{ $monasteries->firstItem() }}–{{ $monasteries->lastItem() }} od {{ $monasteries->total() }} manastira
+            </div>
 
-        <nav class="ps-pagination">
-            @if ($monasteries->onFirstPage())
-                <span class="ps-page ps-disabled">‹</span>
-            @else
-                <a class="ps-page" href="{{ $monasteries->previousPageUrl() }}">‹</a>
-            @endif
-
-            @foreach ($monasteries->getUrlRange(1, $monasteries->lastPage()) as $page => $url)
-                @if ($page == $monasteries->currentPage())
-                    <span class="ps-page is-active">{{ $page }}</span>
+            <nav class="ps-pagination">
+                @if ($monasteries->onFirstPage())
+                    <span class="ps-page ps-disabled">‹</span>
                 @else
-                    <a class="ps-page" href="{{ $url }}">{{ $page }}</a>
+                    <a class="ps-page" href="{{ $monasteries->previousPageUrl() }}">‹</a>
                 @endif
-            @endforeach
 
-            @if ($monasteries->hasMorePages())
-                <a class="ps-page" href="{{ $monasteries->nextPageUrl() }}">›</a>
-            @else
-                <span class="ps-page ps-disabled">›</span>
-            @endif
-        </nav>
-    </div>
-@endif
+                @foreach ($monasteries->getUrlRange(1, $monasteries->lastPage()) as $page => $url)
+                    @if ($page == $monasteries->currentPage())
+                        <span class="ps-page is-active">{{ $page }}</span>
+                    @else
+                        <a class="ps-page" href="{{ $url }}">{{ $page }}</a>
+                    @endif
+                @endforeach
+
+                @if ($monasteries->hasMorePages())
+                    <a class="ps-page" href="{{ $monasteries->nextPageUrl() }}">›</a>
+                @else
+                    <span class="ps-page ps-disabled">›</span>
+                @endif
+            </nav>
+          </div>
+        @endif
       </div>
     </div>
 

@@ -110,17 +110,6 @@
           <div class="kt-card__footer">
             <a class="btn btn--ghost" href="{{ route('ktitors.show', $k->slug) }}">Detalji</a>
 
-            <button
-              class="btn"
-              type="button"
-              data-ai
-              data-name="{{ e($k->name) }}"
-              data-born="{{ $k->born_year ?? '' }}"
-              data-died="{{ $k->died_year ?? '' }}"
-              data-bio="{{ e(\Illuminate\Support\Str::limit(strip_tags($k->bio ?? ''), 2200)) }}"
-            >
-              Pitaj AI
-            </button>
           </div>
         </article>
       @endforeach
@@ -440,15 +429,30 @@
   font-weight:800;
   letter-spacing:.02em;
 }
-.kt-card__bio{
-  margin-top:10px;
-  color:rgba(255,255,255,.80);
-  line-height:1.68;
-  font-size:14px;
-  text-align:justify;
-  text-justify:inter-word;
+.kt-card__bio {
+    margin-top: 10px;
+    color: rgba(255,255,255,.80);
+    line-height: 1.68;
+    font-size: 14px;
+    text-align: justify;
+    text-justify: inter-word;
+    
+    /* OVO JE KLJUČNO: */
+    display: -webkit-box;
+    -webkit-line-clamp: 4; /* Broj redova teksta - stavi 3 ili 4 kako ti lepše izgleda */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    height: 75px; /* Fiksna visina za tekst - ovo će izjednačiti sve kartice */
 }
-
+/* Osigurava da dugme uvek bude na dnu */
+.kt-card {
+    min-height: 480px; 
+    display: flex;
+    flex-direction: column;
+}
+.kt-card__body {
+    flex: 1; /* Telo kartice zauzima sav prostor */
+}
 .kt-card__footer{
   display:flex;
   gap:12px;

@@ -1223,7 +1223,7 @@ private function pickBestSummarySentences(array $sentences, array $keywords, int
         return implode("\n", $lines);
     }
 
-    private function callOllama(
+   private function callOllama(
         string $baseUrl,
         string $model,
         string $system,
@@ -1250,42 +1250,42 @@ private function pickBestSummarySentences(array $sentences, array $keywords, int
             'content' => $question,
         ];
 
+        // Ignorišemo lokalni model i forsiramo brzi Groq
         $payload = [
-            'model' => $model,
+            'model' => 'llama3-8b-8192',
             'messages' => $messages,
-            'stream' => false,
-            'options' => [
-                'temperature' => 0.05,
-                'top_p' => 0.55,
-                'num_predict' => $maxTokens,
-                'num_ctx' => 2048,
-                'repeat_penalty' => 1.20,
-            ],
+            'temperature' => 0.05,
+            'top_p' => 0.55,
+            'max_tokens' => $maxTokens, // U Groq-u se koristi max_tokens, a ne num_predict
         ];
 
-        $url = $baseUrl . '/api/chat';
+        $url = 'https://api.groq.com/openai/v1/chat/completions';
 
-        $res = Http::connectTimeout(20)
-            ->timeout(90)
+        // Dodato prosleđivanje API ključa kroz headere
+        $res = Http::withHeaders([
+                'Authorization' => 'Bearer ' . env('GROQ_API_KEY'),
+            ])
+            ->connectTimeout(5)
+            ->timeout(30)
             ->acceptJson()
             ->asJson()
             ->post($url, $payload);
 
         if (!$res->successful()) {
-            Log::error('Ollama failed', [
+            Log::error('Groq API failed', [
                 'url' => $url,
                 'status' => $res->status(),
                 'body' => $res->body(),
             ]);
 
-            throw new \RuntimeException('Ollama greška: HTTP ' . $res->status());
+            throw new \RuntimeException('Groq API greška: HTTP ' . $res->status());
         }
 
         $data = $res->json();
 
-        return trim((string) data_get($data, 'message.content', ''));
+        // Parsiranje putanje do teksta specifične za OpenAI/Groq format
+        return trim((string) data_get($data, 'choices.0.message.content', ''));
     }
-
     private function limitText(?string $text, int $limit = 300): string
     {
         $text = $this->cleanText((string) $text);

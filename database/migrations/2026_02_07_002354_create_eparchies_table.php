@@ -14,6 +14,7 @@ public function up(): void
     Schema::create('eparchies', function (Blueprint $table) {
         $table->id();
         $table->string('name')->unique();
+        $table->string('slug')->unique();
         $table->timestamps();
     });
 }

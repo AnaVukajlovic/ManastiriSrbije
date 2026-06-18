@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Monastery;
 use App\Models\Eparchy;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MonasteryController extends Controller
 {
@@ -12,31 +13,34 @@ class MonasteryController extends Controller
     {
         $q        = trim((string) $request->query('q', ''));
         $region   = trim((string) $request->query('region', ''));
-        $eparchy  = trim((string) $request->query('eparchy', '')); // ✅ NOVO (slug)
+        $eparchy  = trim((string) $request->query('eparchy', ''));
         $sort     = trim((string) $request->query('sort', 'popular'));
 
-        // dropdown: regioni
+        // 1. Dropdown: regioni (bez duplikata i praznih polja)
         $regions = Monastery::query()
             ->whereNotNull('region')
             ->where('region', '<>', '')
+            ->select('region')
             ->distinct()
             ->orderBy('region')
-            ->pluck('region')
-            ->values();
+            ->pluck('region');
 
-        // dropdown: eparhije (iz tabele eparchies)
+        // 2. Dropdown: eparhije (rešavamo duplikate i enkodiranje direktno iz baze)
+        // Koristimo raw query ako treba da "nateramo" bazu da pravilno čita UTF-8
         $eparchies = Eparchy::query()
+            ->select('id', 'name', 'slug')
             ->orderBy('name')
-            ->get(['id', 'name', 'slug']);
+            ->get()
+            ->unique('name'); // Laravel će ovo očistiti u memoriji ako baza i dalje vraća duplikate
 
-        // query
+        // 3. Query
         $query = Monastery::query()->with('eparchy');
 
         if ($q !== '') {
             $query->where(function ($qq) use ($q) {
                 $qq->where('name', 'like', "%{$q}%")
-                    ->orWhere('city', 'like', "%{$q}%")
-                    ->orWhere('region', 'like', "%{$q}%");
+                   ->orWhere('city', 'like', "%{$q}%")
+                   ->orWhere('region', 'like', "%{$q}%");
             });
         }
 
@@ -44,14 +48,13 @@ class MonasteryController extends Controller
             $query->where('region', $region);
         }
 
-        // ✅ filter po eparhiji (slug)
         if ($eparchy !== '') {
             $query->whereHas('eparchy', function ($qq) use ($eparchy) {
                 $qq->where('slug', $eparchy);
             });
         }
 
-        // sortiranje
+        // Sortiranje
         if ($sort === 'name') {
             $query->orderBy('name');
         } elseif ($sort === 'new') {
@@ -63,23 +66,17 @@ class MonasteryController extends Controller
         $monasteries = $query->paginate(24)->withQueryString();
 
         return view('pages.monasteries.index', compact(
-            'monasteries',
-            'regions',
-            'eparchies',
-            'q',
-            'region',
-            'eparchy',
-            'sort'
+            'monasteries', 'regions', 'eparchies', 'q', 'region', 'eparchy', 'sort'
         ));
     }
 
     public function show(string $slug)
     {
-        $monastery = Monastery::query()
-            ->with(['profile', 'eparchy'])
-            ->where('slug', $slug)
-            ->firstOrFail();
-
-        return view('pages.monasteries.show', compact('monastery'));
+        // Koristi findOrFail za sigurnost
+        return view('pages.monasteries.show', [
+            'monastery' => Monastery::with(['profile', 'eparchy'])
+                ->where('slug', $slug)
+                ->firstOrFail()
+        ]);
     }
 }

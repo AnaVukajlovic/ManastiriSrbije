@@ -4,58 +4,40 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Monastery;
-use App\Models\Eparchy;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 class MonasterySeeder extends Seeder
 {
-    public function run(): void
-    {
-        // Uveri se da su eparhije već posejane (EparchySeeder pre ovoga u DatabaseSeeder)
-        $e = Eparchy::pluck('id', 'name'); // ['Žička' => 1, ...]
+public function run(): void
+{
+    $csvPath = storage_path('app/import/monasteries.csv');
+    if (!File::exists($csvPath)) return;
 
-        // Ako nema ni jedna eparhija, bolje odmah prekini da ne upišemo null svuda
-        // (možeš ovo obrisati ako želiš da dozvoliš null eparchy_id)
-        // if ($e->isEmpty()) return;
+    $file = fopen($csvPath, 'r');
+    $headers = fgetcsv($file, 0, ';');
+    $h = array_flip($headers);
 
-        Monastery::truncate();
+    while (($row = fgetcsv($file, 0, ';')) !== false) {
+        if (count($row) < count($headers)) continue;
 
-        Monastery::insert([
-            [
-                'name' => 'Studenica',
-                'slug' => 'studenica',
-                'region' => 'Raška',
-                'city' => 'Kraljevo',
-                'description' => 'Manastir iz 12. veka, UNESCO baština.',
-                'latitude' => 43.4850,
-                'longitude' => 20.5310,
-                'eparchy_id' => $e['Žička'] ?? null,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name' => 'Žiča',
-                'slug' => 'zica',
-                'region' => 'Raška',
-                'city' => 'Kraljevo',
-                'description' => 'Sedište prvog srpskog arhiepiskopa.',
-                'latitude' => 43.7242,
-                'longitude' => 20.6893,
-                'eparchy_id' => $e['Žička'] ?? null,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name' => 'Đurđevi Stupovi',
-                'slug' => 'djurdjevi-stupovi',
-                'region' => 'Raška',
-                'city' => 'Novi Pazar',
-                'description' => 'Zadužbina Stefana Nemanje.',
-                'latitude' => 43.1535,
-                'longitude' => 20.5207,
-                'eparchy_id' => $e['Raško-prizrenska'] ?? ($e['Žička'] ?? null),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-        ]);
+        // U tvom MonasterySeeder.php, u delu gde se upisuju podaci:
+\App\Models\Monastery::updateOrInsert(
+    ['slug' => str_replace('"', '', $row[$h['slug']])],
+    [
+        'name'              => $row[$h['name']] ?? 'Nepoznato',
+        'ktitor'            => $row[$h['ktitor']] ?? null, // OVO MORA DA BUDE TU
+        'godina_izgradnje'  => $row[$h['godina_izgradnje']] ?? null, // OVO MORA DA BUDE TU
+        'region'            => $row[$h['region']] ?? 'Nepoznato',
+        'city'              => $row[$h['city']] ?? 'Nepoznato',
+        'updated_at'        => now(),
+    ]
+);
     }
+    fclose($file);
+     $this->command->info("Uvoz završen.");
+}
+
+       
+    
 }

@@ -11,62 +11,15 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Monastery extends Model
 {
     protected $fillable = [
-        'name',
-        'slug',
-
-        // legacy (da UI radi i bez FK)
-        'region',
-        'city',
-
-        // FK za filtere
-        'region_id',
-        'city_id',
-        'eparchy_id',
-
-        // tekstovi (ako ih već koristiš u monasteries tabeli)
-        'excerpt',
-        'description',
-        'history',
-        'architecture',
-        'art',
-        'spiritual_life',
-        'visiting',
-        'sources',
-
-        // geo/media
-        'latitude',
-        'longitude',
-        'image_url',
-
-        // status
-        'review_status',
-        'is_approved',
-
-        // ostala postojeća polja u tabeli
-        'address',
-        'phone',
-        'email',
-        'website',
-        'opening_hours',
-        'wikipedia_url',
-        'wikidata_item',
-        'source',
-        'wikidata_qid',
-        'religion_qid',
-        'denomination_qid',
-        'is_spc',
-        'is_spc_guess',
-
-
-        'description_short',
-'ktitor',
-'godina_izgradnje',
-'napomena_podaci',
-'status',
-'coord_source',
-'coord_url',
-'coord_status',
-    ];
+    'name', 'slug', 'region', 'city', 'region_id', 'city_id', 'eparchy_id',
+    'ktitor', 'godina_izgradnje', 'excerpt', 'description', 'history', 
+    'architecture', 'art', 'spiritual_life', 'visiting', 'sources',
+    'latitude', 'longitude', 'image_url', 'review_status', 'is_approved',
+    'address', 'phone', 'email', 'website', 'opening_hours', 'wikipedia_url',
+    'wikidata_item', 'source', 'wikidata_qid', 'religion_qid', 'denomination_qid',
+    'is_spc', 'is_spc_guess', 'description_short', 'napomena_podaci', 
+    'status', 'coord_source', 'coord_url', 'coord_status',
+];
 
     public function getRouteKeyName(): string
     {
