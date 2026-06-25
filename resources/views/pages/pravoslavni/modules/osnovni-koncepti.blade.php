@@ -530,9 +530,9 @@
     </section>
 
     <blockquote class="ps-quote ps-quote--big">
-      <span class="ps-quote__mark">„</span>
+      <span class="ps-quote__mark"></span>
       <span class="ps-quote__text">
-        Vera nije samo znanje — to je život koji se svakog dana iznova uči."
+        „Vera nije samo znanje — to je život koji se svakog dana iznova uči."
       </span>
     </blockquote>
 

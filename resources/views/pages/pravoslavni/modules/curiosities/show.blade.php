@@ -5,238 +5,126 @@
 
 @section('content')
 <style>
-  .curios-show3{
-    --cs-ink: rgba(255,255,255,.92);
-    --cs-muted: rgba(255,255,255,.74);
-    --cs-line: rgba(255,255,255,.08);
-    --cs-gold-line: rgba(197,162,74,.22);
-    --cs-shadow: 0 18px 45px rgba(0,0,0,.26);
+  .curios-show3 { padding-top: 10px !important; }
+  .curios-show3 .container { width: min(1200px, calc(100% - 30px)); margin: 0 auto; }
+
+  /* Head - svedeno i kompaktno */
+  .curios-show3__head { margin-bottom: 30px; max-width: 800px; }
+  .back-btn { display: inline-flex; margin-bottom: 15px; text-decoration: none; color: var(--gold); background: rgba(197,162,74,.08); padding: 6px 14px; border-radius: 999px; font-size: 0.85rem; }
+  
+  .curios-show3__title { 
+    margin: 0 0 15px 0; color: #fff; 
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem); 
+    line-height: 1.1; font-weight: 800;
+    white-space: normal; word-break: break-word; 
+    text-align: left; /* Osigurava da uvek krene od ivice */
+    margin-bottom: 20px;
+    padding-right: 20px; /* Daje malo disanja naslovu da ne dodiruje sidebar */
+  }
+  /* 1. Glavni grid - dajemo mu imena za redove */
+  .curios-show3__layout { 
+    display: grid; 
+    grid-template-columns: 1fr 340px; 
+    gap: 40px; 
+    align-items: start; 
   }
 
-  .curios-show3 .container{
-    width:min(1320px, calc(100% - 30px));
-    max-width:none;
-  }
+  /* Naslov zauzima prvu kolonu */
+  .curios-show3__head { grid-column: 1; margin-bottom: 30px; }
+  
+  /* Artikal zauzima prvu kolonu ispod naslova */
+  .curios-show3__article { grid-column: 1; }
 
-  .back-btn{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    margin-bottom:20px;
-    padding:10px 16px;
-    border-radius:999px;
-    text-decoration:none;
-    color:var(--gold);
-    background:rgba(197,162,74,.10);
-    border:1px solid rgba(197,162,74,.22);
+  /* Sidebar zauzima drugu kolonu i proteže se od vrha naslova do dna članka */
+.curios-show3__side { 
+    grid-column: 2; 
+    grid-row: 1 / 3; 
+    position: sticky; 
+    top: 20px; 
+    /* OVO SPUŠTA DIV DOLE - povecaj broj ako zelis jos nize */
+    margin-top: 60px; 
   }
+  .curios-show3__meta { color: rgba(255,255,255,0.6); margin-bottom: 20px; font-size: 0.9rem; }
+  .curios-show3__lead { margin: 0; color: rgba(255,255,255,0.9); line-height: 1.6; font-size: 1.05rem; border-left: 3px solid var(--gold); padding-left: 15px; }
 
-  .curios-show3__head{
-    margin-bottom:24px;
+  /* Layout - Grid */
+.curios-show3__layout { 
+    display: grid; 
+    grid-template-columns: 1fr 340px; 
+    gap: 40px; 
+    align-items: start; 
+  }  
+  /* Article */
+  .curios-show3__article { border-radius: 24px; border: 1px solid rgba(255,255,255,.05); background: rgba(20,12,12,.6); overflow: hidden; }
+  .curios-show3__content { padding: 30px; line-height: 1.8; color: #eee; text-align: justify; }
+
+  /* Sidebar (Još zanimljivosti) */
+.curios-show3__side { 
+    grid-column: 2; 
+    grid-row: 1 / 3; 
+    position: sticky; 
+    top: 20px; 
+    margin-top: 0; /* Vrati na 0 */
   }
-
-  .curios-show3__badge{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    padding:8px 14px;
-    border-radius:999px;
-    background:rgba(197,162,74,.10);
-    border:1px solid rgba(197,162,74,.22);
-    color:var(--gold);
-    font-weight:700;
-    font-size:.82rem;
-    margin-bottom:14px;
+.curios-show3__box { 
+    padding: 25px; 
+    margin-top: 0px; /* OVO ĆE SPUSTITI SAM BOX DOLE */
+    border-radius: 24px; 
+    border: 1px solid rgba(255,255,255,.05); 
+    background: rgba(20,12,12,.6); 
   }
-
-  .curios-show3__title{
-    margin:0 0 10px;
-    color:var(--gold);
-    font-size:clamp(2rem, 4vw, 3rem);
-    line-height:1.06;
-    letter-spacing:-.02em;
-  }
-
-  .curios-show3__meta{
-    display:flex;
-    flex-wrap:wrap;
-    gap:8px;
-    align-items:center;
-    color:var(--cs-muted);
-    margin-bottom:14px;
-  }
-
-  .curios-show3__lead{
-    margin:0;
-    max-width:980px;
-    color:var(--cs-ink);
-    line-height:1.9;
-    font-size:1.03rem;
-    text-align:justify;
-    text-justify:inter-word;
-  }
-
-  .curios-show3__layout{
-    display:grid;
-    grid-template-columns:minmax(0, 1fr) 320px;
-    gap:24px;
-    align-items:start;
-  }
-
-  .curios-show3__article,
-  .curios-show3__box{
-    border-radius:24px;
-    border:1px solid var(--cs-line);
-    background:
-      radial-gradient(circle at top right, rgba(197,162,74,.10), transparent 26%),
-      linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015)),
-      rgba(20,12,12,.90);
-    box-shadow:var(--cs-shadow);
-  }
-
-  .curios-show3__article{
-    overflow:hidden;
-  }
-
-  .curios-show3__imagewrap{
-    width:100%;
-    overflow:hidden;
-    border-bottom:1px solid var(--cs-line);
-  }
-
-  .curios-show3__image{
-    display:block;
-    width:100%;
-    max-height:420px;
-    object-fit:cover;
-  }
-
-  .curios-show3__content{
-    padding:28px 30px;
-    color:var(--cs-ink);
-    line-height:2;
-    font-size:1.05rem;
-    text-align:justify;
-    text-justify:inter-word;
-    white-space:normal;
-  }
-
-  .curios-show3__side{
-    position:sticky;
-    top:100px;
-  }
-
-  .curios-show3__box{
-    padding:22px;
-  }
-
-  .curios-show3__box h3{
-    margin:0 0 14px;
-    color:var(--gold);
-    font-size:1.15rem;
-  }
-
-  .curios-show3__more{
-    display:flex;
-    flex-direction:column;
-    gap:12px;
-  }
-
-  .curios-show3__moreitem{
-    display:block;
-    text-decoration:none;
-    padding:14px 14px;
-    border-radius:16px;
-    background:rgba(255,255,255,.03);
-    border:1px solid rgba(255,255,255,.06);
-  }
-
-  .curios-show3__moretitle{
-    display:block;
-    color:var(--cs-ink);
-    font-weight:700;
-    margin-bottom:6px;
-  }
-
-  .curios-show3__moremeta{
-    display:block;
-    color:var(--cs-muted);
-    font-size:.9rem;
-  }
-
-  .curios-show3__backlink{
-    display:inline-flex;
-    margin-top:16px;
-    color:var(--gold);
-    text-decoration:none;
-    font-weight:700;
-  }
-
-  @media (max-width: 980px){
-    .curios-show3__layout{
-      grid-template-columns:1fr;
+    .curios-show3__box h3 { margin: 0 0 20px; color: var(--gold); font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; }
+  .curios-show3__moreitem { display: block; text-decoration: none; padding: 14px; border-radius: 16px; background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.05); margin-bottom: 12px; }
+  .curios-show3__moreitem:hover { background: rgba(197,162,74,.05); }
+  .curios-show3__moretitle { display: block; color: var(--cs-ink); font-weight: 700; margin-bottom: 4px; }
+  .curios-show3__moremeta { color: rgba(255,255,255,0.5); font-size: 0.8rem; }
+/* RESPONSIVNOST - KLJUČNA IZMENA */
+  @media (max-width: 980px) {
+    /* 1. Grid se pretvara u jednu kolonu */
+    .curios-show3__layout { 
+      grid-template-columns: 1fr !important; 
+      gap: 30px !important; 
     }
 
-    .curios-show3__side{
-      position:static;
+    /* 2. Sidebar se spušta ispod članka */
+    .curios-show3__side { 
+      grid-column: 1 !important; 
+      grid-row: auto !important; 
+      position: static !important; /* Ukida "sticky" efekat na mobilnom */
+      margin-top: 0 !important; 
     }
+
+    /* 3. Smanjivanje margina na mobilnom */
+    .curios-show3__box { margin-top: 0 !important; }
+    
+    /* 4. Naslov prilagođen malom ekranu */
+    .curios-show3__title { font-size: 1.8rem !important; }
   }
 
-  @media (max-width: 760px){
-    .curios-show3 .container{
-      width:min(100%, calc(100% - 20px));
-    }
-
-    .curios-show3__content,
-    .curios-show3__box{
-      padding:20px;
-    }
-
-    .curios-show3__title{
-      font-size:clamp(1.8rem, 8vw, 2.4rem);
-    }
-
-    .curios-show3__content{
-      font-size:1rem;
-      line-height:1.9;
-    }
+  /* Dodatno za tablet */
+  @media (max-width: 768px) {
+    .curios-show3__content { padding: 20px !important; }
   }
 </style>
 
 <section class="section curios-show3">
   <div class="container">
-
-    @php
-      $img = $item->image ? asset($item->image) : asset('images/curiosities/default.jpg');
-      $lead = $item->excerpt ?: \Illuminate\Support\Str::limit(strip_tags($item->content ?? ''), 220);
-      $reading = $item->reading_minutes ? ((int)$item->reading_minutes . ' min čitanja') : 'Duhovni vodič';
-    @endphp
-
     <a class="back-btn" href="{{ route('curiosities.index') }}">← Nazad na zanimljivosti</a>
 
-    <div class="curios-show3__head">
-      @if(!empty($item->category))
-        <span class="curios-show3__badge">{{ $item->category }}</span>
-      @endif
-
-      <h1 class="curios-show3__title">{{ $item->title }}</h1>
-
-      <div class="curios-show3__meta">
-        <span>{{ $reading }}</span>
-        <span class="dot">•</span>
-        <span>Pravoslavni Svetionik</span>
+    <div class="curios-show3__layout">
+      <div class="curios-show3__head">
+        @if(!empty($item->category))
+          <span class="curios-show3__badge">{{ $item->category }}</span>
+        @endif
+        <h1 class="curios-show3__title">{{ $item->title }}</h1>
+        <div class="curios-show3__meta">
+          {{ $item->reading_minutes ? ((int)$item->reading_minutes . ' min čitanja') : 'Duhovni vodič' }} • Pravoslavni Svetionik
+        </div>
+        <p class="curios-show3__lead">{{ $item->excerpt }}</p>
       </div>
 
-      <p class="curios-show3__lead">{{ $lead }}</p>
-    </div>
-
-    <div class="curios-show3__layout">
-
       <article class="curios-show3__article">
-        <div class="curios-show3__imagewrap">
-          <img src="{{ $img }}" alt="{{ $item->title }}" class="curios-show3__image">
-        </div>
-
+        <img src="{{ $item->image ? asset($item->image) : asset('images/curiosities/default.jpg') }}" alt="{{ $item->title }}" class="curios-show3__image">
         <div class="curios-show3__content">
           {!! nl2br(e($item->content)) !!}
         </div>
@@ -245,7 +133,6 @@
       <aside class="curios-show3__side">
         <div class="curios-show3__box">
           <h3>Još zanimljivosti</h3>
-
           <div class="curios-show3__more">
             @foreach($more as $m)
               <a class="curios-show3__moreitem" href="{{ route('curiosities.show', $m->slug) }}">
@@ -256,13 +143,9 @@
               </a>
             @endforeach
           </div>
-
-          <a class="curios-show3__backlink" href="{{ route('curiosities.index') }}">Nazad na sve</a>
         </div>
       </aside>
-
     </div>
-
   </div>
 </section>
 @endsection

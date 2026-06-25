@@ -17,6 +17,8 @@ use App\Http\Controllers\VaskrsController;
 use App\Http\Controllers\EdukacijaController;
 use App\Http\Controllers\Api\AiController;
 
+use App\Http\Controllers\GameController;
+
 /*
 |--------------------------------------------------------------------------
 | Public
@@ -192,3 +194,13 @@ Route::post('/map/ai/recommend-by-city', [MapAiController::class, 'recommendByCi
 
 Route::get('/avantura', [AdventureController::class, 'index'])->name('avantura.index');
 Route::get('/avantura/igra', [AdventureController::class, 'play'])->name('avantura.play');
+
+/*Igrica*/
+Route::get('/igra', function () {
+    return view('game.escape');
+});
+
+
+
+Route::get('/api/game/riddle', [GameController::class, 'getRiddle']);
+Route::post('/api/game/verify', [GameController::class, 'verifyAnswer']);

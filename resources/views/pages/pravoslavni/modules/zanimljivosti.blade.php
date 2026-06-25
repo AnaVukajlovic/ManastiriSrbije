@@ -53,3 +53,57 @@
     (Kasnije ovaj deo može biti poseban modul “Slave i običaji”.)
   </p>
 </section>
+
+<style>
+  .ps-asec {
+    margin-bottom: 40px;
+    padding: 30px;
+    border-radius: 24px;
+    border: 1px solid rgba(197, 162, 74, 0.16);
+    background: linear-gradient(145deg, rgba(20, 12, 12, 0.9), rgba(10, 8, 8, 0.95));
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  }
+
+  .ps-asec h2 {
+    color: var(--gold);
+    font-size: 1.8rem;
+    margin-bottom: 16px;
+    letter-spacing: -0.01em;
+  }
+
+  .ps-ap {
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.8;
+    margin-bottom: 16px;
+    text-align: justify;
+  }
+
+  .ps-ul {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .ps-ul li {
+    padding-left: 24px;
+    position: relative;
+    margin-bottom: 10px;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .ps-ul li::before {
+    content: "✦";
+    color: var(--gold);
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+
+  .ps-callout {
+    background: rgba(197, 162, 74, 0.08);
+    border-left: 4px solid var(--gold);
+    padding: 16px;
+    margin-top: 16px;
+    border-radius: 0 12px 12px 0;
+    color: #fff;
+  }
+</style>

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Str;
-
+use App\Models\Monastery;
 class Ktitor extends Model
 {
     use HasFactory;
@@ -43,4 +43,9 @@ class Ktitor extends Model
     {
         return $this->hasOne(\App\Models\KtitorImage::class)->latest('sort');
     }
+public function manastiri()
+{
+    // Ovo povezuje ktitore i manastire preko pivot tabele
+    return $this->belongsToMany(Monastery::class, 'ktitor_manastir', 'ktitor_id', 'monastery_id');
+}
 }

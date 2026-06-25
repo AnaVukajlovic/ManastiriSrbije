@@ -476,4 +476,18 @@
     text-decoration: underline;
 }
 </style>
+
+<script>
+    window.MAP_SHOW = {
+        point: {
+            name: "{!! addslashes($monastery->name) !!}",
+            slug: "{{ $monastery->slug }}",
+            lat: {{ $monastery->lat }},
+            lng: {{ $monastery->lng }},
+            city: "{!! addslashes($monastery->city ?? '') !!}",
+            region: "{!! addslashes($monastery->region ?? '') !!}"
+        }
+    };
+</script>
+<script src="{{ asset('js/map-show.js') }}"></script>
 @endsection

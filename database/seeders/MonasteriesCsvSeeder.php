@@ -12,316 +12,80 @@ class MonasteriesCsvSeeder extends Seeder
     public function run(): void
     {
         $path = storage_path('app/import/monasteries.csv');
-
         if (!file_exists($path)) {
             $this->command?->error("CSV not found: {$path}");
             return;
         }
 
-        $probe = fopen($path, 'r');
-        if ($probe === false) {
-            $this->command?->error("Cannot open CSV: {$path}");
-            return;
-        }
-
-        $firstPhysicalLine = fgets($probe);
-        fclose($probe);
-
-        if ($firstPhysicalLine === false || trim($firstPhysicalLine) === '') {
-            $this->command?->error("CSV empty.");
-            return;
-        }
-
-        $firstPhysicalLine = preg_replace('/^\xEF\xBB\xBF/', '', $firstPhysicalLine);
-
-        // delimiter detekcija samo iz header reda
-        $delimiter = (substr_count($firstPhysicalLine, ';') > substr_count($firstPhysicalLine, ',')) ? ';' : ',';
+        // OVDE UVEZI NAŠ NIZ KOORDINATA KOJI SMO DEFINISALI
+        $fixes = [ /* ovde nalepi onaj veliki niz sa koordinatama */ ];
 
         $handle = fopen($path, 'r');
-        if ($handle === false) {
-            $this->command?->error("Cannot open CSV: {$path}");
-            return;
-        }
-
-        $firstRow = fgetcsv($handle, 0, $delimiter);
-        if ($firstRow === false || !is_array($firstRow) || count($firstRow) === 0) {
-            fclose($handle);
-            $this->command?->error("CSV header missing.");
-            return;
-        }
-
-        if (isset($firstRow[0])) {
-            $firstRow[0] = preg_replace('/^\xEF\xBB\xBF/', '', (string) $firstRow[0]);
-        }
-
-        $header = array_map(fn ($h) => trim((string) $h), $firstRow);
-
+        fgetcsv($handle, 0, ';', '"'); // Preskoči header
+        
         $now = now();
         $insertedOrUpdated = 0;
 
-        // NE briši sve na početku
-        $cleanStart = false;
+        while (($row = fgetcsv($handle, 0, ';', '"')) !== false) {
+            if (count($row) < 15) continue;
 
-        $has = fn (string $col) => Schema::hasColumn('monasteries', $col);
+            $slug = trim($row[0]);
+            
+            $eparchyName = trim($row[8]);
+            
+            // Najjednostavnija i najbrža pretraga jer su imena sada identična
+            $eparchy = DB::table('eparchies')
+                ->where('name', $eparchyName)
+                ->first();
 
-        $HAS_LAT = $has('lat');
-        $HAS_LNG = $has('lng');
-        $HAS_LATITUDE = $has('latitude');
-        $HAS_LONGITUDE = $has('longitude');
-        $HAS_EPAR = $has('eparchy');
-        $HAS_EPAR_ID = $has('eparchy_id');
+            $eparchyId = $eparchy ? $eparchy->id : null;
 
-        // dodatna polja iz tvog CSV-a
-        $HAS_DESCRIPTION_SHORT = $has('description_short');
-        $HAS_STATUS = $has('status');
-        $HAS_KTITOR = $has('ktitor');
-        $HAS_GODINA_IZGRADNJE = $has('godina_izgradnje');
-        $HAS_NAPOMENA_PODACI = $has('napomena_podaci');
-        $HAS_COORD_SOURCE = $has('coord_source');
-        $HAS_COORD_URL = $has('coord_url');
-        $HAS_COORD_STATUS = $has('coord_status');
-
-        if ($cleanStart) {
-            $driver = DB::getDriverName();
-
-            if ($driver === 'sqlite') {
-                DB::statement('PRAGMA foreign_keys = OFF;');
-                DB::table('monasteries')->delete();
-                DB::statement('PRAGMA foreign_keys = ON;');
-            } else {
-                DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-                DB::table('monasteries')->truncate();
-                DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+            $eparchyId = $eparchy ? $eparchy->id : null;             // PRIVREMENI TEST ZA ISPIS U TERMINALU
+            if (!$eparchy && !empty($eparchyName)) {
+                $this->command?->warn("Nije povezano: Iz CSV-a čitam '{$eparchyName}'");
             }
-        }
+            $eparchyId = $eparchy ? $eparchy->id : null;
 
-        $getAny = function (array $assoc, array $keys): ?string {
-            foreach ($keys as $k) {
-                if (array_key_exists($k, $assoc)) {
-                    $v = $assoc[$k];
+            // 2. KORIŠĆENJE FIXES NIZA ZA KOORDINATE
+$lat = (float)str_replace(',', '.', $row[5] ?? 0);
+            $lng = (float)str_replace(',', '.', $row[6] ?? 0);
 
-                    if ($v === null) {
-                        continue;
-                    }
-
-                    $v = trim((string) $v);
-                    if ($v !== '') {
-                        return $v;
-                    }
-                }
-            }
-            return null;
-        };
-
-        $toFloat = function (?string $v): ?float {
-            if ($v === null) return null;
-            $v = trim($v);
-            if ($v === '') return null;
-
-            // pokušaj da sredi i decimalne zapise sa zarezom
-            $v = str_replace(',', '.', $v);
-
-            // ukloni višak razmaka
-            $v = preg_replace('/\s+/', '', $v);
-
-            return is_numeric($v) ? (float) $v : null;
-        };
-
-        $toBool = function (?string $v): ?int {
-            if ($v === null) return null;
-            $vv = strtolower(trim($v));
-            if ($vv === '') return null;
-
-            if (in_array($vv, ['1', 'true', 'yes', 'da'], true)) return 1;
-            if (in_array($vv, ['0', 'false', 'no', 'ne'], true)) return 0;
-
-            return null;
-        };
-
-        while (($row = fgetcsv($handle, 0, $delimiter)) !== false) {
-            if (!is_array($row)) {
-                continue;
+            if (isset($fixes[$slug])) {
+                $lat = $fixes[$slug][0];
+                $lng = $fixes[$slug][1];
             }
 
-            $nonEmpty = array_filter($row, fn ($x) => $x !== null && trim((string) $x) !== '');
-            if (count($nonEmpty) === 0) {
-                continue;
+            // NOVO REŠENJE: Direktan "hardkodovani" spas za Banjsku preko imena
+            if (str_contains(strtolower(trim($row[1])), 'banjska')) {
+                $lat = 42.971389;
+                $lng = 20.781667;
             }
-
-            if (count($row) < count($header)) {
-                $row = array_pad($row, count($header), null);
-            } elseif (count($row) > count($header)) {
-                $row = array_slice($row, 0, count($header));
-            }
-
-            $assoc = [];
-            foreach ($header as $j => $key) {
-                $assoc[$key] = isset($row[$j]) ? trim((string) $row[$j]) : null;
-            }
-
-            $name = $getAny($assoc, ['name', 'naziv']);
-            if (!$name) {
-                continue;
-            }
-
-            $slug = $getAny($assoc, ['slug']) ?: Str::slug($name);
-
-            $eparchyName = $getAny($assoc, ['eparchy', 'eparchy_name', 'eparhija']);
-            $eparchyId = null;
-
-            if ($eparchyName) {
-                $eparchySlug = Str::slug($eparchyName);
-
-                try {
-                    $existing = DB::table('eparchies')->where('slug', $eparchySlug)->first();
-
-                    if ($existing) {
-                        $eparchyId = $existing->id;
-                    } else {
-                        $eparchyId = DB::table('eparchies')->insertGetId([
-                            'name' => $eparchyName,
-                            'slug' => $eparchySlug,
-                            'created_at' => $now,
-                            'updated_at' => $now,
-                        ]);
-                    }
-                } catch (\Throwable $e) {
-                    $eparchyId = null;
-                }
-            }
-
-            $region = $getAny($assoc, ['region', 'oblast', 'okrug']);
-            $city = $getAny($assoc, ['city', 'mesto', 'grad']);
-
-            $address = $getAny($assoc, ['address', 'adresa']);
-            $phone = $getAny($assoc, ['phone', 'telefon']);
-            $email = $getAny($assoc, ['email']);
-            $website = $getAny($assoc, ['website', 'site', 'sajt']);
-
-            $latitude = $toFloat($getAny($assoc, ['latitude', 'lat']));
-            $longitude = $toFloat($getAny($assoc, ['longitude', 'lng']));
-
-            $descriptionShort = $getAny($assoc, ['description_short', 'opis_kratki', 'short_description']);
-            $description = $getAny($assoc, ['description', 'opis', 'excerpt']);
-            $imageUrl = $getAny($assoc, ['image_url', 'image']);
-            $wikipediaUrl = $getAny($assoc, ['wikipedia_url', 'wikipedia', 'wiki', 'source_url']);
-            $wikidataItem = $getAny($assoc, ['wikidata_item']);
-            $wikidataQid = $getAny($assoc, ['wikidata_qid', 'qid']);
-
-            $type = $getAny($assoc, ['type', 'tip']);
-            $openingHours = $getAny($assoc, ['opening_hours', 'radno_vreme']);
-            $history = $getAny($assoc, ['history', 'istorija']);
-            $source = $getAny($assoc, ['source', 'izvor']);
-
-            $statusText = $getAny($assoc, ['status']);
-            $ktitor = $getAny($assoc, ['ktitor']);
-            $godinaIzgradnje = $getAny($assoc, ['godina_izgradnje']);
-            $napomenaPodaci = $getAny($assoc, ['napomena_podaci']);
-            $coordSource = $getAny($assoc, ['coord_source']);
-            $coordUrl = $getAny($assoc, ['coord_url']);
-            $coordStatus = $getAny($assoc, ['coord_status']);
-
-            $reviewStatus = $getAny($assoc, ['review_status']) ?? 'pending';
-            $isApproved = $toBool($getAny($assoc, ['is_approved'])) ?? 0;
-
-            $isSpc = $toBool($getAny($assoc, ['is_spc']));
-            $isSpcGuess = $toBool($getAny($assoc, ['is_spc_guess']));
-            $religionQid = $getAny($assoc, ['religion_qid']);
-            $denomQid = $getAny($assoc, ['denomination_qid']);
 
             $data = [
-                'name' => $name,
+                'name' => trim($row[1]),
                 'slug' => $slug,
-                'region' => $region,
-                'city' => $city,
-                'description' => $description,
-                'type' => $type,
-                'address' => $address,
-                'phone' => $phone,
-                'email' => $email,
-                'website' => $website,
-                'opening_hours' => $openingHours,
-                'wikidata_item' => $wikidataItem,
-                'wikidata_qid' => $wikidataQid,
-                'wikipedia_url' => $wikipediaUrl,
-                'history' => $history,
-                'image_url' => $imageUrl,
-                'source' => $source,
-                'religion_qid' => $religionQid,
-                'denomination_qid' => $denomQid,
-                'is_spc' => $isSpc,
-                'is_spc_guess' => $isSpcGuess,
-                'review_status' => $reviewStatus,
-                'is_approved' => $isApproved,
+                'region' => $row[2] ?? null,
+                'city' => $row[3] ?? null,
+                'description_short' => $row[4] ?? null,
+                'lat' => $lat,
+                'lng' => $lng,
+                'latitude' => $lat,  // Dodajemo i latitude/longitude kolone ako ih koristiš
+                'longitude' => $lng,
+                'status' => $row[7] ?? 'aktivan',
+                'eparchy_id' => $eparchyId,
+                'description' => $row[9] ?? null,
+                'image_url' => $row[10] ?? null,
+                'wikipedia_url' => $row[11] ?? null,
+                'source' => $row[12] ?? null,
+                'ktitor' => !empty(trim($row[13])) ? trim($row[13]) : 'Nepoznato',
+                'godina_izgradnje' => !empty(trim($row[14])) ? trim($row[14]) : null,
                 'updated_at' => $now,
             ];
 
-            // created_at samo za nove zapise, ali može ostati i ovako ako nemaš problem
-            $data['created_at'] = $now;
-
-            if ($HAS_LATITUDE) $data['latitude'] = $latitude;
-            if ($HAS_LONGITUDE) $data['longitude'] = $longitude;
-            if ($HAS_LAT) $data['lat'] = $latitude;
-            if ($HAS_LNG) $data['lng'] = $longitude;
-
-            if ($HAS_EPAR && $eparchyName) {
-                $data['eparchy'] = $eparchyName;
-            }
-
-            if ($HAS_EPAR_ID) {
-                $data['eparchy_id'] = $eparchyId;
-            }
-
-            if ($HAS_DESCRIPTION_SHORT) {
-                $data['description_short'] = $descriptionShort;
-            }
-
-            if ($HAS_STATUS) {
-                $data['status'] = $statusText;
-            }
-
-            if ($HAS_KTITOR) {
-                $data['ktitor'] = $ktitor;
-            }
-
-            if ($HAS_GODINA_IZGRADNJE) {
-                $data['godina_izgradnje'] = $godinaIzgradnje;
-            }
-
-            if ($HAS_NAPOMENA_PODACI) {
-                $data['napomena_podaci'] = $napomenaPodaci;
-            }
-
-            if ($HAS_COORD_SOURCE) {
-                $data['coord_source'] = $coordSource;
-            }
-
-            if ($HAS_COORD_URL) {
-                $data['coord_url'] = $coordUrl;
-            }
-
-            if ($HAS_COORD_STATUS) {
-                $data['coord_status'] = $coordStatus;
-            }
-
-            DB::table('monasteries')->updateOrInsert(
-                ['slug' => $slug],
-                $data
-            );
-
+            DB::table('monasteries')->updateOrInsert(['slug' => $slug], $data);
             $insertedOrUpdated++;
         }
-
         fclose($handle);
-
-        $this->command?->info("Imported/updated monasteries: {$insertedOrUpdated}");
-        $this->command?->info("CSV used: {$path} (delimiter: {$delimiter})");
-
-        try {
-            $eCount = DB::table('eparchies')->count();
-            $this->command?->info("Eparchies in DB: {$eCount}");
-        } catch (\Throwable $e) {
-            //
-        }
+        $this->command?->info("Uvezeno: {$insertedOrUpdated} manastira.");
     }
 }

@@ -15,5 +15,6 @@ class DatabaseSeeder extends Seeder
         ]);
         $this->call(\Database\Seeders\CuriositiesSeeder::class);
         $this->call(KtitorsCsvSeeder::class);
-    }
+        $this->call(KtitorManastirSeeder::class);
+}
 }

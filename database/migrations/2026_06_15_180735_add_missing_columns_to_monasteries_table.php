@@ -9,8 +9,7 @@ return new class extends Migration
     public function up(): void
 {
     Schema::table('monasteries', function (Blueprint $table) {
-        $table->string('ktitor')->nullable()->after('description');
-        $table->string('godina_izgradnje')->nullable()->after('ktitor');
+
     });
 }
 

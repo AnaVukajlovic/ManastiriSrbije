@@ -13,7 +13,7 @@ class KtitorSeeder extends Seeder
     {
         // CSV mora da bude ovde:
         // backend/database/seeders/ktitors_full_complete.csv
-        $csvPath = database_path('seeders/ktitors_full_complete.csv');
+       $csvPath = storage_path('app/import/ktitors.csv');
 
         if (!file_exists($csvPath)) {
             $this->command?->error("CSV nije pronađen: {$csvPath}");
@@ -41,22 +41,25 @@ class KtitorSeeder extends Seeder
                 $slug = Str::slug($name);
             }
 
-            // Ako nema name, a ima slug - napravi "name" iz sluga
             if ($name === '') {
                 $name = Str::of($slug)->replace('-', ' ')->title()->toString();
             }
 
-            // (Opcionalno) ako tvoj CSV ima i bio / born_year / died_year - automatski će povući
-            $payload = [
-                'name'      => $name,
-                'slug'      => $slug,
-                'bio'       => $r['bio'] ?? $r['description'] ?? null,
-                'born_year' => $this->toIntOrNull($r['born_year'] ?? null),
-                'died_year' => $this->toIntOrNull($r['died_year'] ?? null),
-            ];
 
-            // Očisti null ključeve koje možda nemaš u tabeli (ako ti migracija nema te kolone)
-            // Ako ti tabela NEMA born_year/died_year/bio, javi mi i sklanjam ih.
+           $payload = [
+    'name'         => $name,
+    'slug'         => $slug,
+    'bio'          => $r['bio'] ?? $r['description'] ?? null,
+    'born_year'    => $this->toIntOrNull($r['born_year'] ?? null),
+    'died_year'    => $this->toIntOrNull($r['died_year'] ?? null),
+
+    'title'        => $r['title'] ?? null,
+    'dynasty'      => $r['dynasty'] ?? null,
+    'is_saint'     => isset($r['is_saint']) ? (bool)$r['is_saint'] : false,
+    'burial_place' => $r['burial_place'] ?? null,
+];
+
+
             $payload = array_filter($payload, fn($v) => $v !== null);
 
             $k = Ktitor::updateOrCreate(
@@ -64,8 +67,6 @@ class KtitorSeeder extends Seeder
                 $payload
             );
 
-            // Slika (lokalna) - upis u ktitor_images
-            // u CSV treba da bude npr: images/kritors/car - dusan.jpg
             if ($image !== '') {
                 KtitorImage::updateOrCreate(
                     [
@@ -82,7 +83,7 @@ class KtitorSeeder extends Seeder
             }
         }
 
-        $this->command?->info("Ktitori seed: OK (CSV: ktitors_full_complete.csv)");
+        $this->command?->info("Ktitori seed: OK (CSV: ktitors.csv)");
     }
 
     private function readCsvAssoc(string $path): array

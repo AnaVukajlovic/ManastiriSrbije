@@ -1223,69 +1223,47 @@ private function pickBestSummarySentences(array $sentences, array $keywords, int
         return implode("\n", $lines);
     }
 
-   private function callOllama(
-        string $baseUrl,
-        string $model,
-        string $system,
-        string $question,
-        string $context,
-        int $maxTokens
-    ): string {
-        $messages = [
-            [
-                'role' => 'system',
-                'content' => $system,
-            ],
-        ];
+ private function callOllama(
+    string $baseUrl,
+    string $model,
+    string $system,
+    string $question,
+    string $context,
+    int $maxTokens
+): string {
+    // Groq očekuje niz poruka
+    $messages = [
+        ['role' => 'system', 'content' => $system],
+    ];
 
-        if ($context !== '') {
-            $messages[] = [
-                'role' => 'system',
-                'content' => "KONTEKST:\n" . $context,
-            ];
-        }
-
-        $messages[] = [
-            'role' => 'user',
-            'content' => $question,
-        ];
-
-        // Ignorišemo lokalni model i forsiramo brzi Groq
-        $payload = [
-            'model' => 'llama3-8b-8192',
-            'messages' => $messages,
-            'temperature' => 0.05,
-            'top_p' => 0.55,
-            'max_tokens' => $maxTokens, // U Groq-u se koristi max_tokens, a ne num_predict
-        ];
-
-        $url = 'https://api.groq.com/openai/v1/chat/completions';
-
-        // Dodato prosleđivanje API ključa kroz headere
-        $res = Http::withHeaders([
-                'Authorization' => 'Bearer ' . env('GROQ_API_KEY'),
-            ])
-            ->connectTimeout(5)
-            ->timeout(30)
-            ->acceptJson()
-            ->asJson()
-            ->post($url, $payload);
-
-        if (!$res->successful()) {
-            Log::error('Groq API failed', [
-                'url' => $url,
-                'status' => $res->status(),
-                'body' => $res->body(),
-            ]);
-
-            throw new \RuntimeException('Groq API greška: HTTP ' . $res->status());
-        }
-
-        $data = $res->json();
-
-        // Parsiranje putanje do teksta specifične za OpenAI/Groq format
-        return trim((string) data_get($data, 'choices.0.message.content', ''));
+    if ($context !== '') {
+        $messages[] = ['role' => 'system', 'content' => "KONTEKST:\n" . $context];
     }
+
+    $messages[] = ['role' => 'user', 'content' => $question];
+
+    // Poziv ka Groq API-ju
+    $res = Http::withHeaders([
+        'Authorization' => 'Bearer ' . env('GROQ_API_KEY'),
+        'Content-Type'  => 'application/json',
+    ])
+    ->connectTimeout(10)
+    ->timeout(60) // Povećali smo timeout jer cloud može biti sporiji od lokalnog
+    ->post('https://api.groq.com/openai/v1/chat/completions', [
+        'model' => 'llama3-8b-8192',
+        'messages' => $messages,
+        'temperature' => 0.5,
+        'max_tokens' => $maxTokens,
+    ]);
+
+    if (!$res->successful()) {
+        Log::error('Groq API greška: ' . $res->body());
+        throw new \RuntimeException('Groq API nije odgovorio ispravno.');
+    }
+
+    return trim((string) data_get($res->json(), 'choices.0.message.content', ''));
+}
+
     private function limitText(?string $text, int $limit = 300): string
     {
         $text = $this->cleanText((string) $text);

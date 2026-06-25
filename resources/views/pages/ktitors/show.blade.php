@@ -1,7 +1,7 @@
 @extends('layouts.site')
 
 @section('title', ($ktitor->name ?? 'Ktitor') . ' — Pravoslavni Svetionik')
-
+@section('nav_ktitors', 'active')
 @section('content')
 <section class="section ktitor-show-page">
   <div class="container ktitor-show-container">
@@ -32,44 +32,28 @@
         : asset('images/placeholders/ktitor.png');
 
       $rawBio = trim((string)($ktitor->bio ?? ''));
-      $lead = 'Biografija uskoro…';
-      
-      // Čišćenje i izvlačenje Kratkog opisa
-      if ($rawBio !== '' && preg_match('/Kratak opis:\s*(.+?)(?:\n[A-ZČĆŠĐŽa-zčćšđž ]+:\s*|\z)/us', $rawBio, $m)) {
-        $lead = trim($m[1]);
-      } elseif ($rawBio !== '') {
-        $lead = Str::limit(strip_tags($rawBio), 260);
-      }
-
+      $lead = null;
       $sections = [];
+      
       if ($rawBio !== '') {
-        // Deljenje teksta na celine
-        $chunks = preg_split("/\n\s*\n/u", $rawBio) ?: [];
-        foreach ($chunks as $ch) {
-          $ch = trim($ch);
-          if ($ch === '') continue;
-          
-          if (preg_match('/^(.{2,80}):\s*(.*)$/us', $ch, $m)) {
-            $title = trim($m[1]);
-            $body = trim($m[2]);
-            
-            if ($body === '' && str_contains($ch, "\n")) {
-              $lines = preg_split("/\n/u", $ch);
-              $first = array_shift($lines);
-              $title = trim(rtrim($first, ':'));
-              $body = trim(implode("\n", $lines));
-            }
-            
-            // Rešavamo ružne markere - pretvaramo ih u lep naslov (npr. ISTORIJA -> Istorija)
-            $cleanTitle = Str::ucfirst(mb_strtolower(rtrim($title, ':')));
-            
-            if (mb_strtolower($cleanTitle) !== 'kratak opis' && $body !== '') {
-              $sections[] = ['title' => $cleanTitle, 'body' => $body];
-            }
+          if (preg_match('/(?:Kratak opis|Uvod):\s*(.+?)(?:\n|$)/us', $rawBio, $m)) {
+              $lead = trim($m[1]);
           } else {
-            $sections[] = ['title' => 'Biografija', 'body' => $ch];
+              $paragraphs = preg_split("/\n\s*\n/u", $rawBio);
+              $lead = trim($paragraphs[0]);
           }
-        }
+
+          $chunks = preg_split("/\n\s*\n/u", $rawBio);
+          foreach ($chunks as $ch) {
+              $ch = trim($ch);
+              if ($ch === '' || str_contains($ch, 'Kratak opis:')) continue;
+              
+              if (preg_match('/^(.{2,80}):\s*(.*)$/us', $ch, $m)) {
+                  $sections[] = ['title' => Str::ucfirst(mb_strtolower(rtrim($m[1], ':'))), 'body' => trim($m[2])];
+              } else {
+                  $sections[] = ['title' => 'Biografija', 'body' => $ch];
+              }
+          }
       }
 
       $years = ($ktitor->born_year || $ktitor->died_year)
@@ -80,21 +64,21 @@
     {{-- DVO-KOLONARNI LAYOUT --}}
     <div class="ktGrid" id="biografija">
       
-      {{-- GLAVNI TEKST (SREĐEN I TIPOGRAFSKI UTIEGNUT) --}}
+      {{-- GLAVNI TEKST --}}
       <div class="ktMain text-book-layout">
         
-        @if($lead && $lead !== 'Biografija uskoro…')
+        @if($lead)
           <div class="kt-hero-lead-block">
-            {{-- Prvi pasus dobija uvodni, elegantni stil --}}
             <p class="kt-hero__lead">{{ $lead }}</p>
             <div class="kt-separator"><span class="kt-separator__ornament">❧</span></div>
           </div>
+        @else
+          <p class="kt-paragraph muted">Detaljna biografija za ovu istorijsku ličnost je trenutno u pripremi.</p>
         @endif
 
         @if(!empty($sections))
           @foreach($sections as $s)
             @php
-              // Čistimo pasuse unutar same sekcije od zaostalih duplih enter-a i razmaka
               $paras = array_values(array_filter(array_map('trim', preg_split("/\n+/u", $s['body']) ?: [])));
             @endphp
             
@@ -102,33 +86,26 @@
               <div class="kt-book-section__head">
                 <h3>{{ $s['title'] }}</h3>
               </div>
-              
               <div class="kt-book-section__body">
                 @foreach($paras as $p)
-                  {{-- Proveravamo da tekst pasusa slučajno ne sadrži ponovljen marker --}}
                   @php
                     $cleanParagraph = preg_replace('/^[A-ZČĆŠĐŽa-zčćšđž ]+:\s*/u', '', $p);
                   @endphp
                   <p class="kt-paragraph">{{ $cleanParagraph }}</p>
                 @endforeach
               </div>
-
-              <div class="kt-separator">
-                <span class="kt-separator__ornament">❧</span>
-              </div>
+              <div class="kt-separator"><span class="kt-separator__ornament">❧</span></div>
             </article>
           @endforeach
-        @else
-          <p class="kt-paragraph muted">Detaljna biografija za ovu istorijsku ličnost je trenutno u pripremi.</p>
         @endif
 
         {{-- MANASTIRI --}}
-        @if(isset($monasteries) && $monasteries->count())
-          <section class="kt-info-panel">
-            <div class="kt-info-panel__title">Povezani manastiri</div>
-            <div class="kt-tags-list">
-              @foreach($monasteries as $m)
-                <span class="kt-custom-tag">{{ $m->name ?? 'Manastir' }}</span>
+        @if($ktitor->manastiri && $ktitor->manastiri->count())
+          <section class="kt-info-panel" style="margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(197, 162, 74, 0.2);">
+            <div class="kt-info-panel__title" style="color: var(--gold); font-size: 1.1rem; margin-bottom: 15px;">Zadužbine</div>
+            <div class="kt-tags-list" style="display: flex; flex-wrap: wrap; gap: 10px;">
+              @foreach($ktitor->manastiri as $m)
+                <a href="{{ route('monasteries.show', $m->slug) }}" class="kt-custom-tag">{{ $m->name ?? 'Manastir' }}</a>
               @endforeach
             </div>
           </section>
@@ -138,8 +115,7 @@
       {{-- DESNI PANEL --}}
       <aside class="ktSide">
         <div class="ktSideBannerPhoto">
-          <img src="{{ $mainImageUrl }}" alt="Fotografija: {{ $ktitor->name ?? 'Ktitor' }}" loading="lazy" onerror="this.onerror=null;this.src='{{ asset('images/placeholders/ktitor.png') }}';" />
-        </div>
+<img src="{{ asset($mainImageUrl) }}" alt="Fotografija: {{ $ktitor->name ?? 'Ktitor' }}" loading="lazy" onerror="this.onerror=null;this.src='{{ asset('images/placeholders/ktitor.png') }}';" />        </div>
 
         <div class="card ktSide__card">
           <h3 class="ktSide__title">Informacije</h3>
@@ -150,38 +126,45 @@
                 <div class="ktKV__v nm-gold-highlight">{{ $years }}</div>
               </div>
             @endif
-
             @if(!empty($ktitor->title))
               <div class="ktKV__row">
                 <div class="ktKV__k">Titula / Status</div>
                 <div class="ktKV__v nm-gold-highlight">{{ $ktitor->title }}</div>
               </div>
             @endif
-
             @if(!empty($ktitor->dynasty))
               <div class="ktKV__row">
                 <div class="ktKV__k">Dinastija</div>
                 <div class="ktKV__v">{{ $ktitor->dynasty }}</div>
               </div>
             @endif
-
             @if(isset($ktitor->is_saint))
               <div class="ktKV__row">
                 <div class="ktKV__k">Kanonizacija</div>
                 <div class="ktKV__v">{{ $ktitor->is_saint ? 'Da (Svetitelj)' : 'Ne' }}</div>
               </div>
             @endif
-
             @if(!empty($ktitor->burial_place))
               <div class="ktKV__row">
                 <div class="ktKV__k">Mesto sahrane</div>
                 <div class="ktKV__v">{{ $ktitor->burial_place }}</div>
               </div>
             @endif
+            @if($ktitor->manastiri->isNotEmpty())
+    <div class="mt-4">
+        <h4>Povezane zadužbine:</h4>
+        <div class="flex flex-wrap gap-2">
+            @foreach($ktitor->manastiri as $manastir)
+                <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">
+                    {{ $manastir->name }}
+                </span>
+            @endforeach
+        </div>
+    </div>
+@endif
           </div>
         </div>
       </aside>
-
     </div>
   </div>
 </section>
@@ -229,7 +212,6 @@
     padding: 0 !important;
 }
 
-/* TIPOGRAFSKO SREĐIVANJE TEKSTA */
 .kt-hero__lead {
     font-size: 17.5px;
     line-height: 1.9;
@@ -248,23 +230,21 @@
 
 .kt-book-section__head h3 {
     font-size: 24px;
-    color: #c5a24a; /* Prepoznatljiva žuto-zlatna */
+    color: #c5a24a;
     font-weight: 800;
     margin: 0 0 16px 0;
     letter-spacing: -0.01em;
 }
 
-/* Svaki pojedinačni pasus */
 .kt-paragraph {
     font-size: 16px;
     line-height: 1.85;
-    color: rgba(255, 255, 255, 0.86); /* Lepa prozirna bela za ugodno čitanje */
+    color: rgba(255, 255, 255, 0.86);
     text-align: justify;
-    text-justify: inter-word; /* Savršeno ravnanje ivica */
+    text-justify: inter-word;
     margin-bottom: 18px;
 }
 
-/* UKRASNA LINIJA (tanko -> debelo -> tanko) */
 .kt-separator {
     display: flex;
     align-items: center;
@@ -299,7 +279,6 @@
     display: none;
 }
 
-/* Manastiri panel */
 .kt-info-panel {
     margin-top: 40px;
     padding-top: 24px;
@@ -330,7 +309,6 @@
     transform: translateY(-1px);
 }
 
-/* SIDEBAR STILOVI */
 .ktSideBannerPhoto {
     width: 100%;
     border-radius: 24px;
@@ -344,6 +322,11 @@
     height: auto;
     display: block;
 }
+
+.ktitors-grid { display: flex; flex-wrap: wrap; gap: 20px; align-items: stretch; }
+.ktitor-card { display: flex; flex-direction: column; height: 100%; }
+.ktitor-card__content { flex-grow: 1; }
+.ktitor-card__footer { margin-top: auto; }
 
 .ktSide__card {
     padding: 24px;

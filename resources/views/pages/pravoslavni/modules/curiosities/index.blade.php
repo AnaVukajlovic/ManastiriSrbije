@@ -5,309 +5,138 @@
 
 @section('content')
 <style>
-  .curios-index{
-    --ci-ink: rgba(255,255,255,.92);
-    --ci-muted: rgba(255,255,255,.74);
-    --ci-line: rgba(255,255,255,.08);
-    --ci-gold-line: rgba(197,162,74,.22);
-    --ci-shadow: 0 16px 38px rgba(0,0,0,.24);
+  /* Uklanja prazan prostor iznad stranice */
+  .ps-container {
+    padding-top: 20px !important; 
   }
 
-  .curios-index .container{
-    width:min(1320px, calc(100% - 30px));
-    max-width:none;
+  /* Sređivanje sekcija (tvoj HTML) */
+  .ps-asec {
+    margin-bottom: 30px;
+    max-width: 900px; /* Ograničava širinu da tekst ne bude razvučen preko celog ekrana */
+    margin-left: auto;
+    margin-right: auto;
   }
 
-  .ps-head{
-    margin-bottom:22px;
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-start;
-    gap:18px;
-    flex-wrap:wrap;
+  /* Naslov da bude estetski, ali čitljiv */
+  .ps-asec h2 {
+    color: var(--gold, #c5a24a);
+    font-size: clamp(1.5rem, 2.5vw, 2rem);
+    line-height: 1.2;
+    margin-bottom: 16px;
+    font-weight: 800;
   }
 
-  .ps-title{
-    margin:0;
-    color:var(--gold);
-    font-size:clamp(2.2rem, 4vw, 3.6rem);
-    line-height:1.02;
-    letter-spacing:-.02em;
+  /* Razmak između pasusa kao kod manastira */
+  .ps-ap {
+    margin-bottom: 20px; /* Ovo pravi "vazduh" između pasusa */
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.85);
+    text-align: justify;
+  }
+  .curios-index {
+    --ci-ink: rgba(255, 255, 255, .92);
+    --ci-muted: rgba(255, 255, 255, .74);
+    --ci-line: rgba(255, 255, 255, .08);
+    --ci-gold-line: rgba(197, 162, 74, .22);
+    --ci-shadow: 0 16px 38px rgba(0, 0, 0, .24);
+  }
+/* Naslov članka */
+  .post-title {
+    font-size: clamp(2rem, 5vw, 3rem); /* Smanjuje se na mobilnom, max 3rem na desktopu */
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin-bottom: 16px;
+    color: #fff;
+    max-width: 900px; /* Ograniči širinu da ne ide od ivice do ivice */
   }
 
-  .ps-sub{
-    margin:12px 0 0;
-    color:var(--ci-ink);
-    text-align:justify;
-    text-justify:inter-word;
-    max-width:900px;
-    line-height:1.9;
-    font-size:1.02rem;
+  /* Kratak opis (subtitle) */
+  .post-subtitle {
+    font-size: 1.25rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 24px;
+    max-width: 800px;
+    line-height: 1.6;
   }
 
-  .ps-meta{
-    display:flex;
-    align-items:center;
+  /* Container za bolje disanje */
+  .article-container {
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+  .curios-index .container {
+    width: min(1320px, calc(100% - 30px));
+    max-width: none;
   }
 
-  .ps-meta .muted{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    padding:12px 18px;
-    border-radius:999px;
-    border:1px solid var(--ci-line);
-    background:rgba(255,255,255,.03);
-    white-space:nowrap;
+  /* Glava sekcije */
+  .ps-head { margin-bottom: 22px; display: flex; justify-content: space-between; align-items: flex-start; gap: 18px; flex-wrap: wrap; }
+  .ps-title { margin: 0; color: var(--gold); font-size: clamp(2.2rem, 4vw, 3.6rem); line-height: 1.02; letter-spacing: -.02em; }
+  .ps-sub { margin: 12px 0 0; color: var(--ci-ink); text-align: justify; max-width: 900px; line-height: 1.9; font-size: 1.02rem; }
+  .ps-meta .muted { display: inline-flex; padding: 12px 18px; border-radius: 999px; border: 1px solid var(--ci-line); background: rgba(255, 255, 255, .03); white-space: nowrap; }
+
+  /* Filteri i Kategorije */
+  .filters { margin-bottom: 24px; padding: 16px; border-radius: 24px; border: 1px solid var(--ci-line); background: rgba(20, 12, 12, .90); box-shadow: var(--ci-shadow); }
+  .filters__row { display: flex; flex-direction: column; gap: 16px; }
+  .filters__top { display: flex; gap: 14px; align-items: center; }
+  .filters__field { flex-grow: 1; }
+  .filters__field input { width: 100%; height: 48px; border-radius: 14px; color: var(--ci-ink); font-size: 14px; border: 1px solid var(--ci-line); background: rgba(255, 255, 255, .04); padding: 0 14px; }
+  .filters__actions { display: flex; gap: 10px; }
+  /* 1. Smanjujemo razmak između kategorija */
+  .cat-pills { 
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 10px; /* Smanjeno sa 10px na 6px */
+    margin-top: 10px;
   }
 
-  .filters{
-    margin-bottom:24px;
-    padding:14px;
-    border-radius:24px;
-    border:1px solid var(--ci-line);
-    background:
-      radial-gradient(circle at top right, rgba(197,162,74,.10), transparent 24%),
-      linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015)),
-      rgba(20,12,12,.90);
-    box-shadow:var(--ci-shadow);
+  /* 2. Smanjujemo padding i font da budu uže */
+  .cat-pill { 
+    appearance: none; 
+    cursor: pointer; 
+    display: inline-flex; 
+    align-items: center; 
+    min-height: 36px; /* Smanjeno sa 42px na 36px */
+    padding: 0 12px;   /* Smanjeno sa 16px na 12px */
+    border-radius: 999px; 
+    background: rgba(255, 255, 255, .04); 
+    border: 1px solid rgba(255, 255, 255, .08); 
+    color: var(--ci-ink); 
+    font-size: 0.9rem; /* Malo manji font da stane više teksta */
+    font-weight: 500; 
+    transition: all .2s ease; 
+    text-decoration: none; 
   }
 
-  .filters__row{
-    display:grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap:14px;
-    align-items:start;
+  /* 3. Hover efekat ostaje, ali su sada elegantnije */
+  .cat-pill:hover, .cat-pill.is-active { 
+    border-color: rgba(197, 162, 74, .32); 
+    color: var(--gold); 
+    background: rgba(197, 162, 74, .1); 
   }
+  /* Grid Kartica */
+  .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .card { display: flex; flex-direction: column; min-height: 480px; overflow: hidden; border-radius: 22px; border: 1px solid var(--ci-line); background: rgba(20, 12, 12, .90); transition: transform .22s ease; }
+  .card:hover { transform: translateY(-4px); border-color: rgba(197, 162, 74, .24); }
+  .card__media { position: relative; height: 220px; overflow: hidden; }
+  .card__img { position: absolute; inset: 0; background-size: cover; background-position: center; transition: transform .35s ease; }
+  .card:hover .card__img { transform: scale(1.05); }
+  
+  .card__body { padding: 18px; display: flex; flex-direction: column; flex-grow: 1; }
+  .card__title { margin: 0 0 10px; font-size: 1.15rem; line-height: 1.3; min-height: 3.2em; }
+  .card__title a { color: var(--ci-ink); text-decoration: none; }
+  .card__text { margin: 0 0 14px; color: var(--ci-ink); line-height: 1.6; font-size: .95rem; text-align: justify; flex-grow: 1; hyphens: auto; }
+  .card__meta { display: flex; align-items: center; justify-content: space-between; margin-top: auto; }
+  .link { color: var(--gold); font-weight: 700; text-decoration: none; }
 
-  .filters__main{
-    display:grid;
-    grid-template-columns:minmax(0, 1fr);
-    gap:12px;
-  }
-
-  .filters__field{
-    min-width:0;
-  }
-
-  .filters__field input{
-    width:100%;
-    height:48px;
-    border-radius:14px;
-    color:var(--ci-ink);
-    font-size:14px;
-    outline:none;
-    border:1px solid var(--ci-line);
-    background:rgba(255,255,255,.04);
-    padding:0 14px;
-  }
-
-  .filters__field input::placeholder{
-    color:rgba(255,255,255,.46);
-  }
-
-  .filters__field input:focus{
-    border-color:rgba(197,162,74,.34);
-    box-shadow:0 0 0 2px rgba(197,162,74,.10);
-  }
-
-  .filters__actions{
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
-  }
-
-  .cat-pills{
-    display:flex;
-    flex-wrap:wrap;
-    gap:10px;
-  }
-
-  .cat-pill{
-    appearance:none;
-    border:none;
-    cursor:pointer;
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    min-height:42px;
-    padding:0 16px;
-    border-radius:999px;
-    background:rgba(255,255,255,.04);
-    border:1px solid rgba(255,255,255,.08);
-    color:var(--ci-ink);
-    font-size:14px;
-    font-weight:600;
-    transition:all .2s ease;
-    text-decoration:none;
-  }
-
-  .cat-pill:hover{
-    border-color:rgba(197,162,74,.26);
-    color:#fff;
-    transform:translateY(-1px);
-  }
-
-  .cat-pill.is-active{
-    background:rgba(197,162,74,.12);
-    border-color:rgba(197,162,74,.32);
-    color:var(--gold);
-    box-shadow:0 8px 20px rgba(0,0,0,.18);
-  }
-
-  .cards-grid{
-    display:grid;
-    grid-template-columns:repeat(3, minmax(0, 1fr));
-    gap:22px;
-  }
-
-  .card{
-    overflow:hidden;
-    border-radius:22px;
-    border:1px solid var(--ci-line);
-    background:
-      radial-gradient(circle at top right, rgba(197,162,74,.10), transparent 24%),
-      linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015)),
-      rgba(20,12,12,.90);
-    box-shadow:var(--ci-shadow);
-    transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease;
-  }
-
-  .card:hover{
-    transform:translateY(-4px);
-    border-color:rgba(197,162,74,.24);
-    box-shadow:0 22px 46px rgba(0,0,0,.28);
-  }
-
-  .card__media{
-    position:relative;
-    display:block;
-    height:220px;
-    overflow:hidden;
-  }
-
-  .card__img{
-    position:absolute;
-    inset:0;
-    background-size:cover;
-    background-position:center;
-    transform:scale(1);
-    transition:transform .35s ease;
-  }
-
-  .card:hover .card__img{
-    transform:scale(1.05);
-  }
-
-  .card__shade{
-    position:absolute;
-    inset:0;
-    background:linear-gradient(to top, rgba(0,0,0,.35), rgba(0,0,0,.05));
-  }
-
-  .chip{
-    position:absolute;
-    left:14px;
-    top:14px;
-    z-index:2;
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    padding:7px 12px;
-    border-radius:999px;
-    background:rgba(197,162,74,.12);
-    border:1px solid rgba(197,162,74,.22);
-    color:var(--gold);
-    font-size:.78rem;
-    font-weight:700;
-  }
-
-  .card__body{
-    padding:18px;
-  }
-
-  .card__title{
-    margin:0 0 10px;
-    font-size:1.15rem;
-    line-height:1.3;
-  }
-
-  .card__title a{
-    color:var(--ci-ink);
-    text-decoration:none;
-  }
-
-  .card__text{
-    margin:0 0 14px;
-    color:var(--ci-ink);
-    line-height:1.82;
-    font-size:.97rem;
-    text-align:justify;
-    text-justify:inter-word;
-  }
-
-  .card__meta{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:12px;
-  }
-
-  .link{
-    color:var(--gold);
-    text-decoration:none;
-    font-weight:700;
-    white-space:nowrap;
-  }
-
-  .empty{
-    padding:28px;
-    border-radius:22px;
-    border:1px solid var(--ci-line);
-    background:rgba(255,255,255,.03);
-  }
-
-  .pagination-wrap{
-    margin-top:24px;
-  }
-
-  @media (max-width: 1100px){
-    .cards-grid{
-      grid-template-columns:repeat(2, minmax(0, 1fr));
-    }
-
-    .filters__row{
-      grid-template-columns:1fr;
-    }
-  }
-
-  @media (max-width: 760px){
-    .curios-index .container{
-      width:min(100%, calc(100% - 20px));
-    }
-
-    .cards-grid{
-      grid-template-columns:1fr;
-      gap:18px;
-    }
-
-    .card__media{
-      height:210px;
-    }
-
-    .ps-meta .muted{
-      white-space:normal;
-    }
-
-    .filters__actions{
-      width:100%;
-    }
-
-    .filters__actions .btn,
-    .filters__actions .btn--ghost{
-      flex:1;
-      justify-content:center;
-    }
+  /* Responsiveness */
+  @media (max-width: 1100px) { .cards-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 760px) { 
+    .cards-grid { grid-template-columns: 1fr; }
+    .filters__top { flex-direction: column; align-items: stretch; }
+    .filters__actions { width: 100%; }
+    .filters__actions .btn { flex: 1; }
   }
 </style>
 
@@ -318,7 +147,7 @@
       <div>
         <h1 class="ps-title">Zanimljivosti</h1>
         <p class="ps-sub">
-          Priče, simboli i objašnjenja iz pravoslavne tradicije — napisano razumljivo i informativno.
+          Priče, simboli i objašnjenja iz pravoslavne tradicije.
         </p>
       </div>
 
@@ -328,43 +157,31 @@
     </div>
 
     <form class="filters" method="GET" action="{{ route('curiosities.index') }}">
-      <div class="filters__row">
-        <div class="filters__main">
-          <div class="filters__field">
-            <label class="sr-only" for="q">Pretraga</label>
-            <input
-              id="q"
-              name="q"
-              type="search"
-              value="{{ $q }}"
-              placeholder="Pretraži: sveće, tamjan, freske, post..."
-            />
-          </div>
+    <div class="filters__row">
+        <!-- Prvi red: Pretraga i Akcije -->
+        <div style="display: flex; gap: 14px; width: 100%;">
+            <div class="filters__field" style="flex-grow: 1;">
+                <input name="q" type="search" value="{{ $q }}" placeholder="Pretraži..." />
+            </div>
+            <div class="filters__actions">
+                <button class="btn" type="submit">Primeni</button>
+                <a class="btn btn--ghost" href="{{ route('curiosities.index') }}">Reset</a>
+            </div>
+        </div>
 
-          <div class="cat-pills">
-            <button type="submit" name="category" value="" class="cat-pill {{ $category === null || $category === '' ? 'is-active' : '' }}">
-              Sve kategorije
+        <!-- Drugi red: Kategorije (potpuno slobodne) -->
+        <div class="cat-pills">
+            <button type="submit" name="category" value="" class="cat-pill {{ $category === null ? 'is-active' : '' }}">
+                Sve kategorije
             </button>
-
             @foreach($categories as $c)
-              <button
-                type="submit"
-                name="category"
-                value="{{ $c }}"
-                class="cat-pill {{ $category === $c ? 'is-active' : '' }}"
-              >
-                {{ $c }}
-              </button>
+                <button type="submit" name="category" value="{{ $c }}" class="cat-pill {{ $category === $c ? 'is-active' : '' }}">
+                    {{ $c }}
+                </button>
             @endforeach
-          </div>
         </div>
-
-        <div class="filters__actions">
-          <button class="btn" type="submit">Primeni</button>
-          <a class="btn btn--ghost" href="{{ route('curiosities.index') }}">Reset</a>
-        </div>
-      </div>
-    </form>
+    </div>
+</form>
 
     @if($items->count() === 0)
       <div class="empty">

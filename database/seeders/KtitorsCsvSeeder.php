@@ -4,70 +4,72 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class KtitorsCsvSeeder extends Seeder
 {
     public function run(): void
     {
         $path = storage_path('app/import/ktitors.csv');
-
+        
         if (!file_exists($path)) {
-            $this->command->error("CSV not found: {$path}");
+            $this->command?->error("Fajl nije pronađen.");
             return;
         }
 
-        $fh = fopen($path, 'r');
-        $header = fgetcsv($fh);
+        // RESTART: Čistimo samo ktitore i slike na početku
+        DB::statement('PRAGMA foreign_keys = OFF;');
+        DB::table('ktitor_images')->truncate();
+        DB::table('ktitors')->truncate();
+        DB::statement('PRAGMA foreign_keys = ON;');
 
-        if (!$header) {
-            $this->command->error("Empty CSV.");
-            return;
-        }
+        $file = new \SplFileObject($path);
+        $file->setFlags(\SplFileObject::READ_CSV | \SplFileObject::SKIP_EMPTY | \SplFileObject::DROP_NEW_LINE);
+        $file->setCsvControl(',');
 
-        $map = array_flip($header);
-        $required = ['name', 'slug', 'bio'];
+        $isFirstLine = true;
+        $inserted = 0;
 
-        foreach ($required as $col) {
-            if (!isset($map[$col])) {
-                $this->command->error("Missing column: {$col}");
-                return;
-            }
-        }
-
-        $rows = 0;
-
-        while (($row = fgetcsv($fh)) !== false) {
-            $name = trim((string)($row[$map['name']] ?? ''));
-            $slug = trim((string)($row[$map['slug']] ?? ''));
-            $bio  = (string)($row[$map['bio']] ?? '');
-
-            if ($name === '' || $slug === '') {
+        foreach ($file as $row) {
+            if (empty($row) || !isset($row[1])) continue;
+            
+            if ($isFirstLine) {
+                $isFirstLine = false;
                 continue;
             }
 
-            $bornYear = isset($map['born_year']) ? trim((string)($row[$map['born_year']] ?? '')) : null;
-            $diedYear = isset($map['died_year']) ? trim((string)($row[$map['died_year']] ?? '')) : null;
+            $name = trim($row[0]);
+            $slug = trim($row[1]);
 
-            // Pretvori "\n" u stvarne nove redove
-            $bio = str_replace(["\\n", "\\r"], ["\n", "\r"], $bio);
+            if ($slug === '') continue;
 
-            DB::table('ktitors')->updateOrInsert(
-                ['slug' => $slug],
-                [
-                    'name'       => $name,
-                    'born_year'  => $bornYear !== '' ? (int)$bornYear : null,
-                    'died_year'  => $diedYear !== '' ? (int)$diedYear : null,
-                    'bio'        => $bio,
-                    'updated_at' => now(),
-                    'created_at' => now(),
-                ]
-            );
+            $ktitorId = DB::table('ktitors')->insertGetId([
+                'name'         => $name,
+                'slug'         => $slug,
+                'born_year'    => is_numeric(trim($row[2])) ? (int)trim($row[2]) : null,
+                'died_year'    => is_numeric(trim($row[3])) ? (int)trim($row[3]) : null,
+                'bio'          => $row[4] ?? '',
+                'title'        => $row[5] ?? '',
+                'dynasty'      => $row[6] ?? 'Nemanjići',
+                'is_saint'     => isset($row[7]) ? (bool)trim($row[7]) : false,
+                'burial_place' => $row[8] ?? '',
+                'updated_at'   => now(),
+                'created_at'   => now(),
+            ]);
 
-            $rows++;
+            // Slike na osnovu sluga
+            DB::table('ktitor_images')->insert([
+                'ktitor_id'  => $ktitorId,
+                'path'       => "images/ktitors/{$slug}.jpg",
+                'caption'    => $name,
+                'source'     => 'Local',
+                'created_at' => now(),
+                'updated_at' => now()
+            ]);
+
+            $inserted++;
         }
 
-        fclose($fh);
-
-        $this->command->info("Imported/updated: {$rows} ktitors.");
+        $this->command?->info("Uvezeno: {$inserted} ktitora.");
     }
 }

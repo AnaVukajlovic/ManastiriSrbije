@@ -65,7 +65,7 @@
   }
 
   .edu-sub{
-    max-width:980px;
+    max-width: 100%; /* Sklonjeno ograničenje širine kako bi popunio ekran */
     margin:0;
     color:var(--edu-ink);
     font-size:1.04rem;
@@ -87,6 +87,12 @@
     gap:28px;
     padding:34px 0;
     border-bottom:1px solid var(--edu-line);
+  }
+
+  /* Uklonjen donji border za poslednji element da izgleda lepše na kraju liste */
+  .edu-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
   }
 
   .edu-item::before{
@@ -237,35 +243,6 @@
     font-size:1.1rem;
   }
 
-  .edu-foot{
-    padding:34px 0 8px;
-  }
-
-  .edu-foot__box{
-    padding:22px 24px;
-    border:1px solid var(--edu-line);
-    border-radius:22px;
-    background:
-      radial-gradient(circle at top right, rgba(197,162,74,.10), transparent 28%),
-      linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015)),
-      rgba(20,12,12,.86);
-  }
-
-  .edu-foot__title{
-    margin:0 0 10px;
-    color:var(--gold);
-    font-size:1.22rem;
-    line-height:1.2;
-  }
-
-  .edu-foot__text{
-    margin:0;
-    color:var(--edu-ink);
-    line-height:1.85;
-    text-align:justify;
-    text-justify:inter-word;
-  }
-
   @media (max-width: 980px){
     .edu-item{
       grid-template-columns:1fr;
@@ -312,8 +289,7 @@
 
     .edu-lead,
     .edu-text,
-    .edu-sub,
-    .edu-foot__text{
+    .edu-sub{
       font-size:.97rem;
     }
 
@@ -365,7 +341,7 @@
 
           <div class="edu-side">
             <div class="edu-icon">👑</div>
-            <a class="edu-btn" href="{{ route('edukacija.show','istorija-kultura') }}">Otvori lekciju →</a>
+            <a class="edu-btn" href="{{ route('edukacija.show','istorija-kultura') }}">Otvori →</a>
           </div>
         </div>
       </section>
@@ -396,7 +372,7 @@
 
           <div class="edu-side">
             <div class="edu-icon">⛪</div>
-            <a class="edu-btn" href="{{ route('edukacija.show','srpska-crkva') }}">Otvori lekciju →</a>
+            <a class="edu-btn" href="{{ route('edukacija.show','srpska-crkva') }}">Otvori →</a>
           </div>
         </div>
       </section>
@@ -427,7 +403,7 @@
 
           <div class="edu-side">
             <div class="edu-icon">🏛️</div>
-            <a class="edu-btn" href="{{ route('edukacija.show','manastiri-kao-zaduzbine') }}">Otvori lekciju →</a>
+            <a class="edu-btn" href="{{ route('edukacija.show','manastiri-kao-zaduzbine') }}">Otvori →</a>
           </div>
         </div>
       </section>
@@ -458,7 +434,7 @@
 
           <div class="edu-side">
             <div class="edu-icon">🎨</div>
-            <a class="edu-btn" href="{{ route('edukacija.show','arhitektura-umetnost') }}">Otvori lekciju →</a>
+            <a class="edu-btn" href="{{ route('edukacija.show','arhitektura-umetnost') }}">Otvori →</a>
           </div>
         </div>
       </section>
@@ -489,7 +465,7 @@
 
           <div class="edu-side">
             <div class="edu-icon">🕯️</div>
-            <a class="edu-btn" href="{{ route('edukacija.show','srbija-pod-osmanlijama') }}">Otvori lekciju →</a>
+            <a class="edu-btn" href="{{ route('edukacija.show','srbija-pod-osmanlijama') }}">Otvori →</a>
           </div>
         </div>
       </section>
@@ -520,22 +496,11 @@
 
           <div class="edu-side">
             <div class="edu-icon">🧠</div>
-            <a class="edu-btn" href="{{ route('edukacija.show','ucenje-interakcija') }}">Otvori lekciju →</a>
+            <a class="edu-btn" href="{{ route('edukacija.show','ucenje-interakcija') }}">Otvori →</a>
           </div>
         </div>
       </section>
 
-    </div>
-
-    <div class="edu-foot">
-      <div class="edu-foot__box">
-        <h3 class="edu-foot__title">Edukativni modul kao povezana celina</h3>
-        <p class="edu-foot__text">
-          Ovaj deo aplikacije zamišljen je tako da korisnik ne čita izdvojene tekstove, već da postepeno
-          ulazi u celovit prikaz srpske duhovne i kulturne istorije — od države i Crkve, preko manastira
-          i umetnosti, do interaktivnog povezivanja znanja kroz kviz, vremensku liniju i dodatne module.
-        </p>
-      </div>
     </div>
 
   </div>

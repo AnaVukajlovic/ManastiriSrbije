@@ -70,7 +70,9 @@ public function getLngAttribute()
     return $this->attributes['longitude'] ?? null;
 }
 
-
+public function ktitori() {
+    return $this->belongsToMany(Ktitor::class, 'ktitor_manastir', 'monastery_id', 'ktitor_id');
+}
 
 
 }
