@@ -318,6 +318,70 @@
       width:100%;
     }
   }
+
+
+/* 1. Подеси Hero да користи Flexbox */
+.ui-hero {
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; /* Ово гура садржај лево и десно */
+    background: #1a1512;
+    padding: 60px;
+    border-radius: 20px;
+    border: 1px solid #332720;
+    gap: 40px; /* Размак између текста и десног дела */
+}
+
+/* 2. Текст сада заузима 60% ширине */
+.ui-hero__content {
+    flex: 1; /* Ово му даје флексибилност */
+    max-width: 65%; 
+}
+
+/* 3. Ово је "празан" део десно који треба да попунимо */
+.ui-hero__visual {
+    flex: 0 0 30%; /* Десна страна заузима 30% */
+    text-align: center;
+}
+
+/* РЕСПОНЗИВНОСТ ЗА МОБИЛНЕ УРЕЂАЈЕ */
+@media (max-width: 768px) {
+    .ui-hero {
+        flex-direction: column; /* Текст и слика иду једно испод другог */
+        padding: 30px !important;
+        text-align: center;
+    }
+
+    .ui-hero__content {
+        max-width: 100% !important;
+        margin-bottom: 20px;
+    }
+
+    .ui-hero__visual {
+        flex: 0 0 100% !important; /* Слика заузима целу ширину */
+        max-width: 280px; /* Мало је смањујемо на мобилном */
+    }
+
+    .ui-intro-grid {
+        grid-template-columns: 1fr !important; /* Инфо картице иду једна испод друге */
+    }
+
+
+
+/* Koristimo roditelja da bismo sigurno selektovali sliku */
+.ui-hero-visual img {
+    border: 3px solid #c5a059 !important; /* !important forsira primenu stila */
+    border-radius: 8px !important;
+    padding: 5px !important;
+    background-color: #1a1512 !important;
+    box-shadow: 0 4px 15px rgba(197, 160, 89, 0.4) !important;
+    display: block; /* Osigurava da padding lepo radi */
+    max-width: 100%; /* Da ne izađe iz okvira */
+}
+
+
+}
+
 </style>
 
 <section class="section ui-page">
@@ -346,6 +410,18 @@
           proveri svoje znanje i dobije dodatna objašnjenja kroz interaktivne module.
         </div>
       </div>
+
+
+      <div class="ui-hero__visual">
+        <img src="{{ asset('images/ui.jpg') }}" 
+     alt="Učenje i interakcija" 
+     style="border: 3px solid #c5a059 !important; border-radius: 8px !important; padding: 5px !important; 
+     background-color: #1a1512 !important; box-shadow: 0 4px 15px rgba(197, 160, 89, 0.4) !important; 
+     display: block; width: 100%; max-width: 500px;">
+        <br>
+        <p style="color: var(--gold); font-style: italic;"><i>Истраживање духовног наслеђа кроз интерактивне модуле</i></p>
+    </div>
+
     </div>
 
     <div class="ui-intro-grid">

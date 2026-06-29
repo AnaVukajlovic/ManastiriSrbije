@@ -42,28 +42,53 @@ class AiController extends Controller
             ], 422);
         }
 
-        $maxTokens = (int) $request->input('max_tokens', 160);
+        $maxTokens = (int) $request->input('max_tokens', 300);
         $maxTokens = max(80, min($maxTokens, 320));
 
         $dbContext = $this->buildDatabaseContext($question);
         $finalContext = $dbContext !== '' ? $dbContext : $userContext;
 
-        if ($mode === 'timeline_explain') {
-            $answer = $this->buildTimelineExplanation($finalContext);
-            $answer = $this->normalizeAnswer($answer);
+// DODAJ OVO NA SAM POČETAK CHAT METODE
+if ($request->input('mode') === 'socratic_hint') {
+    $system = "Ti si mudri istorijski savetnik u aplikaciji 'Pravoslavni Svetionik'. 
+               Tvoj zadatak je da podstakneš razmišljanje o istorijskom kontekstu pitanja. 
+               Ne otkrivaj tačan odgovor. Postavi jedno provokativno potpitanje ili ukaži na 
+               uzročno-posledičnu vezu koja vodi do rešenja. Budi kratak, inspirativan i koristi 
+               ton istorijskog naratora.";
+    $answer = $this->callOllama('', 'llama-3.3-70b-versatile', $system, $request->input('question'), '', 150);
+    return response()->json(['ok' => true, 'answer' => $this->normalizeAnswer($answer)]);
+}
 
-            return response()->json([
-                'ok' => true,
-                'answer' => $answer,
-                'reply' => $answer,
-                'meta' => [
-                    'used_db_context' => $dbContext !== '',
-                    'generated_locally' => true,
-                    'used_ollama' => false,
-                    'mode' => 'timeline_explain',
-                ],
-            ]);
-        }
+
+
+if ($mode === 'timeline_explain') {
+    // Umesto $this->buildTimelineExplanation($finalContext), sada zovemo Groq/Ollama
+    $system = $this->buildSystemPrompt($finalContext !== '', $mode);
+    
+    // Koristimo tvoju postojeću metodu callOllama koja već gađa Groq API
+    $answer = $this->callOllama(
+        '', // baseUrl nije potreban za Groq
+        'llama3-8b-8192', // Model koji Groq koristi
+        $system,
+        $question, // Ovo je "Objasni..."
+        $finalContext, // Ovo je sadržaj iz timeline-a
+        $maxTokens
+    );
+
+    $answer = $this->normalizeAnswer($answer);
+
+    return response()->json([
+        'ok' => true,
+        'answer' => $answer,
+        'reply' => $answer,
+        'meta' => [
+            'used_db_context' => $dbContext !== '',
+            'generated_locally' => false,
+            'used_ollama' => true, // Ovo sada znači "koristim AI"
+            'mode' => 'timeline_explain',
+        ],
+    ]);
+}
 
         $useOllama = filter_var(env('AI_USE_OLLAMA', false), FILTER_VALIDATE_BOOL);
 
@@ -120,6 +145,52 @@ class AiController extends Controller
         ]);
     }
 
+public function gradeQuiz(Request $request) {
+    $answers = $request->input('answers');
+    // AI analizira sve odgovore i daje personalizovanu povratnu informaciju
+    $system = "Ti si profesor koji ocenjuje kviz. Analiziraj sledeće odgovore i daj ocenu i savet za učenje.";
+    $answer = $this->callOllama('', 'llama-3.3-70b-versatile', $system, json_encode($answers), "", 500);
+    
+    return response()->json(['feedback' => $answer]);
+}
+
+public function regenerateQuiz(Request $request)
+{
+    // 1. Odredi tip kviza (default je 'history')
+    $type = $request->input('type', 'history'); 
+    
+    // 2. Dinamički prompt prema tipu kviza
+    $topic = ($type === 'orthodox') 
+        ? "osnovama pravoslavne vere, bogosluženju, praznicima, simbolima i duhovnom životu" 
+        : "istoriji Srpske pravoslavne crkve, Nemanjićima, srednjovekovnim manastirima i ključnim istorijskim događajima";
+    
+    $system = "Ti si vrhunski profesor istorije i teologije. Generiši kviz od 20 pitanja na temu: $topic. 
+               Vrati odgovor ISKLJUČIVO kao validan JSON niz objekata, bez ikakvog dodatnog teksta (bez ```json oznaka). 
+               Svaki objekat mora imati tačno ove ključeve: 'id', 'q', 'options' (niz od 4 stringa), 'correct' (index 0-3), 'explain' (string).";
+    
+    // 3. Poziv AI modela
+    $answer = $this->callOllama('', 'llama-3.3-70b-versatile', $system, "Napravi novi kviz od 20 pitanja.", "", 3000);
+    
+    // 4. Čišćenje JSON-a
+    $start = strpos($answer, '[');
+    $end = strrpos($answer, ']');
+    $cleanJson = substr($answer, $start, $end - $start + 1);
+    $questions = json_decode($cleanJson, true);
+
+    // 5. Provera da li je JSON ispravan
+    if (!$questions) {
+        return response()->json(['status' => 'error', 'message' => 'AI nije vratio validan JSON'], 500);
+    }
+    
+    // 6. Čuvanje u SESIJU koja odgovara tipu kviza (Sprečava mešanje!)
+    session(['quiz_questions_' . $type => $questions]);
+    session()->forget('quiz_results_' . $type);
+    
+    return response()->json(['status' => 'success', 'type' => $type]);
+}
+
+
+
     private function buildSystemPrompt(bool $hasContext, string $mode = ''): string
     {
         $contextRule = $hasContext
@@ -142,6 +213,22 @@ OBAVEZNA PRAVILA:
 - Objasni samo događaj i njegov značaj.
 SYS;
         }
+
+
+        if ($mode === 'ruler_simulation') {
+    return <<<SYS
+Ti si mudri savetnik u "Pravoslavnom Svetioniku".
+OBAVEZNA PRAVILA:
+- Igrač je srpski vladar (Nemanjić).
+- Predstavi istorijsku situaciju kao dramatičnu dilemu.
+- Ne daj tačan odgovor odmah; koristi Sokratov metod (postavljaj potpitanja ako igrač pogreši).
+- Na kraju svakog odgovora, ponudi 3 konkretne akcije.
+- Koristi autentičan, ali razumljiv stil govora.
+- Ako igrač izabere istorijski tačan potez, pohvali ga i objasni zašto je to bio uspešan manevar.
+- Ako izabere pogrešan, objasni posledice koristeći istorijske činjenice.
+SYS;
+}
+
 
         if ($mode === 'summarize') {
             return <<<SYS
@@ -209,8 +296,21 @@ SYS;
     {
         $sourceText = $this->cleanText($userContext !== '' ? $userContext : $dbContext);
 
-        if ($mode === 'timeline_explain') {
-            return $this->buildTimelineExplanation($dbContext !== '' ? $dbContext : $userContext);
+if ($mode === 'timeline_explain') {
+            $context = ($dbContext !== '' ? $dbContext : $userContext);
+            $system = $this->buildSystemPrompt($context !== '', 'timeline_explain');
+            
+            // Ovde koristimo tvoju callOllama metodu koja već komunicira sa Groq-om
+            $answer = $this->callOllama(
+                config('services.ollama.url', 'http://127.0.0.1:11434'),
+                'llama3-8b-8192',
+                $system,
+                $question, // Ovo je "Objasni..." instrukcija
+                $context,
+                300 // max_tokens
+            );
+            
+            return $this->normalizeAnswer($answer);
         }
 
         if ($mode === 'summarize') {
@@ -1250,9 +1350,9 @@ private function pickBestSummarySentences(array $sentences, array $keywords, int
     ->connectTimeout(10)
     ->timeout(60) // Povećali smo timeout jer cloud može biti sporiji od lokalnog
     ->post('https://api.groq.com/openai/v1/chat/completions', [
-        'model' => 'llama3-8b-8192',
+        'model' => 'llama-3.3-70b-versatile',
         'messages' => $messages,
-        'temperature' => 0.5,
+        'temperature' => 0.3,
         'max_tokens' => $maxTokens,
     ]);
 

@@ -32,7 +32,7 @@
             
             <ul>
               <li>
-                <a href="{{ route('ktitors.show', 'vukan-nemanjic') }}" class="nm-tree-card text-clickable">
+                <a href="{{ route('ktitors.show', 'vukan-nemanjic') }}" class="nm-tree-card style-ruler text-clickable">
                   <div class="nm-vladar-name">Vukan Nemanjić</div>
                   <div class="nm-vladar-title">Kralj Duklje i Zete</div>
                   <div class="nm-vladar-date">1195—1208.</div>
@@ -103,7 +103,7 @@
 
                     <ul>
                       <li>
-                        <a href="{{ route('ktitors.show', 'stefan-dragutin') }}" class="nm-tree-card text-clickable">
+                        <a href="{{ route('ktitors.show', 'kralj-dragutin') }}" class="nm-tree-card text-clickable">
                           <div class="nm-vladar-name">Stefan Dragutin</div>
                           <div class="nm-vladar-title">Kralj Raške i Srema</div>
                           <div class="nm-vladar-date">1276—1282.</div>
@@ -120,7 +120,7 @@
                       </li>
 
                       <li>
-                        <a href="{{ route('ktitors.show', 'stefan-milutin') }}" class="nm-tree-card style-ruler text-clickable">
+                        <a href="{{ route('ktitors.show', 'kralj-milutin') }}" class="nm-tree-card style-ruler text-clickable">
                           <div class="nm-vladar-name">Stefan Uroš II Milutin</div>
                           <div class="nm-vladar-title">Kralj Raške</div>
                           <div class="nm-vladar-date">1282—1321.</div>
@@ -148,7 +148,7 @@
                                 </a>
                                 <ul>
                                   <li>
-                                    <a href="{{ route('ktitors.show', 'stefan-uros-v') }}" class="nm-tree-card style-ruler text-clickable">
+                                    <a href="{{ route('ktitors.show', 'uros-nejaki') }}" class="nm-tree-card style-ruler text-clickable">
                                       <div class="nm-vladar-name">Stefan Uroš V Nejaki</div>
                                       <div class="nm-vladar-title">Car Srbije</div>
                                       <div class="nm-vladar-date">1355—1371.</div>

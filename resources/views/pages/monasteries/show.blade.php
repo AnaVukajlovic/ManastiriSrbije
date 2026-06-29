@@ -2,7 +2,6 @@
 
 @section('title', ($monastery->name ?? 'Manastir') . ' — Pravoslavni Svetionik')
 @section('nav_monasteries', 'active')
-
 @php
     $slug = $monastery->slug ?? 'placeholder';
     $img = asset('images/monasteries/' . $slug . '.jpg');
@@ -253,7 +252,7 @@
                 @endif
             </div>
 
-            {{-- DESNI ASIDE PANEL - STRUKTURA I SLIKA POTPUNO NETAKNUTI --}}
+{{-- DESNI ASIDE PANEL - STRUKTURA SA INTEGRISANIM KUSTOS KONTEKSTOM --}}
             <aside class="monSide">
                 
                 <div class="monSideBannerPhoto">
@@ -331,6 +330,209 @@
                             </a>
                         @endif
                     </div>
+
+                   {{-- DUGME KOJE POKREĆE ČET --}}
+                    <div class="kustos-trigger-wrapper" style="margin: 20px 0;">
+                        <button type="button" id="openKustosBtn" class="btn2 btn2--wide btn2--gold">
+                            ✨ Pitaj AI Letopisca
+                        </button>
+                    </div>
+
+                    {{-- MODALNI PROZOR ZA ČET --}}
+                    <div id="kustosModal" class="kustos-modal">
+                        <div class="kustos-modal__overlay" id="closeKustosOverlay"></div>
+                        <div class="kustos-modal__content">
+                            
+                            {{-- Zaglavlje --}}
+                            <div class="kustos-modal__header">
+                                <div class="kustos-modal__title-box">
+                                    <span class="kustos-modal__icon">📜</span>
+                                    <h3 class="kustos-modal__title">Digitalni Letopisac</h3>
+                                </div>
+                                <button type="button" class="kustos-modal__close" id="closeKustosBtn">&times;</button>
+                            </div>
+
+                            {{-- Telo četa --}}
+                            <div class="kustos-modal__body">
+                                @include('kustos.chat', ['entitet' => $monastery, 'tip' => 'manastir'])
+                            </div>
+
+                        </div>
+                    </div>
+
+                    {{-- Skriveni parametri --}}
+                    <div id="kustos-context" 
+                         data-id="{{ $monastery->id }}" 
+                         data-name="{{ $monastery->name }}" 
+                         style="display: none;">
+                    </div>
+
+                    {{-- CSS STILOVI ZA PRELEP POP-UP --}}
+                    <style>
+                    .kustos-modal {
+                        position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+                        z-index: 9999; display: flex; align-items: center; justify-content: center;
+                        opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+                    }
+                    .kustos-modal--open { opacity: 1; pointer-events: auto; }
+                    .kustos-modal__overlay {
+                        position: absolute; width: 100%; height: 100%;
+                        background: rgba(10, 8, 5, 0.85); backdrop-filter: blur(5px);
+                    }
+                    .kustos-modal__content {
+                        position: relative; width: 90%; max-width: 420px;
+                        height: 600px; max-height: 85vh;
+                        background: #1a1512; border: 1px solid #c5a059; border-radius: 16px;
+                        box-shadow: 0 25px 50px -12px rgba(0,0,0,0.7);
+                        display: flex; flex-direction: column;
+                        transform: translateY(30px) scale(0.95);
+                        transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                    }
+                    .kustos-modal--open .kustos-modal__content { transform: translateY(0) scale(1); }
+                    .kustos-modal__header {
+                        padding: 16px 20px; background: #241d19;
+                        border-bottom: 1px solid #332720; border-radius: 16px 16px 0 0;
+                        display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;
+                    }
+                    .kustos-modal__title-box { display: flex; align-items: center; gap: 12px; }
+                    .kustos-modal__icon { font-size: 1.5em; }
+                    .kustos-modal__title { margin: 0; font-size: 1.15em; color: #c5a059; font-weight: 600; }
+                    .kustos-modal__close {
+                        background: none; border: none; color: #a39288; font-size: 32px;
+                        cursor: pointer; padding: 0; line-height: 1; transition: 0.2s;
+                    }
+                    .kustos-modal__close:hover { color: #c5a059; transform: scale(1.1); }
+                    .kustos-modal__body {
+                        flex: 1; padding: 16px; overflow-y: auto;
+                        display: flex; flex-direction: column;
+                    }
+                    /* Obezbeđuje da čet uvek ima prostora */
+                    .kustos-modal__body > div { flex: 1; display: flex; flex-direction: column; height: 100%; }
+                    
+                    .btn2--gold {
+                        background: #c5a059 !important; color: #1a1512 !important;
+                        font-weight: 700; font-size: 1.1em; padding: 14px 24px;
+                        border-radius: 8px; transition: all 0.2s ease;
+                        box-shadow: 0 4px 15px rgba(197, 160, 89, 0.2);
+                    }
+                    .btn2--gold:hover { background: #e0b86f !important; transform: translateY(-2px); }
+                    </style>
+
+                    {{-- JAVASCRIPT KOJI POKREĆE SVE --}}
+                    <script>
+                    document.addEventListener('DOMContentLoaded', () => {
+                        const modal = document.getElementById('kustosModal');
+                        const openBtn = document.getElementById('openKustosBtn');
+                        const closeBtn = document.getElementById('closeKustosBtn');
+                        const closeOverlay = document.getElementById('closeKustosOverlay');
+                        const contextEl = document.getElementById('kustos-context');
+                        
+                        if (!modal || !openBtn || !contextEl) return;
+
+                        const monasteryId = contextEl.dataset.id;
+                        const monasteryName = contextEl.dataset.name;
+
+                        // Otvaranje modala
+                        openBtn.addEventListener('click', () => {
+                            modal.classList.add('kustos-modal--open');
+                            triggerContextGreeting(monasteryId, monasteryName);
+                        });
+
+                        // Zatvaranje modala
+                        const closeModal = () => modal.classList.remove('kustos-modal--open');
+                        closeBtn?.addEventListener('click', closeModal);
+                        closeOverlay?.addEventListener('click', closeModal);
+                    });
+
+                    async function triggerContextGreeting(id, name) {
+                        if (sessionStorage.getItem('kustos_greeted_' + id)) return;
+
+                        try {
+                            const response = await fetch("{{ route('kustos.context-greeting') }}", {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Accept': 'application/json',
+                                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                                },
+                                body: JSON.stringify({ model_id: id, model_type: 'manastir' })
+                            });
+
+                            const data = await response.json();
+                            
+                            if (data.success && data.greeting) {
+                                sessionStorage.setItem('kustos_greeted_' + id, 'true');
+
+                                // Pronađi prostor za poruke iz tvog kustos.chat fajla
+                                const chatMessages = document.querySelector('.chat-messages') || document.getElementById('chatMessages');
+                                if (chatMessages) {
+                                    const greetingDiv = document.createElement('div');
+                                    greetingDiv.className = 'chat-message chat-message--ai'; 
+                                    greetingDiv.innerHTML = `<p>${data.greeting}</p>`;
+                                    chatMessages.appendChild(greetingDiv);
+                                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                                }
+                            }
+                        } catch (error) {
+                            console.error('Greška pri učitavanju AI konteksta:', error);
+                        }
+                    }
+                    </script>
+
+                    <script>
+                    document.addEventListener('DOMContentLoaded', () => {
+                        const contextEl = document.getElementById('kustos-context');
+                        if (!contextEl) return;
+
+                        const monasteryId = contextEl.dataset.id;
+                        const monasteryName = contextEl.dataset.name;
+
+                        // Pokretanje automatskog pozdrava na osnovu trenutnog manastira
+                        triggerContextGreeting(monasteryId, monasteryName);
+                    });
+
+                    async function triggerContextGreeting(id, name) {
+                        // Ako je Kustos već jednom pozdravio korisnika na ovoj stranici, ne ponavljaj poziv
+                        if (sessionStorage.getItem('kustos_greeted_' + id)) return;
+
+                        try {
+                            const response = await fetch("{{ route('kustos.context-greeting') }}", {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Accept': 'application/json',
+                                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                                },
+                                body: JSON.stringify({ 
+                                    model_id: id,
+                                    model_type: 'manastir'
+                                })
+                            });
+
+                            const data = await response.json();
+                            
+                            if (data.success && data.greeting) {
+                                // Beležimo u sesiju pretraživača da je pozdrav uspešno izvršen
+                                sessionStorage.setItem('kustos_greeted_' + id, 'true');
+
+                                // Pronalaženje kontejnera gde se ispisuju poruke u tvom vidžetu
+                                const chatMessages = document.querySelector('.chat-messages') || document.getElementById('chatMessages');
+                                
+                                if (chatMessages) {
+                                    const greetingDiv = document.createElement('div');
+                                    greetingDiv.className = 'chat-message chat-message--ai'; 
+                                    greetingDiv.innerHTML = `<p>${data.greeting}</p>`;
+                                    chatMessages.appendChild(greetingDiv);
+                                    
+                                    // Automatski skrol na dno četa
+                                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                                }
+                            }
+                        } catch (error) {
+                            console.error('Greška pri učitavanju AI konteksta:', error);
+                        }
+                    }
+                    </script>
 
                     <div class="monTocDesktop">
                         <div class="muted monTocDesktop__label">Sadržaj</div>

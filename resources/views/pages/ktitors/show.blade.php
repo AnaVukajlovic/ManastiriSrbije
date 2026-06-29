@@ -161,7 +161,18 @@
             @endforeach
         </div>
     </div>
+
+
+
 @endif
+
+<div class="kt-kustos-wrapper" style="margin-top: 30px; padding: 20px; background: #1a1512; border: 1px solid #332720; border-radius: 12px;">
+    <h4 style="color: #c5a059; margin-bottom: 15px; font-family: inherit;">✨🖋️ Дигитални Летописац 🕯️📜</h4>
+    @include('kustos.chat', [
+        'entitet' => $ktitor, 
+        'tip' => 'ktitor'
+    ])
+</div>
           </div>
         </div>
       </aside>

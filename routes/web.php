@@ -17,7 +17,7 @@ use App\Http\Controllers\VaskrsController;
 use App\Http\Controllers\EdukacijaController;
 use App\Http\Controllers\Api\AiController;
 
-use App\Http\Controllers\GameController;
+use App\Http\Controllers\KustosController;
 
 /*
 |--------------------------------------------------------------------------
@@ -128,6 +128,13 @@ Route::prefix('pravoslavni')->group(function () {
 Route::get('/edukacija', fn () => redirect()->route('edukacija.index'));
 Route::get('/edukacija/{any}', fn () => redirect()->route('edukacija.index'))
     ->where('any', '.*');
+Route::post('/edukacija/ai-chat', [App\Http\Controllers\Api\AiController::class, 'chat'])
+     ->name('edukacija.ai.chat');
+
+Route::post('/edukacija/regenerate-quiz', [App\Http\Controllers\Api\AiController::class, 'regenerateQuiz'])
+     ->name('edukacija.ai.regenerate');
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -186,7 +193,7 @@ Route::redirect('/dashboard', '/');
 */
 Route::post('/map/ai/recommend-by-city', [MapAiController::class, 'recommendByCity'])
     ->name('map.ai.recommendByCity');
-
+Route::post('/map/ai/recommend', [App\Http\Controllers\MapAiController::class, 'recommendByCity'])->name('map.ai.recommendByCity');
 
     
 
@@ -200,7 +207,15 @@ Route::get('/igra', function () {
     return view('game.escape');
 });
 
+// Ruta za automatski uvodni pozdrav (Ovo smo dodali malopre)
+Route::post('/kustos/context-greeting', [App\Http\Controllers\KustosController::class, 'contextGreeting'])->name('kustos.context-greeting');
+
+// Glavna ruta za razgovor u četu (Gledaj da ime i putanja budu tačno ovakvi)
+// Додај ово баш овакво у web.php
+Route::post('/kustos/chat', [\App\Http\Controllers\KustosController::class, 'chat']);
 
 
-Route::get('/api/game/riddle', [GameController::class, 'getRiddle']);
-Route::post('/api/game/verify', [GameController::class, 'verifyAnswer']);
+Route::post('/map/ai-query', [MapAiController::class, 'handleAiQuery'])->name('map.ai.handleAiQuery');
+
+Route::post('/kustos/context-greeting', [App\Http\Controllers\KustosController::class, 'contextGreeting'])
+->name('kustos.context-greeting');

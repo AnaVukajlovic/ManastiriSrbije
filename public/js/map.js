@@ -74,10 +74,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function buildPopupHtml(p, lat, lng) {
     const name = p.name || "Manastir";
-    const meta = [p.city, p.region, p.eparchy].filter(Boolean).join(" • ");
+    const meta = [p.city, p.region].filter(Boolean).join(" • ");
     const slug = p.slug || null;
     const detailsUrl = slug ? `/manastiri/${slug}` : null;
-    const gmUrl = `https://www.google.com/maps?q=${encodeURIComponent(lat + "," + lng)}`;
+    
+    // Čist URL bez onog misterioznog "1{" koji ti pravi 404
+    const gmUrl = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
 
     return `
       <div class="mappopup">

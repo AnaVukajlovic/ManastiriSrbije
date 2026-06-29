@@ -549,8 +549,6 @@
       </div>
 
       <div class="sectionhead__actions map-actions-top">
-        <button type="button" class="btn btn--ghost" data-map-action="legend">Legenda</button>
-        <button type="button" class="btn btn--ghost" data-map-action="locate">Moja lokacija</button>
         <a class="btn btn--ghost" href="{{ route('map.index') }}">Reset</a>
       </div>
     </div>
@@ -626,12 +624,12 @@
       </div>
 
       <div class="filters__row filters__row--meta filters__row--map-meta">
-        <div class="muted">
-          Prikazano: <strong>{{ $total ?? 0 }}</strong>
-          <span class="dot">•</span>
-          Sa koordinatama: <strong>{{ $geo_total ?? 0 }}</strong>
-        </div>
-      </div>
+    <div class="muted" id="mapCounterInfo">
+        Prikazano: <strong>{{ $total ?? 0 }}</strong>
+        <span class="dot">&bull;</span>
+        Sa koordinatama: <strong>{{ $geo_total ?? 0 }}</strong>
+    </div>
+</div>
     </form>
 
     <div class="maplayout">
@@ -658,20 +656,7 @@
             </div>
           @endif
 
-          <div class="maplegend" data-map-legend hidden>
-            <div class="maplegend__inner">
-              <div class="maplegend__head">
-                <strong>Legenda</strong>
-                <button type="button" class="btn btn--ghost btn--sm" data-map-action="legend-close">Zatvori</button>
-              </div>
-
-              <ul class="maplegend__list">
-                <li><span class="badge badge--primary"></span> Manastir</li>
-                <li><span class="badge badge--soft"></span> Više lokacija</li>
-                <li><span class="badge badge--accent"></span> Tvoja lokacija</li>
-              </ul>
-            </div>
-          </div>
+          
         </div>
       </div>
 
@@ -779,44 +764,37 @@
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('mapFilters');
-  if (!form) return;
-
-  ['region', 'eparchy'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) {
-      el.addEventListener('change', () => setTimeout(() => form.submit(), 50));
-    }
-  });
+  if (form) {
+    ['region', 'eparchy'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener('change', () => setTimeout(() => form.submit(), 50));
+    });
+  }
 });
 
 window.MAP_PAGE = {
   points: @json($points ?? []),
-  options: {
-    cluster: true,
-    onlyGeo: false
-  }
+  options: { cluster: true, onlyGeo: false }
 };
 
 document.addEventListener('DOMContentLoaded', () => {
   const input = document.getElementById('aiCityInput');
   const btn = document.getElementById('aiCityBtn');
   const loading = document.getElementById('aiCityLoading');
-  const result = document.getElementById('aiCityResult');
-  const textEl = document.getElementById('aiCityText');
-  const itemsEl = document.getElementById('aiCityItems');
+  
+  // Hvatamo elemente desnog panela
+  const rightPanelList = document.querySelector('.maplist__items');
+  const rightPanelTitle = document.querySelector('.maplist .card__title h3');
+  const rightPanelDesc = document.querySelector('.maplist .card__title p');
 
   async function fetchRecommendation() {
     const city = input.value.trim();
-
-    if (!city) {
-      alert('Unesi grad.');
-      return;
-    }
+    if (!city) { alert('Unesi grad.'); return; }
 
     loading.style.display = 'block';
-    result.style.display = 'none';
-    textEl.textContent = '';
-    itemsEl.innerHTML = '';
+    
+    // Čistimo desni panel i stavljamo "Učitavanje"
+    rightPanelList.innerHTML = '<div class="empty">Tražim manastire...</div>';
 
     try {
       const response = await fetch("{{ route('map.ai.recommendByCity') }}", {
@@ -830,85 +808,94 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       const data = await response.json();
-
       loading.style.display = 'none';
-      result.style.display = 'block';
-      textEl.textContent = data.ai_text || '';
 
-      if (Array.isArray(data.items) && data.items.length) {
+     if (Array.isArray(data.items) && data.items.length) {
+        
+        if (rightPanelTitle) rightPanelTitle.textContent = 'AI Rezultati';
+        if (rightPanelDesc) rightPanelDesc.textContent = data.ai_text || `Predlog za: ${city}`;
+
+        rightPanelList.innerHTML = '';
+
+        // NOVO: Pripremamo niz za pomeranje mape i brojanje
+        const bounds = [];
+        let validCoordsCount = 0;
+
         data.items.forEach(item => {
-          const card = document.createElement('div');
-          card.className = 'ai-city-item';
+          const rawLat = String(item.latitude ?? item.lat ?? 0).replace(',', '.').trim();
+          const rawLng = String(item.longitude ?? item.lng ?? 0).replace(',', '.').trim();
+          const lat = parseFloat(rawLat);
+          const lng = parseFloat(rawLng);
+          
+          const hasCoord = !isNaN(lat) && !isNaN(lng) && lat !== 0 && lng !== 0;
 
+          // NOVO: Ako imamo koordinate, beježimo ih za kameru i brojimo
+          if (hasCoord) {
+            bounds.push([lat, lng]);
+            validCoordsCount++;
+          }
+
+          const placeholderImg = "{{ asset('images/monasteries/placeholder.jpg') }}";
+          const imgSrc = item.image ? (item.image.startsWith('http') ? item.image : `/${item.image}`) : placeholderImg;
+          
+          const gmQuery = hasCoord ? `${lat},${lng}` : encodeURIComponent(item.name + ' ' + (item.city ?? 'Srbija'));
+          const gmUrl = `https://www.google.com/maps/search/?api=1&query=${gmQuery}`;
+
+          const card = document.createElement('article');
+          card.className = 'resultcard';
+          
           card.innerHTML = `
-            <div class="ai-city-item-main">
-              <div class="ai-city-item-title">${item.name}</div>
-              <div class="ai-city-item-meta">
-                ${item.city ?? ''}${item.region ? ' • ' + item.region : ''}
+            <div class="resultcard__media">
+              <img src="${imgSrc}" alt="${item.name}" loading="lazy" onerror="this.onerror=null; this.src='${placeholderImg}';">
+            </div>
+            <div class="resultcard__content">
+              <h4 class="resultcard__title">${item.name}</h4>
+              <div class="resultcard__meta muted">${item.city ?? ''}${item.region ? ' • ' + item.region : ''}</div>
+              <div class="resultcard__actions" style="margin-top: 10px; display: flex; gap: 8px; align-items: center;">
+                <a class="btn btn--soft btn--sm" href="${gmUrl}" target="_blank" rel="noopener">Google Maps</a>
+                
+                ${hasCoord ? `
+                  <button type="button" class="btn btn--soft btn--sm" data-map-action="focus" data-lat="${lat}" data-lng="${lng}" data-title="${item.name}">
+                    Prikaži na mapi
+                  </button>
+                ` : `<span class="muted" style="font-size:0.8em;">Nema koordinate</span>`}
+                
+                <a class="btn btn--ghost btn--sm" href="${item.url}">Detalji</a>
               </div>
             </div>
-
-            <div class="ai-city-item-actions">
-              <a href="${item.url}" target="_blank" class="ai-link-open">Otvori</a>
-              <button
-                type="button"
-                class="show-on-map-btn"
-                data-lat="${item.lat ?? ''}"
-                data-lng="${item.lng ?? ''}"
-                data-name="${item.name}"
-              >
-                Prikaži na mapi
-              </button>
-            </div>
           `;
-
-          itemsEl.appendChild(card);
+          rightPanelList.appendChild(card);
         });
+
+        // --- NOVO: AUTOMATSKO ZUMIRANJE MAPE ---
+        // Kad AI završi, mapa automatski "leti" da obuhvati sve nađene manastire
+        if (bounds.length > 0 && window.map) {
+          window.map.fitBounds(bounds, { padding: [50, 50], maxZoom: 12, animate: true });
+        }
+
+        // --- NOVO: AŽURIRANJE BROJAČA ---
+        const counterEl = document.getElementById('mapCounterInfo');
+        if (counterEl) {
+          // Ažuriramo HTML direktno koristeći ID
+          counterEl.innerHTML = `Prikazano: <strong>${data.items.length}</strong> &bull; Sa koordinatama: <strong>${validCoordsCount}</strong>`;
+        }
+
       } else {
-        itemsEl.innerHTML = `<div class="ai-city-empty">Nema rezultata.</div>`;
+        rightPanelList.innerHTML = `
+          <div class="empty">
+            <strong>Nema rezultata.</strong>
+            <p class="muted">AI nije pronašao manastire za ovaj upit.</p>
+          </div>
+        `;
       }
     } catch (error) {
       loading.style.display = 'none';
-      result.style.display = 'block';
-      textEl.textContent = 'Došlo je do greške pri generisanju preporuke.';
+      rightPanelList.innerHTML = `<div class="empty">Došlo je do greške u komunikaciji sa serverom.</div>`;
     }
   }
 
   btn?.addEventListener('click', fetchRecommendation);
-
-  input?.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      fetchRecommendation();
-    }
-  });
-
-  document.addEventListener('click', (e) => {
-    const mapBtn = e.target.closest('.show-on-map-btn');
-    if (!mapBtn) return;
-
-    const lat = parseFloat(mapBtn.dataset.lat);
-    const lng = parseFloat(mapBtn.dataset.lng);
-    const name = mapBtn.dataset.name || 'Manastir';
-
-    if (!Number.isFinite(lat) || !Number.isFinite(lng)) {
-      alert('Za ovaj manastir nema koordinata.');
-      return;
-    }
-
-    if (window.map) {
-      window.map.setView([lat, lng], 11);
-
-      if (window.L) {
-        L.popup()
-          .setLatLng([lat, lng])
-          .setContent(`<strong>${name}</strong>`)
-          .openOn(window.map);
-      }
-    } else {
-      alert('Mapa nije dostupna.');
-    }
-  });
+  input?.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); fetchRecommendation(); }});
 });
 </script>
 

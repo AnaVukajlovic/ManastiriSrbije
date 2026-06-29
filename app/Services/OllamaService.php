@@ -52,4 +52,29 @@ class OllamaService
 
         return $decoded;
     }
+
+
+    public function generateText(string $systemPrompt, string $userPrompt): string
+{
+    $response = Http::withHeaders([
+        'Authorization' => 'Bearer ' . env('GROQ_API_KEY'),
+        'Content-Type' => 'application/json',
+    ])
+    ->timeout(30)
+    ->post('https://api.groq.com/openai/v1/chat/completions', [
+        'model' => 'llama3-8b-8192',
+        'messages' => [
+            ['role' => 'system', 'content' => $systemPrompt],
+            ['role' => 'user', 'content' => $userPrompt]
+        ],
+        'temperature' => 0.7, // Мало већа креативност за објашњења
+        'max_tokens' => 200,
+    ]);
+
+    if (! $response->successful()) {
+        throw new \RuntimeException('Groq API request failed: ' . $response->body());
+    }
+
+    return $response->json('choices.0.message.content') ?? 'Објашњење није доступно.';
+}
 }

@@ -28,17 +28,7 @@ class MapAiController extends Controller
                       ->orWhereRaw('LOWER(description) LIKE ?', ['%' . mb_strtolower($alias) . '%']);
                 }
             })
-            ->select([
-                'id',
-                'name',
-                'slug',
-                'city',
-                'region',
-                'description',
-                'lat',
-                'lng',
-                'image',
-            ])
+            
             ->limit(8)
             ->get();
 

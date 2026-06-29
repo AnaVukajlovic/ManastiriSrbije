@@ -432,44 +432,6 @@ $map = [
 
     /* ---------------- KVIZ: ISTORIJA ---------------- */
 
-    public function quizHistory()
-    {
-        $questions = $this->historyQuestions();
-
-        return view('pages.pravoslavni.modules.edukacija.quiz-history', [
-            'questions' => $questions,
-            'result' => null,
-            'answers' => [],
-        ]);
-    }
-
-    public function quizHistorySubmit(Request $request)
-    {
-        $questions = $this->historyQuestions();
-
-        $answers = (array) $request->input('answers', []);
-        $score = 0;
-        $max = count($questions);
-
-        foreach ($questions as $q) {
-            $picked = $answers[$q['id']] ?? null;
-            if ($picked !== null && (string) $picked === (string) $q['correct']) {
-                $score++;
-            }
-        }
-
-        $result = [
-            'score' => $score,
-            'max' => $max,
-            'percent' => $max ? round(($score / $max) * 100) : 0,
-        ];
-
-        return view('pages.pravoslavni.modules.edukacija.quiz-history', [
-            'questions' => $questions,
-            'result' => $result,
-            'answers' => $answers,
-        ]);
-    }
 
     private function historyQuestions(): array
     {
@@ -643,46 +605,63 @@ $map = [
     }
 
     /* ---------------- KVIZ: PRAVOSLAVLJE ---------------- */
-
-    public function quizOrthodox()
+// --- KVIZ: ISTORIJA ---
+    public function quizHistory() 
     {
-        $questions = $this->orthodoxQuestions();
-
-        return view('pages.pravoslavni.modules.edukacija.quiz-orthodox', [
-            'questions' => $questions,
-            'result' => null,
-            'answers' => [],
-        ]);
+        // Koristimo _history sufiks
+        $questions = session('quiz_questions_history', $this->historyQuestions());
+        $result = session('quiz_results_history', null);
+        
+        return view('pages.pravoslavni.modules.edukacija.quiz-history', compact('questions', 'result'));
     }
 
-    public function quizOrthodoxSubmit(Request $request)
+    public function quizHistorySubmit(Request $request) 
     {
-        $questions = $this->orthodoxQuestions();
-
+        $questions = session('quiz_questions_history', $this->historyQuestions());
         $answers = (array) $request->input('answers', []);
         $score = 0;
         $max = count($questions);
 
         foreach ($questions as $q) {
             $picked = $answers[$q['id']] ?? null;
-            if ($picked !== null && (string) $picked === (string) $q['correct']) {
+            if ($picked !== null && (string)$picked === (string)$q['correct']) {
                 $score++;
             }
         }
 
-        $result = [
-            'score' => $score,
-            'max' => $max,
-            'percent' => $max ? round(($score / $max) * 100) : 0,
-        ];
-
-        return view('pages.pravoslavni.modules.edukacija.quiz-orthodox', [
-            'questions' => $questions,
-            'result' => $result,
-            'answers' => $answers,
-        ]);
+        session(['quiz_results_history' => ['score' => $score, 'max' => $max, 'percent' => ($max > 0 ? ($score / $max) * 100 : 0)]]);
+        return redirect()->route('edukacija.quiz-history');
     }
 
+    // --- KVIZ: PRAVOSLAVLJE ---
+    public function quizOrthodox() 
+    {
+        // Koristimo _orthodox sufiks
+        $questions = session('quiz_questions_orthodox', $this->orthodoxQuestions());
+        $result = session('quiz_results_orthodox', null);
+        
+        return view('pages.pravoslavni.modules.edukacija.quiz-orthodox', compact('questions', 'result'));
+    }
+
+    public function quizOrthodoxSubmit(Request $request) 
+    {
+        $questions = session('quiz_questions_orthodox', $this->orthodoxQuestions());
+        $answers = (array) $request->input('answers', []);
+        $score = 0;
+        $max = count($questions);
+
+        foreach ($questions as $q) {
+            $picked = $answers[$q['id']] ?? null;
+            if ($picked !== null && (string)$picked === (string)$q['correct']) {
+                $score++;
+            }
+        }
+
+        session(['quiz_results_orthodox' => ['score' => $score, 'max' => $max, 'percent' => ($max > 0 ? ($score / $max) * 100 : 0)]]);
+        return redirect()->route('edukacija.quiz-orthodox');
+    }
+
+    
     private function orthodoxQuestions(): array
     {
         return [
