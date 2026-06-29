@@ -8,7 +8,7 @@ use App\Models\Ktitor;
 
 class KustosController extends Controller
 {
-    private $apiKey = "env('GROQ_API_KEY')";
+     private $apiKey = "env('GROQ_API_KEY')";
 
     private function sendGroqRequest($data) {
         $ch = curl_init('https://api.groq.com/openai/v1/chat/completions');
