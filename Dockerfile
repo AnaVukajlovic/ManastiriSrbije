@@ -34,4 +34,4 @@ RUN npm run build
 
 EXPOSE 10000
 
-CMD sh -c "php artisan migrate --force && php artisan db:seed --class=MonasteriesCsvSeeder --force && php artisan optimize:clear && php artisan serve --host=0.0.0.0 --port=10000"
+CMD sh -c "php artisan migrate --force && php artisan optimize:clear && php artisan serve --host=0.0.0.0 --port=10000"
