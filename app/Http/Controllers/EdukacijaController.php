@@ -14,25 +14,46 @@ class EdukacijaController extends Controller
 
     public function show($slug)
     {
-$map = [
-    'istorija-kultura'         => 'istorija-kultura',
-    'srpska-crkva'             => 'srpska-crkva',
-    'arhitektura-umetnost'     => 'arhitektura-umetnost',
-    'ucenje-interakcija'       => 'ucenje-interakcija',
-    'porodicno-stablo'         => 'porodicno-stablo',
-    'manastiri-kao-zaduzbine'  => 'manastiri-kao-zaduzbine',
-    'srbija-pod-osmanlijama'   => 'srbija-pod-osmanlijama',
+        $legendSlugs = [
+            'legendarijum-price',
+            'legendarijum',
+            'price',
+            'legende',
+            'nemanjici-price',
+            'sveti-sava-price',
+            'legendarijum-i-price',
+            'legende-nemanjici',
+            'price-o-nemanjicima',
+        ];
 
-    // aliasi
-    'interakcija'              => 'ucenje-interakcija',
-    'istorija'                 => 'istorija-kultura',
-    'crkva'                    => 'srpska-crkva',
-    'sveti-sava'               => 'srpska-crkva',
-    'umetnost'                 => 'arhitektura-umetnost',
-    'manastiri'                => 'manastiri-kao-zaduzbine',
-    'zaduzbine'                => 'manastiri-kao-zaduzbine',
-    'osmanlije'                => 'srbija-pod-osmanlijama',
-];
+        if (in_array($slug, $legendSlugs, true)) {
+            return redirect()->route('curiosities.show', 'legendarijum-price');
+        }
+
+        $map = [
+            'istorija-kultura'         => 'istorija-kultura',
+            'srpska-crkva'             => 'srpska-crkva',
+            'arhitektura-umetnost'     => 'arhitektura-umetnost',
+            'ucenje-interakcija'       => 'ucenje-interakcija',
+            'porodicno-stablo'         => 'porodicno-stablo',
+            'manastiri-kao-zaduzbine'  => 'manastiri-kao-zaduzbine',
+            'srbija-pod-osmanlijama'   => 'srbija-pod-osmanlijama',
+
+            // aliasi
+            'interakcija'              => 'ucenje-interakcija',
+            'istorija'                 => 'istorija-kultura',
+            'nemanjici'                => 'istorija-kultura',
+            'bitke'                    => 'istorija-kultura',
+            'bitke-nemanjica'          => 'istorija-kultura',
+            'velbuzd'                  => 'istorija-kultura',
+            'krunisanja'               => 'istorija-kultura',
+            'crkva'                    => 'srpska-crkva',
+            'sveti-sava'               => 'srpska-crkva',
+            'umetnost'                 => 'arhitektura-umetnost',
+            'manastiri'                => 'manastiri-kao-zaduzbine',
+            'zaduzbine'                => 'manastiri-kao-zaduzbine',
+            'osmanlije'                => 'srbija-pod-osmanlijama',
+        ];
 
         $viewSlug = $map[$slug] ?? null;
 

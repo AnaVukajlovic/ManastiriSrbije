@@ -1,0 +1,155 @@
+[112] Manastir Banjska
+  Card: images/monasteries/banjska.jpg
+  - images/monasteries/banjska.jpg
+  - images/monasteries/banjska_gal_1.jpg
+  - images/monasteries/banjska_gal_2.jpg
+  - images/monasteries/banjska_gal_3.jpg
+
+[113] Manastir Budisavci
+  Card: images/monasteries/budisavci.jpg
+  - images/monasteries/budisavci.jpg
+  - images/monasteries/budisavci_gal_2.jpg
+  - images/monasteries/budisavci_gal_3.jpg
+
+[114] Manastir Ceranjska Reka
+  Card: images/monasteries/ceranjska-reka.jpg
+  - images/monasteries/ceranjska-reka.jpg
+
+[115] Manastir Crna Reka
+  Card: images/monasteries/crna-reka.jpg
+  - images/monasteries/crna-reka.jpg
+  - images/monasteries/crna-reka_gal_1.jpg
+  - images/monasteries/crna-reka_gal_2.jpg
+  - images/monasteries/crna-reka_gal_3.jpg
+
+[116] Manastir Devine Vode
+  Card: images/monasteries/devine-vode.jpg
+  - images/monasteries/devine-vode.jpg
+  - images/monasteries/devine-vode_gal_1.jpg
+
+[117] Manastir Devič
+  Card: images/monasteries/devic.jpg
+  - images/monasteries/devic.jpg
+  - images/monasteries/devic_gal_2.jpg
+  - images/monasteries/devic_gal_3.jpg
+
+[118] Manastir Draganac
+  Card: images/monasteries/draganac.jpg
+  - images/monasteries/draganac.jpg
+  - images/monasteries/draganac_gal_1.jpg
+  - images/monasteries/draganac_gal_2.jpg
+  - images/monasteries/draganac_gal_3.jpg
+
+[119] Manastir Pećka Patrijaršija
+  Card: images/monasteries/pecka-patrijarsija.jpg
+  - images/monasteries/pecka-patrijarsija.jpg
+  - images/monasteries/pecka-patrijarsija_gal_1.jpg
+  - images/monasteries/pecka-patrijarsija_gal_2.jpg
+
+[120] Manastir Prizren (Sveti Arhangeli)
+  Card: images/monasteries/prizren.jpg
+  - images/monasteries/prizren.jpg
+  - images/monasteries/prizren_gal_1.jpg
+  - images/monasteries/prizren_gal_2.jpg
+  - images/monasteries/prizren_gal_3.jpg
+
+[121] Manastir Sokolica
+  Card: images/monasteries/sokolica.jpg
+  - images/monasteries/sokolica.jpg
+  - images/monasteries/sokolica_gal_1.jpg
+  - images/monasteries/sokolica_gal_2.jpg
+  - images/monasteries/sokolica_gal_3.jpg
+
+[122] Manastir Sopoćani
+  Card: images/monasteries/sopocani.jpg
+  - images/monasteries/sopocani.jpg
+  - images/monasteries/sopocani_gal_1.jpg
+  - images/monasteries/sopocani_gal_2.jpg
+  - images/monasteries/sopocani_gal_3.jpg
+
+[123] Manastir Sočanica
+  Card: images/monasteries/socanica.jpg
+  - images/monasteries/socanica.jpg
+
+[124] Manastir Tamnica
+  Card: images/monasteries/tamnica.jpg
+  - images/monasteries/tamnica.jpg
+  - images/monasteries/tamnica_gal_1.jpg
+  - images/monasteries/tamnica_gal_2.jpg
+  - images/monasteries/tamnica_gal_3.jpg
+
+[125] Manastir Ulije
+  Card: images/monasteries/ulije.jpg
+  - images/monasteries/ulije.jpg
+
+[126] Manastir Velika Hoča (Sveti Jovan)
+  Card: images/monasteries/velika-hoca.jpg
+  - images/monasteries/velika-hoca.jpg
+  - images/monasteries/velika-hoca_gal_1.jpg
+
+[127] Manastir Visoki Dečani
+  Card: images/monasteries/visoki-decani.jpg
+  - images/monasteries/visoki-decani.jpg
+  - images/monasteries/visoki-decani_gal_1.jpg
+  - images/monasteries/visoki-decani_gal_2.jpg
+  - images/monasteries/visoki-decani_gal_3.jpg
+
+[128] Manastir Zočište
+  Card: images/monasteries/zociste.jpg
+  - images/monasteries/zociste.jpg
+  - images/monasteries/zociste_gal_1.jpg
+  - images/monasteries/zociste_gal_2.jpg
+  - images/monasteries/zociste_gal_3.jpg
+
+[129] Manastir Đakovica
+  Card: images/monasteries/djakovica.jpg
+  - images/monasteries/djakovica.jpg
+
+[130] Manastir Đurđevi Stupovi
+  Card: images/monasteries/djurdjevi-stupovi.jpg
+  - images/monasteries/djurdjevi-stupovi.jpg
+  - images/monasteries/djurdjevi-stupovi_gal_1.jpg
+  - images/monasteries/djurdjevi-stupovi_gal_2.jpg
+  - images/monasteries/djurdjevi-stupovi_gal_3.jpg
+
+[241] Manastir Duboki Potok
+  Card: images/monasteries/duboki-potok.jpg
+  - images/monasteries/duboki-potok.jpg
+
+[242] Manastir Gorioč
+  Card: images/monasteries/gorioc.jpg
+  - images/monasteries/gorioc.jpg
+  - images/monasteries/gorioc_gal_1.jpg
+  - images/monasteries/gorioc_gal_2.jpg
+  - images/monasteries/gorioc_gal_3.jpg
+
+[243] Manastir Gračanica
+  Card: images/monasteries/gracanica.jpg
+  - images/monasteries/gracanica.jpg
+  - images/monasteries/gracanica_gal_1.jpg
+  - images/monasteries/gracanica_gal_2.jpg
+  - images/monasteries/gracanica_gal_3.jpg
+
+[245] Manastir Končul
+  Card: images/monasteries/koncul.jpg
+  - images/monasteries/koncul.jpg
+  - images/monasteries/koncul_gal_1.jpg
+  - images/monasteries/koncul_gal_2.jpg
+  - images/monasteries/koncul_gal_3.jpg
+
+[256] Manastir Vračevo
+  Card: images/monasteries/vracevo.jpg
+  - images/monasteries/vracevo.jpg
+  - images/monasteries/vracevo_gal_1.jpg
+
+[258] Manastir Tušimlja
+  Card: images/monasteries/tusimlja.jpg
+  - images/monasteries/tusimlja.jpg
+
+[260] Bogorodica Ljeviška
+  Card: images/monasteries/bogorodica-ljeviska.jpg
+  - images/monasteries/bogorodica-ljeviska.jpg
+  - images/monasteries/bogorodica-ljeviska_gal_1.jpg
+  - images/monasteries/bogorodica-ljeviska_gal_2.jpg
+  - images/monasteries/bogorodica-ljeviska_gal_3.jpg
+

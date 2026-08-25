@@ -156,6 +156,28 @@
       </div>
     </div>
 
+    {{-- FEATURED BANNER ZA LEGENDARIJUM --}}
+    @if(empty($q) && empty($category))
+      <div style="margin-bottom: 28px; position: relative; border-radius: 24px; border: 1.5px solid rgba(197,162,74,.32); background: radial-gradient(circle at top right, rgba(197,162,74,.15), transparent 50%), linear-gradient(180deg, rgba(32, 21, 18, 0.96), rgba(18, 11, 10, 0.96)); padding: 26px 30px; box-shadow: 0 16px 40px rgba(0,0,0,.35); display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap;">
+        <div style="max-width: 820px;">
+          <div style="display: inline-flex; align-items: center; gap: 8px; padding: 5px 14px; border-radius: 999px; background: rgba(197,162,74,.12); border: 1px solid rgba(197,162,74,.30); color: #e2c26a; font-size: .82rem; font-weight: 700; margin-bottom: 10px;">
+            📜 Посебна тематска целина
+          </div>
+          <h2 style="margin: 0 0 8px 0; color: var(--gold, #c5a24a); font-size: clamp(1.2rem, 1.85vw, 1.55rem); line-height: 1.25; font-weight: 800;">
+            Легендаријум: Приче и предања о Немањићима и Светом Сави
+          </h2>
+          <p style="margin: 0; color: rgba(255,255,255,.88); font-size: 1rem; line-height: 1.7; text-align: justify;">
+            Завири у тајанствени, живи свет средњовековних предања, дирљивих сусрета и историјских анегдота — од бекства принца Растка на Свету Гору и Савиних вода до Милутиновог завета и Душановог царства.
+          </p>
+        </div>
+        <div>
+          <a href="{{ route('curiosities.show', 'legendarijum-price') }}" style="display: inline-flex; align-items: center; gap: 8px; padding: 12px 22px; border-radius: 999px; background: linear-gradient(135deg, rgba(197,162,74,.25), rgba(226,194,106,.20)); border: 1.5px solid rgba(197,162,74,.45); color: #f4dc95; text-decoration: none; font-weight: 800; font-size: 0.96rem; transition: all .2s ease; box-shadow: 0 8px 20px rgba(0,0,0,.25); white-space: nowrap;">
+            Отвори Легендаријум →
+          </a>
+        </div>
+      </div>
+    @endif
+
     <form class="filters" method="GET" action="{{ route('curiosities.index') }}">
     <div class="filters__row">
         <!-- Prvi red: Pretraga i Akcije -->
@@ -192,7 +214,7 @@
       <div class="grid cards-grid">
         @foreach($items as $it)
           @php
-            $img = $it->image ? asset($it->image) : asset('images/hero/hero1.jpg');
+            $img = $it->image_src;
           @endphp
 
           <article class="card">
@@ -258,6 +280,19 @@
   </div>
 @endif
     @endif
+
+    {{-- IZVORI I STRUCNA LITERATURA --}}
+    @include('partials.sources-card', [
+        'title' => 'Izvori i stručna literatura za zanimljivosti i predanja',
+        'sources' => [
+            'Свети Владика Николај Велимировић: <em>„Охридски пролог”</em>, <em>„Мисли о добру и злу”</em> и <em>„Вера Светих”</em>, Ваљево / Београд',
+            'Др Радомир Поповић: <em>„Српска Црква у историји”</em> и <em>„Српски архијереји”</em>, Православни богословски факултет Универзитета у Београду',
+            'Епископ др Данило (Крстић), Епископ др Амфилохије (Радовић): <em>„Нема лепше вере од хришћанске — Основи православног васпитања”</em>, Вршац / Београд',
+            'Академик Владимир Ћоровић: <em>„Историја српског народа”</em>, Бања Лука – Београд, 2001.',
+            'Званични едукативни материјали и зборници Одбора за верску наставу Архиепископије београдско-карловачке СПЦ'
+        ],
+        'note' => 'Све занимљивости, предања и поуке темеље се на веродостојним изворима Српске Православне Цркве и српске историјске науке.'
+    ])
 
   </div>
 </section>

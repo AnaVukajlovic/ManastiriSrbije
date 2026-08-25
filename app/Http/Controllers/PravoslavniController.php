@@ -181,28 +181,6 @@ class PravoslavniController extends Controller
                 ],
             ],
 
-            'posni-recepti' => [
-                'title' => 'Posni recepti',
-                'subtitle' => 'Ideje za posna jela: na vodi, na ulju i riblji dani.',
-                'category' => 'Kuhinja',
-                'badge' => 'Recepti',
-                'intro' => "Ovaj modul je zamišljen kao zbirka praktičnih posnih jela.\nKasnije možeš dodati pretragu po vrsti posta, sastojcima i vremenu pripreme.",
-                'sections' => [
-                    [
-                        'title' => 'Primer jela na vodi',
-                        'text' => "Posan krompir paprikaš je jednostavno i pristupačno jelo.\nPriprema se od krompira, luka, začina i vode, bez ulja i životinjskih proizvoda.",
-                        'bullets' => [
-                            'Pogodno za dane posta na vodi',
-                            'Može se prilagoditi začinima i povrću koje imaš kod kuće',
-                        ],
-                    ],
-                    [
-                        'title' => 'Post nije samo jelovnik',
-                        'text' => "U pravoslavlju post ima i duhovnu dimenziju.\nUzdržanje u hrani prati se molitvom, smirenjem i trudom na popravljanju sebe.",
-                    ],
-                ],
-            ],
-
             'zanimljivosti' => [
                 'title' => 'Zanimljivosti',
                 'subtitle' => 'Kratke činjenice, običaji i zanimljive priče iz pravoslavnog sveta.',

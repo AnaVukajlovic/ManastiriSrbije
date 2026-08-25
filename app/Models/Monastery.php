@@ -74,5 +74,30 @@ public function ktitori() {
     return $this->belongsToMany(Ktitor::class, 'ktitor_manastir', 'monastery_id', 'ktitor_id');
 }
 
+public function getImageSrcAttribute(): string
+{
+    $raw = trim((string) ($this->image_url ?? ''));
+    if ($raw !== '') {
+        if (str_starts_with($raw, 'http://') || str_starts_with($raw, 'https://')) {
+            return $raw;
+        }
+        $clean = ltrim($raw, '/');
+        if (file_exists(public_path($clean))) {
+            return asset($clean);
+        }
+    }
+
+    $slug = (string) ($this->slug ?? '');
+    if ($slug !== '' && file_exists(public_path("images/monasteries/{$slug}.jpg"))) {
+        return asset("images/monasteries/{$slug}.jpg");
+    }
+
+    if (file_exists(public_path('images/monasteries/placeholder.jpg'))) {
+        return asset('images/monasteries/placeholder.jpg');
+    }
+
+    return asset('images/sample/djurdjevi.jpg');
+}
+
 
 }

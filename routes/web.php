@@ -18,6 +18,7 @@ use App\Http\Controllers\EdukacijaController;
 use App\Http\Controllers\Api\AiController;
 
 use App\Http\Controllers\KustosController;
+use App\Http\Controllers\SearchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,7 @@ use App\Http\Controllers\KustosController;
 |--------------------------------------------------------------------------
 */
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/pretraga', [SearchController::class, 'index'])->name('search');
 
 /*
 |--------------------------------------------------------------------------
@@ -83,6 +85,9 @@ Route::prefix('pravoslavni')->group(function () {
 
     Route::get('/datum-vaskrsa/{slug}', [VaskrsController::class, 'show'])
         ->name('vaskrs.show');
+
+    Route::get('/vaskrs', fn () => redirect()->route('vaskrs.index'));
+    Route::get('/vaskrs/{slug}', fn ($slug) => redirect()->route('vaskrs.show', $slug));
 
     /* Edukacija: specifične rute prvo */
     Route::get('/edukacija/ucenje-interakcija', [EdukacijaController::class, 'ucenjeInterakcija'])
@@ -197,25 +202,12 @@ Route::post('/map/ai/recommend', [App\Http\Controllers\MapAiController::class, '
 
     
 
-    use App\Http\Controllers\AdventureController;
 
-Route::get('/avantura', [AdventureController::class, 'index'])->name('avantura.index');
-Route::get('/avantura/igra', [AdventureController::class, 'play'])->name('avantura.play');
-
-/*Igrica*/
-Route::get('/igra', function () {
-    return view('game.escape');
-});
-
-// Ruta za automatski uvodni pozdrav (Ovo smo dodali malopre)
+// Ruta za automatski uvodni pozdrav
 Route::post('/kustos/context-greeting', [App\Http\Controllers\KustosController::class, 'contextGreeting'])->name('kustos.context-greeting');
 
-// Glavna ruta za razgovor u četu (Gledaj da ime i putanja budu tačno ovakvi)
-// Додај ово баш овакво у web.php
-Route::post('/kustos/chat', [\App\Http\Controllers\KustosController::class, 'chat']);
+// Glavna ruta za razgovor u kustos četu
+Route::post('/kustos/chat', [\App\Http\Controllers\KustosController::class, 'chat'])->name('kustos.chat');
 
+Route::post('/map/ai-query', [MapAiController::class, 'recommendByCity'])->name('map.ai.handleAiQuery');
 
-Route::post('/map/ai-query', [MapAiController::class, 'handleAiQuery'])->name('map.ai.handleAiQuery');
-
-Route::post('/kustos/context-greeting', [App\Http\Controllers\KustosController::class, 'contextGreeting'])
-->name('kustos.context-greeting');

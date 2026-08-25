@@ -69,6 +69,20 @@ img,svg,video,canvas,iframe{max-width:100%;display:block;}
 .container{width:var(--container);margin-inline:auto;}
 .muted{color:var(--muted);}
 
+/* Obostrano poravnanje (justified text) */
+p,
+.text-justified,
+.monBookBlock__text,
+.kt-paragraph,
+.kt-hero__lead,
+.text-book-layout p,
+article p {
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+
 .sr-only{
   position:absolute;
   width:1px;
@@ -196,15 +210,17 @@ textarea:focus{
 
 /* Top navigation */
 .topnav{
-  position:sticky;
-  top:0;
-  z-index:999;
-  width:100%;
-  background:rgba(18,12,13,.92);
-  border-bottom:1px solid rgba(255,255,255,.08);
-  backdrop-filter:blur(14px);
-  -webkit-backdrop-filter:blur(14px);
-  box-shadow:none;
+  position:fixed !important;
+  top:0 !important;
+  left:0 !important;
+  right:0 !important;
+  z-index:999999 !important;
+  width:100% !important;
+  background:rgba(18,12,13,.98) !important;
+  border-bottom:1px solid rgba(197,162,74,.32) !important;
+  backdrop-filter:blur(20px) !important;
+  -webkit-backdrop-filter:blur(20px) !important;
+  box-shadow:0 8px 32px rgba(0,0,0,.65) !important;
 }
 
 .topnav__frame{

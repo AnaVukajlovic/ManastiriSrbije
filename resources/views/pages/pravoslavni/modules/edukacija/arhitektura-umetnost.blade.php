@@ -5,64 +5,72 @@
 @section('content')
 <style>
   .lesson-page{
-    max-width: 1100px;
+    max-width: 1240px;
     margin: 0 auto;
+    width: 100%;
   }
 
   .lesson-card{
-    background: rgba(255,255,255,.03);
-    border: 1px solid rgba(255,255,255,.08);
-    border-radius: 18px;
-    padding: 32px;
-    box-shadow: 0 10px 30px rgba(0,0,0,.18);
+    background: linear-gradient(180deg, rgba(28, 18, 16, 0.96), rgba(16, 10, 10, 0.96));
+    border: 1.5px solid rgba(197, 162, 74, 0.28);
+    border-radius: 24px;
+    padding: 38px 42px;
+    box-shadow: 0 16px 40px rgba(0,0,0,.45);
+    width: 100%;
   }
 
   .lesson-page h1{
-    font-size: 36px;
-    margin-bottom: 18px;
-    color: var(--gold);
+    font-size: clamp(2rem, 3.2vw, 2.7rem);
+    margin-bottom: 20px;
+    color: var(--gold, #c5a24a);
+    font-weight: 800;
   }
 
   .lesson-page .lead{
-    font-size: 18px;
-    line-height: 1.85;
+    font-size: 1.12rem;
+    line-height: 1.95;
     text-align: justify;
-    color: rgba(255,255,255,.92);
+    text-justify: inter-word;
+    color: rgba(255,255,255,.96);
     margin-bottom: 24px;
+    font-style: italic;
   }
 
   .lesson-page h2{
-    margin-top: 34px;
-    margin-bottom: 12px;
-    font-size: 24px;
-    color: var(--gold);
+    margin-top: 36px;
+    margin-bottom: 14px;
+    font-size: 1.5rem;
+    color: var(--gold, #c5a24a);
+    font-weight: 700;
   }
 
   .lesson-page p{
     text-align: justify;
-    line-height: 1.9;
-    font-size: 17px;
-    margin-bottom: 16px;
-    color: rgba(255,255,255,.92);
+    text-justify: inter-word;
+    line-height: 1.95;
+    font-size: 1.05rem;
+    margin-bottom: 18px;
+    color: rgba(255,255,255,.90);
+    width: 100%;
   }
 
   @media (max-width: 768px){
     .lesson-card{
-      padding: 22px;
-      border-radius: 14px;
+      padding: 22px 18px;
+      border-radius: 16px;
     }
 
     .lesson-page h1{
-      font-size: 29px;
+      font-size: 1.75rem;
     }
 
     .lesson-page h2{
-      font-size: 22px;
+      font-size: 1.3rem;
     }
 
     .lesson-page p,
     .lesson-page .lead{
-      font-size: 16px;
+      font-size: 0.98rem;
       line-height: 1.8;
     }
   }
@@ -195,7 +203,38 @@
         naroda. Ove svetinje ostaju živi svedoci prošlosti i trajni izvori nadahnuća.
       </p>
 
-    </div>
+      {{-- IZVORI I STRUČNA LITERATURA --}}
+      @include('partials.edu-sources', [
+          'title' => 'Извори и стручна литература за тему „Архитектура и уметност“',
+          'sources' => [
+              [
+                  'author' => 'Др Војислав Ј. Ђурић',
+                  'work' => 'Византијске фреске у Југославији / Српско средњовековно сликарство',
+                  'details' => 'Београд (темељна научна студија о стилским епохама, монументалном фрескопису и сопоћанском златном добу).'
+              ],
+              [
+                  'author' => 'Проф. др Слободан Ненадовић',
+                  'work' => 'Историја српске архитектуре',
+                  'details' => 'Београд (детаљна архитектонска анализа Рашке, Вардарске и Моравске градитељске школе).'
+              ],
+              [
+                  'author' => 'Светозар Радојчић',
+                  'work' => 'Старо српско сликарство',
+                  'details' => 'Истраживања иконографије, портрета владара и стилских особености српских манастира од XII до XV века.'
+              ],
+              [
+                  'author' => 'Галерија фресака Народног музеја у Београду',
+                  'work' => 'Студије и водичи кроз копије фресака и камену пластику средњовековне Србије',
+                  'details' => 'Каталошка документација о розетским украсима, порталима и живопису.'
+              ],
+              [
+                  'author' => 'УНЕСКО (UNESCO World Heritage Centre)',
+                  'work' => 'Документација светске баштине за српске споменике',
+                  'details' => 'Евалуација изузетне универзалне вредности Студенице, Сопоћана, Дечана и Грачанице.'
+              ]
+          ],
+          'note' => 'Подела на градитељске школе и стилске фазе фрескописа заснована је на званичним уџбеницима и монографијама Филозофског и Архитектонског факултета Универзитета у Београду.'
+      ])
   </div>
 </section>
 @endsection

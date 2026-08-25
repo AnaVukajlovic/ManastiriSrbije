@@ -186,8 +186,8 @@
       .monCard{
         position:relative;
         display:block;
-        min-height:330px;
-        border-radius:26px;
+        min-height:260px;
+        border-radius:24px;
         overflow:hidden;
         text-decoration:none;
         border:1px solid rgba(255,255,255,.08);
@@ -232,7 +232,7 @@
         position: absolute;
         inset: 0;
         background:
-          linear-gradient(180deg, rgba(0,0,0,.04) 0%, rgba(0,0,0,.10) 30%, rgba(0,0,0,.68) 100%);
+          linear-gradient(180deg, rgba(0,0,0,.04) 0%, rgba(0,0,0,.20) 35%, rgba(0,0,0,.82) 100%);
       }
 
       .monCard__body{
@@ -246,11 +246,11 @@
 
       .monCard__title{
         margin-bottom:8px;
-        font-size:1.28rem;
-        line-height:1.16;
+        font-size:1.24rem;
+        line-height:1.18;
         font-weight:900;
         color:#fff;
-        text-shadow:0 2px 10px rgba(0,0,0,.25);
+        text-shadow:0 2px 10px rgba(0,0,0,.35);
       }
 
       .monCard__meta{
@@ -258,26 +258,14 @@
         flex-wrap:wrap;
         align-items:center;
         gap:6px;
-        margin-bottom:8px;
         font-size:.88rem;
-        color:rgba(255,255,255,.70);
+        font-weight:600;
       }
 
-      /* Poseban stil za godinu osnivanja u metapodacima */
-      .monCard__meta-year {
-        color: var(--gold2);
-        font-weight: 700;
-      }
-
-      .monCard__excerpt{
-        display: -webkit-box;
-        -webkit-line-clamp: 3;
-        line-clamp: 3;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        font-size: .95rem;
-        line-height: 1.58;
-        color: rgba(255,255,255,.84);
+      .monCard__meta-item,
+      .monCard__meta-sep {
+        color: var(--gold2, #e2c26a) !important;
+        text-shadow: 0 1px 4px rgba(0,0,0,0.6);
       }
 
       .monIndexPagination{
@@ -352,13 +340,13 @@
                 name="q"
                 type="search"
                 value="{{ $q }}"
-                placeholder="Naziv, grad, region..."
+                placeholder="Uneti naziv manastira..."
               />
             </div>
 
             <div class="filters__field mon-select-wrap">
               <label class="sr-only" for="eparchy">Eparhija</label>
-              <select id="eparchy" name="eparchy">
+              <select id="eparchy" name="eparchy" onchange="this.form.submit()">
                 <option value="">Sve eparhije</option>
                 @foreach($eparchies as $e)
                   <option value="{{ $e->slug }}" {{ request('eparchy') === $e->slug ? 'selected' : '' }}>
@@ -370,7 +358,7 @@
 
             <div class="filters__field mon-select-wrap">
               <label class="sr-only" for="region">Region</label>
-              <select id="region" name="region">
+              <select id="region" name="region" onchange="this.form.submit()">
                 <option value="">Svi regioni</option>
                 @foreach($regions as $r)
                   <option value="{{ $r }}" @selected($region === $r)>{{ $r }}</option>
@@ -380,7 +368,7 @@
 
             <div class="filters__field mon-select-wrap">
               <label class="sr-only" for="sort">Sortiranje</label>
-              <select id="sort" name="sort">
+              <select id="sort" name="sort" onchange="this.form.submit()">
                 <option value="popular" @selected($sort === 'popular')>Preporučeno</option>
                 <option value="name" @selected($sort === 'name')>Naziv (A–Š)</option>
                 <option value="new" @selected($sort === 'new')>Najnovije</option>
@@ -396,13 +384,18 @@
       <div class="monGridCards">
         @forelse($monasteries as $m)
           @php
-            $localImg = asset('images/monasteries/' . $m->slug . '.jpg');
+            $localImg = $m->image_src;
             $fallbackImg = asset('images/monasteries/placeholder.jpg');
 
-            // Fleksibilno čišćenje vrednosti iz baze (provera za prazna i "nepoznato" polja bez obzira na velika/mala slova)
+            // Čišćenje vrednosti za metapodatke (Godina | Region | Grad)
+            $godinaLabel = (!empty($m->godina_izgradnje) && strtolower($m->godina_izgradnje) !== 'nepoznato') ? $m->godina_izgradnje : null;
             $regionLabel = (!empty($m->region) && strtolower($m->region) !== 'nepoznato') ? $m->region : null;
             $cityLabel = (!empty($m->city) && strtolower($m->city) !== 'nepoznato') ? $m->city : null;
-            $godinaLabel = (!empty($m->godina_izgradnje) && strtolower($m->godina_izgradnje) !== 'nepoznato') ? $m->godina_izgradnje : null;
+
+            $metaParts = [];
+            if ($godinaLabel) $metaParts[] = $godinaLabel;
+            if ($regionLabel) $metaParts[] = $regionLabel;
+            if ($cityLabel) $metaParts[] = $cityLabel;
           @endphp
 
           <a class="monCard" href="{{ route('monasteries.show', $m->slug) }}">
@@ -417,32 +410,15 @@
             <div class="monCard__body">
               <div class="monCard__title">{{ $m->name }}</div>
 
-              @if($godinaLabel || $regionLabel || $cityLabel)
+              @if(!empty($metaParts))
                 <div class="monCard__meta">
-                  @if($godinaLabel)
-                    <span class="monCard__meta-year">{{ $godinaLabel }}</span>
-                  @endif
-
-                  @if($godinaLabel && ($regionLabel || $cityLabel))
-                    <span>•</span>
-                  @endif
-
-                  @if($regionLabel)
-                    <span>{{ $regionLabel }}</span>
-                  @endif
-
-                  @if($regionLabel && $cityLabel)
-                    <span>•</span>
-                  @endif
-
-                  @if($cityLabel)
-                    <span>{{ $cityLabel }}</span>
-                  @endif
+                  @foreach($metaParts as $part)
+                    <span class="monCard__meta-item">{{ $part }}</span>
+                    @if(!$loop->last)
+                      <span class="monCard__meta-sep">•</span>
+                    @endif
+                  @endforeach
                 </div>
-              @endif
-
-              @if(!empty($m->excerpt))
-                <div class="monCard__excerpt">{{ $m->excerpt }}</div>
               @endif
             </div>
           </a>

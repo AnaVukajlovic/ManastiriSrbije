@@ -12,4 +12,19 @@ class KtitorImage extends Model
     {
         return $this->belongsTo(Ktitor::class);
     }
+
+    public function getImageSrcAttribute(): string
+    {
+        $p = (string) ($this->path ?? '');
+        if ($p !== '') {
+            if (str_starts_with($p, 'http://') || str_starts_with($p, 'https://')) {
+                return $p;
+            }
+            $clean = ltrim($p, '/');
+            if (file_exists(public_path($clean))) {
+                return asset($clean);
+            }
+        }
+        return asset('images/sample/studenica.jpg');
+    }
 }

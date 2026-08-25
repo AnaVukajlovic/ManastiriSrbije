@@ -7,20 +7,41 @@
 <section class="section nm-gene-page">
   <div class="container">
     <div class="nm-gene-hero">
-      <div class="nm-hero-text-block">
-        <span class="nm-gene-kicker">Dinastija • Edukacija</span>
-        <h1>Genealogija Nemanjića</h1>
-        <p class="nm-hero-lead-text">Povijesni pregled muške loze Nemanjića. Poveznice sa zlatnim i plavim okvirom vode na detaljan profil ktitora.</p>
+      <div class="nm-hero-header-row">
+        <div class="nm-hero-titles">
+          <span class="nm-gene-kicker">Dinastija • Edukacija</span>
+          <h1>Genealogija Nemanjića</h1>
+        </div>
+        <a href="{{ route('edukacija.ucenje-interakcija') }}" class="nm-gene-back">
+          ← Nazad na učenje
+        </a>
       </div>
 
-      <a href="{{ route('edukacija.ucenje-interakcija') }}" class="nm-gene-back">
-        ← Nazad na učenje
-      </a>
+      <p class="nm-hero-lead-text">
+        U ovoj obrazovnoj celini detaljno je prikazana genealogija dinastije Nemanjić, jer su upravo njeni vladari i članovi svete loze ostali upamćeni kao najveći zadužbinari u celokupnoj srpskoj istoriji. Tokom više od dva veka vladavine (1166—1371), Nemanjići su podigli najznačajnije srpske manastire — od Studenice, Hilandara i Žiče, preko Mileševe i Sopoćana, do Gračanice i Visokih Dečana. Njihovim zadužbinarskim radom utemeljena je autokefalna Srpska crkva (1219), stvorena vrhunska srednjovekovna umetnost i arhitektura, te postavljen trajni duhovni, pravni i kulturni temelj našeg naroda. Klikom na uokvirene kartice vladara i ktitora možete otvoriti detaljne istorijske profile sa podacima o njihovom životu, vladavini i zadužbinama.
+      </p>
+    </div>
+
+    {{-- TOOLBAR: LEGENDA I ZOOM KONTROLE --}}
+    <div class="nm-tree-toolbar">
+      <div class="nm-tree-legend">
+        <span class="nm-legend-item"><span class="nm-legend-dot dot-ruler"></span> Vladari i knezovi</span>
+        <span class="nm-legend-item"><span class="nm-legend-dot dot-gold"></span> Srpski car</span>
+        <span class="nm-legend-item"><span class="nm-legend-dot dot-church"></span> Arhiepiskop</span>
+        <span class="nm-legend-item"><span class="nm-legend-dot dot-static"></span> Dinastička loza</span>
+      </div>
+
+      <div class="nm-tree-zoom-box">
+        <span class="nm-zoom-title">🔍 Zoom:</span>
+        <button type="button" class="nm-zoom-btn" id="nmZoomOut" title="Umanji stablo">−</button>
+        <button type="button" class="nm-zoom-btn nm-zoom-val" id="nmZoomReset" title="Resetuj na 100%">100%</button>
+        <button type="button" class="nm-zoom-btn" id="nmZoomIn" title="Uvećaj stablo">+</button>
+      </div>
     </div>
   </div>
 
   <div class="nm-tree-full-width">
-    <div class="nm-tree-wrapper">
+    <div class="nm-tree-wrapper" id="nmTreeWrapper">
       <div class="nm-tree">
         <ul>
           <li>
@@ -185,11 +206,100 @@
       </div>
     </div>
   </div>
+
 </section>
 
 <style>
-/* ===== ČISTA CSS ARHITEKTURA STABLA BEZ SKROLBARA ===== */
+/* ===== TOOLBAR ZA LEGENDA I ZOOM ===== */
+.nm-tree-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 20px;
+  padding: 14px 20px;
+  background: rgba(24, 18, 16, 0.7);
+  border: 1px solid rgba(197, 162, 74, 0.22);
+  border-radius: 16px;
+  backdrop-filter: blur(8px);
+}
 
+.nm-tree-legend {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.nm-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.nm-legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.dot-ruler { background: #262119; border: 1.5px solid rgba(234, 182, 77, 0.7); }
+.dot-gold { background: #2e2516; border: 1.5px solid #eab64d; box-shadow: 0 0 6px rgba(234, 182, 77, 0.4); }
+.dot-church { background: #141c26; border: 1.5px solid rgba(104, 151, 204, 0.8); }
+.dot-static { background: #181613; border: 1.5px solid rgba(255, 255, 255, 0.2); }
+
+.nm-tree-zoom-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(0, 0, 0, 0.35);
+  padding: 4px 8px;
+  border-radius: 12px;
+  border: 1px solid rgba(197, 162, 74, 0.2);
+}
+
+.nm-zoom-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #e2c26a;
+  margin-right: 4px;
+}
+
+.nm-zoom-btn {
+  background: rgba(197, 162, 74, 0.12);
+  border: 1px solid rgba(197, 162, 74, 0.3);
+  color: #f0d78f;
+  font-weight: 700;
+  font-size: 0.88rem;
+  width: 32px;
+  height: 30px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.nm-zoom-btn:hover {
+  background: rgba(197, 162, 74, 0.25);
+  border-color: #eab64d;
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.nm-zoom-btn.nm-zoom-val {
+  width: auto;
+  min-width: 54px;
+  padding: 0 8px;
+  font-size: 0.78rem;
+}
+
+/* ===== STRUKTURA I POZICIONIRANJE STABLA ===== */
 .nm-tree-full-width {
   width: 100vw;
   position: relative;
@@ -199,22 +309,48 @@
   margin-right: -50vw;
   display: flex;
   justify-content: center;
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 10px 20px 30px 20px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(197, 162, 74, 0.4) rgba(0, 0, 0, 0.2);
+}
+
+.nm-tree-full-width::-webkit-scrollbar {
+  height: 8px;
+}
+
+.nm-tree-full-width::-webkit-scrollbar-track {
+  background: rgba(18, 14, 12, 0.6);
+  border-radius: 4px;
+}
+
+.nm-tree-full-width::-webkit-scrollbar-thumb {
+  background: rgba(197, 162, 74, 0.45);
+  border-radius: 4px;
+}
+
+.nm-tree-full-width::-webkit-scrollbar-thumb:hover {
+  background: rgba(197, 162, 74, 0.7);
 }
 
 .nm-tree-wrapper {
-  padding: 30px 10px;
-  background: rgba(18, 16, 13, 0.25);
-  border: 1px solid rgba(197, 162, 74, 0.15);
+  padding: 32px 20px;
+  background: rgba(18, 16, 13, 0.35);
+  border: 1px solid rgba(197, 162, 74, 0.2);
   border-radius: 24px;
   display: inline-flex;
   justify-content: center;
   margin-top: 10px;
-  margin-bottom: 40px;
+  margin-bottom: 25px;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+  transform-origin: top center;
+  transition: transform 0.2s cubic-bezier(0.2, 0, 0, 1);
 }
 
 .nm-tree ul {
-  padding-top: 20px;
+  padding-top: 22px;
   position: relative;
   display: flex;
   justify-content: center;
@@ -226,7 +362,7 @@
   text-align: center;
   list-style-type: none;
   position: relative;
-  padding: 20px 3px 0 3px;
+  padding: 22px 3px 0 3px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -240,7 +376,7 @@
   right: 50%;
   border-top: 1.5px solid #eab64d;
   width: 50%;
-  height: 20px;
+  height: 22px;
   z-index: 1;
 }
 
@@ -276,55 +412,136 @@
   left: 50%;
   border-left: 1.5px solid #eab64d;
   width: 0;
-  height: 20px;
+  height: 22px;
   margin-left: -0.75px;
 }
 
-/* ===== DIZAJN KARTICA ===== */
+/* ===== DIZAJN KARTICA (PROŠIRENE I JASNIJE) ===== */
 .nm-tree-card {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 138px !important;
-  min-height: 95px !important;
-  padding: 10px 6px;
-  border-radius: 8px;
+  width: 154px !important;
+  min-height: 102px !important;
+  padding: 12px 8px;
+  border-radius: 10px;
   text-align: center;
   text-decoration: none !important;
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.4);
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
+  transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
   background: #1c1914;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1.2px solid rgba(255, 255, 255, 0.08);
   position: relative;
   z-index: 5;
+  box-sizing: border-box;
 }
 
-.nm-tree-card.text-clickable { border-color: rgba(234, 182, 77, 0.5); cursor: pointer; }
+.nm-tree-card.text-clickable { border-color: rgba(234, 182, 77, 0.55); cursor: pointer; }
 .nm-tree-card.style-ruler { background: linear-gradient(145deg, rgba(38, 33, 25, 0.98), rgba(20, 17, 14, 0.98)); }
-.nm-tree-card.style-church { border-color: rgba(104, 151, 204, 0.6); background: linear-gradient(145deg, rgba(20, 28, 38, 0.98), rgba(11, 16, 22, 0.98)); }
-.nm-tree-card.style-gold { border: 1.5px solid #eab64d; background: linear-gradient(145deg, rgba(46, 37, 22, 0.98), rgba(22, 18, 11, 0.98)); box-shadow: 0 0 15px rgba(234, 182, 77, 0.2); }
-.nm-tree-card.style-static { border-color: rgba(255, 255, 255, 0.08); background: rgba(24, 22, 19, 0.6); pointer-events: none; }
+.nm-tree-card.style-church { border-color: rgba(104, 151, 204, 0.7); background: linear-gradient(145deg, rgba(20, 28, 38, 0.98), rgba(11, 16, 22, 0.98)); }
+.nm-tree-card.style-gold { border: 1.8px solid #eab64d; background: linear-gradient(145deg, rgba(48, 38, 22, 0.98), rgba(24, 19, 12, 0.98)); box-shadow: 0 0 16px rgba(234, 182, 77, 0.25); }
+.nm-tree-card.style-static { border-color: rgba(255, 255, 255, 0.08); background: rgba(24, 22, 19, 0.65); pointer-events: none; }
 
-/* Tipografija */
-.nm-vladar-name { color: #fbf9f3; font-weight: 700; font-size: 0.78rem; line-height: 1.15; }
+/* Tipografija kartica */
+.nm-vladar-name { color: #fbf9f3; font-weight: 700; font-size: 0.86rem; line-height: 1.2; }
 .nm-tree-card.style-gold .nm-vladar-name { color: #eab64d; }
-.nm-tree-card.style-static .nm-vladar-name { color: rgba(255, 255, 255, 0.5); }
-.nm-vladar-title { color: rgba(216, 209, 195, 0.6); font-size: 0.6rem; margin-top: 3px; font-weight: 500; }
-.nm-vladar-date { color: #eab64d; font-size: 0.6rem; font-weight: 700; margin-top: 3px; }
+.nm-tree-card.style-static .nm-vladar-name { color: rgba(255, 255, 255, 0.55); }
+.nm-vladar-title { color: rgba(216, 209, 195, 0.7); font-size: 0.68rem; margin-top: 4px; font-weight: 500; line-height: 1.25; }
+.nm-vladar-date { color: #eab64d; font-size: 0.68rem; font-weight: 700; margin-top: 3px; }
 
-.nm-tree-card.text-clickable:hover { transform: translateY(-4px); border-color: #eab64d; box-shadow: 0 8px 20px rgba(234, 182, 77, 0.3); }
+.nm-tree-card.text-clickable:hover { transform: translateY(-4px); border-color: #eab64d; box-shadow: 0 10px 24px rgba(234, 182, 77, 0.35); }
 
 /* HERO PANEL */
-.nm-gene-page .nm-gene-hero { display: flex; justify-content: space-between; align-items: center; gap: 30px; margin-bottom: 35px; width: 100%; }
-.nm-hero-text-block { display: flex; flex-direction: column; align-items: flex-start; flex: 1; }
-.nm-gene-page .nm-gene-kicker { display: inline-flex; padding: 5px 12px; border-radius: 999px; border: 1px solid rgba(197, 162, 74, 0.2); background: rgba(197, 162, 74, 0.05); color: #eab64d; font-size: 0.78rem; font-weight: 700; text-transform: uppercase; }
-.nm-gene-page .nm-gene-hero h1 { margin: 10px 0 6px 0; font-size: clamp(1.8rem, 3.5vw, 2.3rem); font-weight: 800; color: #eab64d; line-height: 1.1; }
-.nm-gene-page .nm-gene-hero .nm-hero-lead-text { color: rgba(255, 255, 255, 0.65); font-size: 0.95rem; margin: 0; line-height: 1.4; max-width: 850px; }
-.nm-gene-back { display: inline-flex; align-items: center; padding: 10px 18px; border-radius: 10px; text-decoration: none; font-weight: 600; color: rgba(255, 255, 255, 0.85); border: 1px solid rgba(255, 255, 255, 0.08); background: rgba(255, 255, 255, 0.02); transition: all 0.2s ease; font-size: 0.88rem; white-space: nowrap; }
+.nm-gene-page .nm-gene-hero {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 24px;
+  width: 100%;
+}
+.nm-hero-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+.nm-hero-titles {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.nm-gene-page .nm-gene-kicker {
+  display: inline-flex;
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(197, 162, 74, 0.25);
+  background: rgba(197, 162, 74, 0.08);
+  color: #eab64d;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.nm-gene-page .nm-gene-hero h1 {
+  margin: 8px 0 0 0;
+  font-size: clamp(1.8rem, 3.5vw, 2.3rem);
+  font-weight: 800;
+  color: #eab64d;
+  line-height: 1.1;
+}
+.nm-gene-page .nm-gene-hero .nm-hero-lead-text {
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 1rem;
+  margin: 0;
+  line-height: 1.85;
+  width: 100%;
+  max-width: 100%;
+  text-align: justify;
+  text-justify: inter-word;
+}
+.nm-gene-back {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 18px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+  transition: all 0.2s ease;
+  font-size: 0.88rem;
+  white-space: nowrap;
+}
+.nm-gene-back:hover {
+  border-color: rgba(197, 162, 74, 0.4);
+  background: rgba(197, 162, 74, 0.1);
+  color: #f0d78f;
+}
 
-/* ===== AUTOMATSKI TIMELINE PRIKAZ ZA MOBITELE ===== */
+@media (max-width: 768px) {
+  .nm-hero-header-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .nm-gene-back {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ===== MOBILNI PRIKAZ ===== */
 @media (max-width: 1024px) {
+  .nm-tree-toolbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .nm-tree-zoom-box {
+    display: none;
+  }
   .nm-tree-full-width {
     margin-left: 0;
     margin-right: 0;
@@ -332,8 +549,9 @@
     right: 0;
     width: 100%;
     overflow-x: hidden;
+    padding: 0;
   }
-  .nm-tree-wrapper { border: none; background: none; padding: 0; margin-bottom: 20px; justify-content: flex-start; }
+  .nm-tree-wrapper { border: none; background: none; padding: 0; margin-bottom: 20px; justify-content: flex-start; transform: none !important; }
   
   .nm-tree > ul { padding-left: 0; }
   .nm-tree > ul > li { border-left: none; padding-left: 0; }
@@ -358,10 +576,51 @@
   .nm-tree li:only-child { padding-top: 12px; }
   
   .nm-tree-card {
-    width: 220px !important;
+    width: 240px !important;
     text-align: left;
     align-items: flex-start;
+    min-height: auto !important;
+    padding: 12px 14px;
   }
 }
 </style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  let currentScale = 1.0;
+  const step = 0.12;
+  const minScale = 0.76;
+  const maxScale = 1.48;
+  const treeWrapper = document.getElementById('nmTreeWrapper');
+  const zoomValBtn = document.getElementById('nmZoomReset');
+  const zoomInBtn = document.getElementById('nmZoomIn');
+  const zoomOutBtn = document.getElementById('nmZoomOut');
+
+  function updateZoom(val) {
+    currentScale = Math.min(Math.max(val, minScale), maxScale);
+    if (treeWrapper) {
+      treeWrapper.style.transform = `scale(${currentScale})`;
+    }
+    if (zoomValBtn) {
+      zoomValBtn.textContent = Math.round(currentScale * 100) + '%';
+    }
+  }
+
+  if (zoomInBtn) {
+    zoomInBtn.addEventListener('click', function() {
+      updateZoom(currentScale + step);
+    });
+  }
+  if (zoomOutBtn) {
+    zoomOutBtn.addEventListener('click', function() {
+      updateZoom(currentScale - step);
+    });
+  }
+  if (zoomValBtn) {
+    zoomValBtn.addEventListener('click', function() {
+      updateZoom(1.0);
+    });
+  }
+});
+</script>
 @endsection

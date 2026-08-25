@@ -9,7 +9,7 @@
   .curios-show3 .container { width: min(1200px, calc(100% - 30px)); margin: 0 auto; }
 
   /* Head - svedeno i kompaktno */
-  .curios-show3__head { margin-bottom: 30px; max-width: 800px; }
+  .curios-show3__head { margin-bottom: 30px; width: 100%; }
   .back-btn { display: inline-flex; margin-bottom: 15px; text-decoration: none; color: var(--gold); background: rgba(197,162,74,.08); padding: 6px 14px; border-radius: 999px; font-size: 0.85rem; }
   
   .curios-show3__title { 
@@ -30,33 +30,26 @@
   }
 
   /* Naslov zauzima prvu kolonu */
-  .curios-show3__head { grid-column: 1; margin-bottom: 30px; }
+  .curios-show3__head { grid-column: 1; margin-bottom: 30px; width: 100%; }
   
   /* Artikal zauzima prvu kolonu ispod naslova */
-  .curios-show3__article { grid-column: 1; }
+  .curios-show3__article { grid-column: 1; width: 100%; }
 
   /* Sidebar zauzima drugu kolonu i proteže se od vrha naslova do dna članka */
-.curios-show3__side { 
+  .curios-show3__side { 
     grid-column: 2; 
     grid-row: 1 / 3; 
     position: sticky; 
     top: 20px; 
-    /* OVO SPUŠTA DIV DOLE - povecaj broj ako zelis jos nize */
-    margin-top: 60px; 
+    margin-top: 0; 
   }
   .curios-show3__meta { color: rgba(255,255,255,0.6); margin-bottom: 20px; font-size: 0.9rem; }
-  .curios-show3__lead { margin: 0; color: rgba(255,255,255,0.9); line-height: 1.6; font-size: 1.05rem; border-left: 3px solid var(--gold); padding-left: 15px; }
+  .curios-show3__lead { margin: 0; color: rgba(255,255,255,0.9); line-height: 1.8; font-size: 1.05rem; border-left: 3.5px solid var(--gold); padding-left: 15px; text-align: justify; text-justify: inter-word; }
 
-  /* Layout - Grid */
-.curios-show3__layout { 
-    display: grid; 
-    grid-template-columns: 1fr 340px; 
-    gap: 40px; 
-    align-items: start; 
-  }  
   /* Article */
   .curios-show3__article { border-radius: 24px; border: 1px solid rgba(255,255,255,.05); background: rgba(20,12,12,.6); overflow: hidden; }
-  .curios-show3__content { padding: 30px; line-height: 1.8; color: #eee; text-align: justify; }
+  .curios-show3__content { padding: 30px; line-height: 1.85; color: #eee; text-align: justify; text-justify: inter-word; }
+  .curios-show3__content p { text-align: justify; text-justify: inter-word; line-height: 1.85; margin-bottom: 16px; }
 
   /* Sidebar (Još zanimljivosti) */
 .curios-show3__side { 
@@ -124,9 +117,21 @@
       </div>
 
       <article class="curios-show3__article">
-        <img src="{{ $item->image ? asset($item->image) : asset('images/curiosities/default.jpg') }}" alt="{{ $item->title }}" class="curios-show3__image">
+        <img src="{{ $item->image_src }}" alt="{{ $item->title }}" class="curios-show3__image" onerror="this.onerror=null;this.src='{{ asset('images/curiosities/default.jpg') }}';">
         <div class="curios-show3__content">
           {!! nl2br(e($item->content)) !!}
+
+          {{-- ELEGANTNI IZVORI --}}
+          @include('partials.sources-card', [
+              'title' => 'Извори и стручна литература за чланак',
+              'sources' => [
+                  'Свети Владика Николај Велимировић: <em>„Охридски пролог”</em> и <em>„Вера Светих”</em>, Београд',
+                  'Свето Писмо Новог Завета, превод Светог Архијерејског Синода СПЦ',
+                  'Др Радомир Поповић: <em>„Појмовник црквених обичаја и богослужења”</em>, Београд',
+                  'Званични едукативни списи Информативне службе Српске Православне Цркве (spc.rs)'
+              ],
+              'note' => 'Текст је приређен у едукативне сврхе у складу са званичним канонима и учењем Српске Православне Цркве.'
+          ])
         </div>
       </article>
 

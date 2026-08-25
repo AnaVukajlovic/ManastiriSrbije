@@ -1,0 +1,120 @@
+{
+  "grliste": {
+    "url": "https://manastiri.rs/eparhije/timocka/manastir-grliste/",
+    "title": "Manastir Grlište sa Crkvom Svetih Apostola - Manastiri",
+    "images": []
+  },
+  "krepicevac": {
+    "url": "https://manastiri.rs/eparhije/timocka/manastir-krepicevac/",
+    "title": "Manastir Krepičevac sa Crkvom Uspenja Bogorodice - Manastiri",
+    "images": []
+  },
+  "lapusnja": {
+    "url": "https://manastiri.rs/eparhije/timocka/manastir-lapusnja/",
+    "title": "Manastir Lapušnja sa Crkvom Svetog Oca Nikolaja - Manastiri",
+    "images": []
+  },
+  "lozica": {
+    "url": "https://manastiri.rs/eparhije/timocka/manastir-lozica/",
+    "title": "Manastir Lozica sa Crkvom Sv. Arhangelu Gavrilu - Manastiri",
+    "images": []
+  },
+  "vratna": {
+    "url": "https://manastiri.rs/eparhije/timocka/manastir-vratna/",
+    "title": "Manastir Vratna sa Crkvom Vaznesenja Gospodnjeg - Manastiri",
+    "images": [
+      "https://manastiri.rs/wp-content/uploads/2025/03/manastir-vratna-1.jpg",
+      "https://manastiri.rs/wp-content/uploads/2025/03/manastir-vratna-5.jpg",
+      "https://manastiri.rs/wp-content/uploads/2025/03/manastir-vratna-6.jpg",
+      "https://manastiri.rs/wp-content/uploads/2025/03/manastir-vratna-8.jpg",
+      "https://manastiri.rs/wp-content/uploads/2025/03/manastir-vratna-3.jpg",
+      "https://manastiri.rs/wp-content/uploads/2025/03/manastir-vratna-4.jpg",
+      "https://manastiri.rs/wp-content/uploads/2025/03/manastir-vratna-7.jpg",
+      "https://manastiri.rs/wp-content/uploads/2025/03/manastir-vratna-8-1.jpg"
+    ]
+  },
+  "suvodol": {
+    "url": "https://manastiri.rs/eparhije/timocka/manastir-suvodol/",
+    "title": "Manastir Suvodol - Manastiri",
+    "images": []
+  },
+  "lelic": {
+    "url": "https://manastiri.rs/eparhije/valjevska/manastir-lelic/",
+    "title": "Manastir Lelić sa Crkvom Svetog Nikolaja - Manastiri",
+    "images": [
+      "https://manastiri.rs/wp-content/uploads/2025/02/manastir-lelic-m1.jpg",
+      "https://manastiri.rs/wp-content/uploads/2025/02/manastir-lelic-manastir.jpg",
+      "https://manastiri.rs/wp-content/uploads/2025/02/manastir-lelic-kapija.jpg",
+      "https://manastiri.rs/wp-content/uploads/2025/02/manastir-lelic-konak.jpg",
+      "https://manastiri.rs/wp-content/uploads/2025/02/manastir-lelic-putokaz.jpg",
+      "https://manastiri.rs/wp-content/uploads/2025/02/manastir-lelic-ulaz.jpg",
+      "https://manastiri.rs/wp-content/uploads/2025/02/manastir-lelic-vrata.jpg",
+      "https://manastiri.rs/wp-content/uploads/2025/02/manastir-lelic-ikonostas.jpg",
+      "https://manastiri.rs/wp-content/uploads/2025/02/manastir-lelic-kapela.jpg"
+    ]
+  },
+  "bogovadja": {
+    "url": "https://manastiri.rs/eparhije/valjevska/manastir-bogovadja/",
+    "title": "Manastir Bogovađa sa Crkvom Svetom Georgiju - Manastiri",
+    "images": [
+      "https://manastiri.rs/wp-content/uploads/2025/02/manastiri-bogovadja-crkva.jpg",
+      "https://manastiri.rs/wp-content/uploads/2025/02/manastiri-bogovadja-dvoriste.jpg",
+      "https://manastiri.rs/wp-content/uploads/2025/02/manastiri-bogovadja-kapija.jpg",
+      "https://manastiri.rs/wp-content/uploads/2025/02/manastiri-bogovadja-putokaz.jpg",
+      "https://manastiri.rs/wp-content/uploads/2025/02/manastiri-bogovadja-ulaz.jpg",
+      "https://manastiri.rs/wp-content/uploads/2025/02/manastiri-bogovadja-zid.jpg"
+    ]
+  },
+  "dokmir": {
+    "url": "https://manastiri.rs/eparhije/valjevska/manastir-dokmir/",
+    "title": "Manastir Dokmir Vavedenju Presvete Bogorodice - Manastiri",
+    "images": [
+      "https://manastiri.rs/wp-content/uploads/2025/02/manastir-dokmir-crkva.jpg",
+      "https://manastiri.rs/wp-content/uploads/2025/02/manastir-dokmir-crkva1.jpg",
+      "https://manastiri.rs/wp-content/uploads/2025/02/manastir-dokmir-crkvica.jpg",
+      "https://manastiri.rs/wp-content/uploads/2025/02/manastir-dokmir-kapija.jpg",
+      "https://manastiri.rs/wp-content/uploads/2025/02/manastir-dokmir-konak.jpg",
+      "https://manastiri.rs/wp-content/uploads/2025/02/manastir-dokmir-putokaz.jpg"
+    ]
+  },
+  "grabovac": {
+    "url": "https://manastiri.rs/eparhije/valjevska/manastir-grabovac/",
+    "title": "Manastir Grabovac sa Crkvom Svetom Ocu Nikolaju - Manastiri",
+    "images": [
+      "https://manastiri.rs/wp-content/uploads/2025/02/manastir-grabovac-1.jpg",
+      "https://manastiri.rs/wp-content/uploads/2025/02/manastir-grabovac-2.jpg",
+      "https://manastiri.rs/wp-content/uploads/2025/02/manastir-grabovac-3.jpg",
+      "https://manastiri.rs/wp-content/uploads/2025/02/manastir-grabovac-4.jpg",
+      "https://manastiri.rs/wp-content/uploads/2025/02/manastir-grabovac-8.jpg",
+      "https://manastiri.rs/wp-content/uploads/2025/02/manastir-grabovac-9.jpg",
+      "https://manastiri.rs/wp-content/uploads/2025/02/manastir-grabovac-10.jpg"
+    ]
+  },
+  "ribnica": {
+    "url": "https://manastiri.rs/eparhije/valjevska/manastir-ribnica/",
+    "title": "Manastir Ribnica Svetim Apostolima Petru i Pavlu - Manastiri",
+    "images": []
+  },
+  "pluzac": {
+    "url": "https://manastiri.rs/eparhije/valjevska/manastir-pluzac/",
+    "title": "Manastir Plužac Caru Konstantinu i Carici Jeleni - Manastiri",
+    "images": []
+  },
+  "jovanja": {
+    "url": "https://manastiri.rs/eparhije/valjevska/manastir-jovanja/",
+    "title": "Manastir Jovanja sa Crkvom Sv. Jovanu Krstitelju - Manastiri",
+    "images": [
+      "https://manastiri.rs/wp-content/uploads/2025/02/manastir-jovanja-crkva.jpg",
+      "https://manastiri.rs/wp-content/uploads/2025/02/manastir-jovanja-crkva2.jpg",
+      "https://manastiri.rs/wp-content/uploads/2025/02/manastir-jovanja-crkva4.jpg",
+      "https://manastiri.rs/wp-content/uploads/2025/02/manastir-jovanja-konak.jpg",
+      "https://manastiri.rs/wp-content/uploads/2025/02/manastir-jovanja-manastir.jpg",
+      "https://manastiri.rs/wp-content/uploads/2025/02/manastir-jovanja-odmor.jpg",
+      "https://manastiri.rs/wp-content/uploads/2025/02/manastir-jovanja-vrh.jpg",
+      "https://manastiri.rs/wp-content/uploads/2025/02/manastir-jovanja-zvonik.jpg",
+      "https://manastiri.rs/wp-content/uploads/2025/02/manastir-jovanja-ikonostas.jpg",
+      "https://manastiri.rs/wp-content/uploads/2025/02/manastir-jovanja-ikonostas2.jpg",
+      "https://manastiri.rs/wp-content/uploads/2025/02/manastir-jovanja-izvor.jpg"
+    ]
+  }
+}

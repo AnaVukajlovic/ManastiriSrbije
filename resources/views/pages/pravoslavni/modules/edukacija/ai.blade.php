@@ -15,7 +15,6 @@
           Ovde AI nije “samo pitanja”. Koristi ga kao alat:
           <span>sažetak</span>, <span>objašnjenje</span>, <span>rečnik</span>, <span>kviz</span> —
           posebno korisno za učenje istorije, SPC i kulture.
-          Režim: <strong>{{ env('AI_USE_OLLAMA', false) ? 'Ollama + baza' : 'Pametni odgovor iz baze' }}</strong>
         </p>
       </div>
 
@@ -547,72 +546,28 @@
     const length = lenEl.value;
 
     const maxTokensMap = {
-      summarize: { short: 120, medium: 170, long: 220 },
-      explain:   { short: 140, medium: 190, long: 240 },
-      glossary:  { short: 160, medium: 220, long: 280 },
-      quiz:      { short: 170, medium: 240, long: 320 }
+      summarize: { short: 600, medium: 1000, long: 1800 },
+      explain:   { short: 600, medium: 1000, long: 1800 },
+      glossary:  { short: 600, medium: 1000, long: 1800 },
+      quiz:      { short: 800, medium: 1200, long: 2000 }
     };
 
-    const maxTokens =
-      maxTokensMap[mode]?.[length]
-      ?? 180;
+    const maxTokens = maxTokensMap[mode]?.[length] ?? 1200;
 
-    const commonRules = [
-      'Odgovaraj isključivo na standardnom srpskom jeziku.',
-      'Koristi ekavicu i latinicu.',
-      'Ne mešaj jezike.',
-      'Ne koristi hrvatske oblike kao što su: povijest, tisuća, svećenik, oduvijek.',
-      'Ako u tekstu nema dovoljno podataka, jasno reci da nema dovoljno podataka.',
-      'Ne izmišljaj činjenice.',
-      'Budi jasan, prirodan i pregledan.'
-    ].join(' ');
-
-    const instructions = {
-      summarize:
-        `Zadatak: Sažmi dati tekst. ${commonRules} ` +
-        `Nivo objašnjenja: ${level}. Dužina: ${length}. ` +
-        `Format odgovora: ` +
-        `1) naslov od najviše 8 reči, ` +
-        `2) jedan sažet pasus od 3 do 5 rečenica, ` +
-        `3) najviše 3 ključne stavke u novim redovima, bez dugih objašnjenja.`,
-
-      explain:
-        `Zadatak: Objasni dati pojam ili tekst tako da bude razumljiv učeniku. ${commonRules} ` +
-        `Nivo objašnjenja: ${level}. Dužina: ${length}. ` +
-        `Format odgovora: ` +
-        `1) kratko objašnjenje u jednom pasusu, ` +
-        `2) ako je korisno, dodaj još jedan kratak pasus sa značajem ili primerom. ` +
-        `Ne dodaj pitanja na kraju.`,
-
-      glossary:
-        `Zadatak: Napravi rečnik iz datog teksta. ${commonRules} ` +
-        `Nivo objašnjenja: ${level}. ` +
-        `Izvuci od 5 do 8 najvažnijih pojmova samo iz datog sadržaja. ` +
-        `Za svaki pojam napiši tačno jedan red u formatu: Pojam — kratko objašnjenje. ` +
-        `Ne piši uvod. Ne ponavljaj isti pojam. Ne objašnjavaj reči koje nisu važne za temu. ` +
-        `Ne prevodi pojmove na drugi jezik i ne navodi sinonime na hrvatskom.`,
-
-      quiz:
-        `Zadatak: Napravi kratak kviz iz datog teksta. ${commonRules} ` +
-        `Težina: ${level}. Dužina: ${length}. ` +
-        `Format odgovora: ` +
-        `napiši 5 pitanja ukupno: ` +
-        `3 pitanja sa ponuđenim odgovorima A), B), C), ` +
-        `i 2 kratka pitanja. ` +
-        `Na kraju napiši odvojeno: Tačni odgovori. ` +
-        `Ne dodaj preduga objašnjenja.`
+    const taskLabels = {
+      summarize: 'Sažmi sledeći tekst na nivou ' + level + ' (' + length + '):',
+      explain:   'Objasni sledeći pojam ili tekst na nivou ' + level + ' (' + length + '):',
+      glossary:  'Napravi rečnik pojmova iz sledećeg teksta na nivou ' + level + ' (' + length + '):',
+      quiz:      'Napravi kviz sa pitanjima i odgovorima iz sledećeg teksta na nivou ' + level + ' (' + length + '):'
     };
-
-    const instruction = instructions[mode] || instructions.summarize;
 
     return {
-      question: instruction,
-      instruction: instruction,
+      question: taskLabels[mode] || 'Obradi tekst:',
       context: rawText,
       max_tokens: maxTokens,
-      mode,
-      level,
-      length
+      mode: mode,
+      level: level,
+      length: length
     };
   }
 

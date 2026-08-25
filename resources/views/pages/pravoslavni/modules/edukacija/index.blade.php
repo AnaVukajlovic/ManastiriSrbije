@@ -323,19 +323,20 @@
 
         <div class="edu-body">
           <div class="edu-main">
-            <h2>Država Nemanjića</h2>
+            <h2>Država Nemanjića: Bitke, krunisanja i sabori</h2>
             <p class="edu-lead">
-              Temelj srednjovekovne Srbije i jedno od najvažnijih razdoblja nacionalne istorije.
+              Temelj srednjovekovne Srbije, slavne pobede, krunisanja i ključne istorijske prekretnice.
             </p>
             <p class="edu-text">
-              Upoznaj nastanak i razvoj srpske države, ulogu Stefana Nemanje i njegovih naslednika,
-              političko jačanje Srbije i vezu između vladarske vlasti, Crkve i manastira.
+              Istraži sve važne događaje dinastije Nemanjića: od bitaka kod Pantina, Morave i slavnog Velbužda,
+              preko krunisanja Prvovenčanog i Žičkog sabora, do carskog krunisanja Dušana Silnog i Dušanovog zakonika.
             </p>
             <div class="edu-tags">
               <span class="edu-tag">dinastija</span>
-              <span class="edu-tag">država</span>
-              <span class="edu-tag">srednji vek</span>
-              <span class="edu-tag">zadužbine</span>
+              <span class="edu-tag">bitke</span>
+              <span class="edu-tag">krunisanja</span>
+              <span class="edu-tag">Velbužd</span>
+              <span class="edu-tag">Dušanov zakonik</span>
             </div>
           </div>
 
@@ -502,7 +503,5 @@
       </section>
 
     </div>
-
-  </div>
 </section>
 @endsection

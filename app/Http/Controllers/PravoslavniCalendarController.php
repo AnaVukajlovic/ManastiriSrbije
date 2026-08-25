@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CalendarDay;
+use App\Support\OrthodoxCalendarHelper;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -23,27 +24,40 @@ class PravoslavniCalendarController extends Controller
         $leadingEmpty = ((int)$monthStart->dayOfWeekIso) - 1;
         $daysInMonth  = (int)$selected->daysInMonth;
 
-        // Učitaj zapise za ceo mesec (sigurno radi na SQLite)
+        // Učitaj zapise za ceo mesec
         $rows = CalendarDay::query()
-            ->whereBetween('date', [$monthStart->copy()->startOfDay(), $monthEnd->copy()->endOfDay()])
+            ->whereBetween('date', [$monthStart->toDateString(), $monthEnd->toDateString()])
             ->orderBy('date')
             ->get();
 
-        // map po broju dana u mesecu
-        $byDay = $rows->keyBy(fn ($r) => (int) $r->date->day);
+        // Mapiraj po broju dana u mesecu
+        $byDay = $rows->keyBy(fn ($r) => (int) Carbon::parse($r->date)->day);
 
-        // izabrani dan row (ako postoji)
+        // Izabrani dan row (ako postoji)
         $dayRow = $byDay->get((int)$selected->day);
 
-        // navigacija meseci
+        // Navigacija meseci
         $prev = $selected->copy()->subMonthNoOverflow()->startOfMonth();
         $next = $selected->copy()->addMonthNoOverflow()->startOfMonth();
 
-        // Predstojeći (7 dana) – može da bude prazno, ok
+        // Spisak svih 12 meseci za brzi skok
+        $monthsList = [];
+        for ($m = 1; $m <= 12; $m++) {
+            $mDate = Carbon::create($selected->year, $m, 1, 0, 0, 0, $tz);
+            $monthsList[] = [
+                'num' => $m,
+                'name' => $mDate->translatedFormat('F'),
+                'short' => $mDate->translatedFormat('M'),
+                'date' => $mDate->toDateString(),
+                'is_active' => $selected->month === $m,
+            ];
+        }
+
+        // Predstojećih 7 dana
         $upcoming = CalendarDay::query()
             ->whereBetween('date', [
-                $selected->copy()->startOfDay(),
-                $selected->copy()->addDays(6)->endOfDay()
+                $selected->toDateString(),
+                $selected->copy()->addDays(6)->toDateString()
             ])
             ->orderBy('date')
             ->get();
@@ -58,6 +72,7 @@ class PravoslavniCalendarController extends Controller
             'dayRow'       => $dayRow,
             'prev'         => $prev,
             'next'         => $next,
+            'monthsList'   => $monthsList,
             'upcoming'     => $upcoming,
         ]);
     }
@@ -66,22 +81,22 @@ class PravoslavniCalendarController extends Controller
     {
         $tz = config('app.timezone', 'Europe/Belgrade');
 
-        // očekujemo Y-m-d iz rute
+        // Očekujemo Y-m-d iz rute
         $selected = Carbon::createFromFormat('Y-m-d', $date, $tz)->startOfDay();
 
         $row = CalendarDay::query()
             ->whereDate('date', $selected->toDateString())
             ->first();
 
-        // prev/next dan
+        // Prev / Next dan
         $prev = $selected->copy()->subDay();
         $next = $selected->copy()->addDay();
 
-        // brzi spisak 7 dana od izabranog (za sidebar)
+        // Brzi spisak 7 dana od izabranog (za sidebar)
         $week = CalendarDay::query()
             ->whereBetween('date', [
-                $selected->copy()->startOfDay(),
-                $selected->copy()->addDays(6)->endOfDay()
+                $selected->toDateString(),
+                $selected->copy()->addDays(6)->toDateString()
             ])
             ->orderBy('date')
             ->get();

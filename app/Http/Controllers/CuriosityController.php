@@ -15,10 +15,13 @@ class CuriosityController extends Controller
         $query = Curiosity::query()->where('is_published', true);
 
         if ($q !== '') {
-            $query->where(function ($qq) use ($q) {
-                $qq->where('title', 'like', "%{$q}%")
-                    ->orWhere('excerpt', 'like', "%{$q}%")
-                    ->orWhere('content', 'like', "%{$q}%");
+            $terms = \App\Services\SearchService::getSearchTerms($q);
+            $query->where(function ($qq) use ($terms) {
+                foreach ($terms as $term) {
+                    $qq->orWhere('title', 'like', "%{$term}%")
+                        ->orWhere('excerpt', 'like', "%{$term}%")
+                        ->orWhere('content', 'like', "%{$term}%");
+                }
             });
         }
 
@@ -44,6 +47,21 @@ return view('pages.pravoslavni.modules.curiosities.index', compact('items', 'q',
 
     public function show(string $slug)
     {
+        $legendSlugs = [
+            'legendarijum-price',
+            'legendarijum',
+            'legende',
+            'nemanjici-price',
+            'legende-nemanjici',
+            'price-o-nemanjicima',
+            'sveti-sava-price',
+            'legendarijum-i-price',
+        ];
+
+        if (in_array($slug, $legendSlugs, true)) {
+            return view('pages.pravoslavni.modules.curiosities.legendarijum-price');
+        }
+
         $item = Curiosity::query()
             ->where('is_published', true)
             ->where('slug', $slug)
@@ -56,5 +74,6 @@ return view('pages.pravoslavni.modules.curiosities.index', compact('items', 'q',
             ->limit(6)
             ->get();
 
-return view('pages.pravoslavni.modules.curiosities.show', compact('item', 'more'));    }
+        return view('pages.pravoslavni.modules.curiosities.show', compact('item', 'more'));
+    }
 }

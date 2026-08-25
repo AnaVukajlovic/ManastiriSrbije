@@ -12,4 +12,16 @@ class MonasteryImage extends Model
     {
         return $this->belongsTo(Monastery::class);
     }
+
+    public function getImageSrcAttribute(): string
+    {
+        $u = $this->url;
+        if (empty($u)) {
+            return asset('images/monasteries/placeholder.jpg');
+        }
+        if (str_starts_with($u, 'http://') || str_starts_with($u, 'https://')) {
+            return $u;
+        }
+        return asset(ltrim($u, '/'));
+    }
 }

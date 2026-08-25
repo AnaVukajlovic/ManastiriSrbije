@@ -260,8 +260,6 @@
         </div>
       </div>
     @endforeach
-
-  </div>
 </section>
 
 <script>

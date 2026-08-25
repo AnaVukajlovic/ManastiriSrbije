@@ -44,21 +44,8 @@
     if (!empty($featured) && count($featured) > 0) {
         foreach ($featured as $m) {
             $name = $m->name ?? 'Manastir';
-            $slug = !empty($m->slug) ? $m->slug : null;
-
-            $img = !empty($m->image_url) ? $m->image_url : null;
-
-            if (!$img && $slug) {
-                $img = asset('images/monasteries/' . $slug . '.jpg');
-            }
-
-            if (!$img) {
-                $img = $fallback[count($cards) % count($fallback)]['img'];
-            }
-
-            if (!$slug) {
-                $slug = $fallback[count($cards) % count($fallback)]['slug'];
-            }
+            $slug = !empty($m->slug) ? $m->slug : 'djurdjevi-stupovi';
+            $img  = $m->image_src ?? asset('images/sample/djurdjevi.jpg');
 
             $cards[] = [
                 'name' => $name,
@@ -804,8 +791,8 @@ body.page-home .home-ref__title{
           <div class="home-ref__quote-meta">— {{ $quote?->author ?? 'Patrijarh Pavle' }}</div>
         </div>
 
-        <form class="home-ref__search" action="{{ route('monasteries.index') }}" method="GET" role="search">
-          <input id="hero-q" name="q" type="search" placeholder="Pretraga manastira, grada ili regiona...">
+        <form class="home-ref__search" action="{{ route('search') }}" method="GET" role="search">
+          <input id="hero-q" name="q" type="search" placeholder="Pretraži manastir, ktitora, grad, eparhiju ili pojam (npr. Vaskrs, Studenica, Valjevo)..." autocomplete="off">
           <button type="submit">Pretraži</button>
         </form>
       </div>

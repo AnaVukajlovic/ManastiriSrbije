@@ -5,64 +5,72 @@
 @section('content')
 <style>
   .lesson-page{
-    max-width: 1100px;
+    max-width: 1240px;
     margin: 0 auto;
+    width: 100%;
   }
 
   .lesson-card{
-    background: rgba(255,255,255,.03);
-    border: 1px solid rgba(255,255,255,.08);
-    border-radius: 18px;
-    padding: 32px;
-    box-shadow: 0 10px 30px rgba(0,0,0,.18);
+    background: linear-gradient(180deg, rgba(28, 18, 16, 0.96), rgba(16, 10, 10, 0.96));
+    border: 1.5px solid rgba(197, 162, 74, 0.28);
+    border-radius: 24px;
+    padding: 38px 42px;
+    box-shadow: 0 16px 40px rgba(0,0,0,.45);
+    width: 100%;
   }
 
   .lesson-page h1{
-    font-size: 36px;
-    margin-bottom: 18px;
-    color: var(--gold);
+    font-size: clamp(2rem, 3.2vw, 2.7rem);
+    margin-bottom: 20px;
+    color: var(--gold, #c5a24a);
+    font-weight: 800;
   }
 
   .lesson-page .lead{
-    font-size: 18px;
-    line-height: 1.85;
+    font-size: 1.12rem;
+    line-height: 1.95;
     text-align: justify;
-    color: rgba(255,255,255,.92);
+    text-justify: inter-word;
+    color: rgba(255,255,255,.96);
     margin-bottom: 24px;
+    font-style: italic;
   }
 
   .lesson-page h2{
-    margin-top: 34px;
-    margin-bottom: 12px;
-    font-size: 24px;
-    color: var(--gold);
+    margin-top: 36px;
+    margin-bottom: 14px;
+    font-size: 1.5rem;
+    color: var(--gold, #c5a24a);
+    font-weight: 700;
   }
 
   .lesson-page p{
     text-align: justify;
-    line-height: 1.9;
-    font-size: 17px;
-    margin-bottom: 16px;
-    color: rgba(255,255,255,.92);
+    text-justify: inter-word;
+    line-height: 1.95;
+    font-size: 1.05rem;
+    margin-bottom: 18px;
+    color: rgba(255,255,255,.90);
+    width: 100%;
   }
 
   @media (max-width: 768px){
     .lesson-card{
-      padding: 22px;
-      border-radius: 14px;
+      padding: 22px 18px;
+      border-radius: 16px;
     }
 
     .lesson-page h1{
-      font-size: 29px;
+      font-size: 1.75rem;
     }
 
     .lesson-page h2{
-      font-size: 22px;
+      font-size: 1.3rem;
     }
 
     .lesson-page p,
     .lesson-page .lead{
-      font-size: 16px;
+      font-size: 0.98rem;
       line-height: 1.8;
     }
   }
@@ -180,7 +188,49 @@
         zauzima posebno mesto u životu srpskog naroda i Srpske pravoslavne crkve.
       </p>
 
-    </div>
+      {{-- DOKUMENTARNI VIDEO SADRŽAJI --}}
+      @php
+          $moduleVideos = \App\Support\EducationalMedia::forEduModule('srpska-crkva');
+      @endphp
+      @if(!empty($moduleVideos) && count($moduleVideos) > 0)
+          @include('partials.video-section', [
+              'videos' => $moduleVideos,
+              'sectionTitle' => '🎬 Video sadržaji: Sveti Sava i autokefalna crkva (HistoryCast)'
+          ])
+      @endif
+
+      {{-- IZVORI I STRUČNA LITERATURA --}}
+      @include('partials.edu-sources', [
+          'title' => 'Извори и стручна литература за тему „Српска црква кроз векове“',
+          'sources' => [
+              [
+                  'author' => 'Епископ Никодим Милаш',
+                  'work' => 'Православно црквено право / Историја Цркве',
+                  'details' => 'Канонска и правна анализа добијања аутокефалности Жичке архиепископије 1219. године.'
+              ],
+              [
+                  'author' => 'Свети Сава Српски',
+                  'work' => 'Законоправило (Номоканон) — Иловички препис из 1262. године',
+                  'details' => 'Први српски правни кодекс који спаја грађанско законодавство и црквене каноне.'
+              ],
+              [
+                  'author' => 'Димитрије Богдановић',
+                  'work' => 'Историја старе српске књижевности и теологије',
+                  'details' => 'СКЗ, Београд (анализа списа Светог Саве, Доментијана и Теодосија).'
+              ],
+              [
+                  'author' => 'Српска Православна Црква (СПЦ)',
+                  'work' => 'Споменица поводом 800 година аутокефалности СПЦ (1219–2019)',
+                  'details' => 'Званична монографија о историјском путу и устројству српске јерархије.'
+              ],
+              [
+                  'author' => 'Информативна служба СПЦ',
+                  'work' => 'Званични портал Српске Православне Цркве (spc.rs)',
+                  'details' => 'Историјски документи о епархијама, патријарсима и црквеном предању.'
+              ]
+          ],
+          'note' => 'Подаци о црквеним саборима, рукоположењима и канонском статусу засновани су на документима Патријаршије СПЦ и канонским зборницима.'
+      ])
   </div>
 </section>
 @endsection

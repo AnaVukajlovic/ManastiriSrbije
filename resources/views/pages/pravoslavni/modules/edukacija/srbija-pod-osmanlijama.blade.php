@@ -6,40 +6,65 @@
 
 <style>
 .lesson-page{
-  max-width: 1100px;
+  max-width: 1240px;
   margin: 0 auto;
+  width: 100%;
 }
 .lesson-page .lesson-card{
-  background: rgba(255,255,255,.03);
-  border: 1px solid rgba(255,255,255,.08);
-  border-radius: 18px;
-  padding: 32px;
-  box-shadow: 0 10px 30px rgba(0,0,0,.18);
+  background: linear-gradient(180deg, rgba(28, 18, 16, 0.96), rgba(16, 10, 10, 0.96));
+  border: 1.5px solid rgba(197, 162, 74, 0.28);
+  border-radius: 24px;
+  padding: 38px 42px;
+  box-shadow: 0 16px 40px rgba(0,0,0,.45);
+  width: 100%;
 }
 .lesson-page h1{
-  font-size: 36px;
-  margin-bottom: 10px;
-  color: var(--gold);
+  font-size: clamp(2rem, 3.2vw, 2.7rem);
+  margin-bottom: 20px;
+  color: var(--gold, #c5a24a);
+  font-weight: 800;
 }
 .lesson-page .lead{
-  font-size: 18px;
-  line-height: 1.8;
+  font-size: 1.12rem;
+  line-height: 1.95;
   text-align: justify;
-  color: rgba(255,255,255,.92);
-  margin-bottom: 22px;
+  text-justify: inter-word;
+  color: rgba(255,255,255,.96);
+  margin-bottom: 24px;
+  font-style: italic;
 }
 .lesson-page h2{
-  margin-top: 30px;
-  margin-bottom: 12px;
-  font-size: 24px;
-  color: var(--gold);
+  margin-top: 36px;
+  margin-bottom: 14px;
+  font-size: 1.5rem;
+  color: var(--gold, #c5a24a);
+  font-weight: 700;
 }
 .lesson-page p{
   text-align: justify;
-  line-height: 1.9;
-  font-size: 17px;
-  margin-bottom: 16px;
-  color: rgba(255,255,255,.92);
+  text-justify: inter-word;
+  line-height: 1.95;
+  font-size: 1.05rem;
+  margin-bottom: 18px;
+  color: rgba(255,255,255,.90);
+  width: 100%;
+}
+@media (max-width: 768px){
+  .lesson-page .lesson-card{
+    padding: 22px 18px;
+    border-radius: 16px;
+  }
+  .lesson-page h1{
+    font-size: 1.75rem;
+  }
+  .lesson-page h2{
+    font-size: 1.3rem;
+  }
+  .lesson-page p,
+  .lesson-page .lead{
+    font-size: 0.98rem;
+    line-height: 1.8;
+  }
 }
 </style>
 
@@ -134,8 +159,49 @@
         najvažnije vrednosti.
       </p>
 
-    </div>
+      {{-- DOKUMENTARNI VIDEO SADRŽAJI --}}
+      @php
+          $moduleVideos = \App\Support\EducationalMedia::forEduModule('srbija-pod-osmanlijama');
+      @endphp
+      @if(!empty($moduleVideos) && count($moduleVideos) > 0)
+          @include('partials.video-section', [
+              'videos' => $moduleVideos,
+              'sectionTitle' => '🎬 Историјске емисије и видео документарци (HistoryCast)'
+          ])
+      @endif
+
+      {{-- IZVORI I STRUČNA LITERATURA --}}
+      @include('partials.edu-sources', [
+          'title' => 'Извори и стручна литература за тему „Србија под Османлијама“',
+          'sources' => [
+              [
+                  'author' => 'Радован Самарџић',
+                  'work' => 'Историја српског народа у доба турске владавине (XVI–XVIII век)',
+                  'details' => 'СКЗ, Београд (детаљна студија о друштвеном положају, цркви, улози манастира и очувању писмености).'
+              ],
+              [
+                  'author' => 'Владимир Ћоровић',
+                  'work' => 'Историја Срба',
+                  'details' => 'Томови о паду Деспотовине 1459, обнови Пећке патријаршије 1557. и Великим сеобама под Арсенијем III Чарнојевићем.'
+              ],
+              [
+                  'author' => 'Српска академија наука и уметности (САНУ)',
+                  'work' => 'Зборник о патријарху Макарију Соколовићу и обнови српских светиња',
+                  'details' => 'Историјски документи о очувању светиња и живописању манастира у XVI и XVII веку.'
+              ],
+              [
+                  'author' => 'Матица српска',
+                  'work' => 'Српска поствизантијска уметност и преписивачка делатност (Фрушка Гора и јужни крајеви)',
+                  'details' => 'Нови Сад (студије о фрушкогорским манастирима као чуварима немањићке традиције).'
+              ],
+              [
+                  'author' => 'Историјски институт у Београду',
+                  'work' => 'Зборници докумената о српском средњем веку и раном новом веку',
+                  'details' => 'Анализа народног памћења, епске поезије и манастирских летописа као чувара идентитета.'
+              ]
+          ],
+          'note' => 'Подаци о обнови Пећке патријаршије 1557. године, Сеобама Срба 1690. и 1739. године и улози манастира усклађени су са званичном историјском науком.'
+      ])
   </div>
 </section>
-
 @endsection

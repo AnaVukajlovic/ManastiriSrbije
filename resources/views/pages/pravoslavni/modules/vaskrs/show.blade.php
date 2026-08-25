@@ -163,7 +163,7 @@
     </div>
 
     <header class="vaskrs-hero2">
-      <div class="vaskrs-hero2__bg" style="background-image:url('{{ asset('images/hero/hero1.jpg') }}')"></div>
+      <div class="vaskrs-hero2__bg" style="background-image:url('{{ asset('images/hero/hero2.jpg') }}')"></div>
       <div class="vaskrs-hero2__overlay"></div>
 
       <div class="vaskrs-hero2__inner">
@@ -303,18 +303,21 @@
           </div>
         </div>
 
-        <div class="vaskrs-sidecard">
-          <h3 class="vaskrs-h3">Izvori</h3>
-          <p class="muted" style="margin:0 0 10px">Tekst je napisan na osnovu ova dva izvora:</p>
+        <div class="vaskrs-sidecard" style="padding: 22px; background: rgba(22, 14, 13, 0.95); border: 1px solid rgba(197, 162, 74, 0.3); border-radius: 18px;">
+          <h3 class="vaskrs-h3" style="color: var(--gold); margin: 0 0 12px 0; font-size: 1.05rem;">📜 Црквени извори</h3>
+          <p class="muted" style="margin:0 0 12px; font-size: 0.85rem; line-height: 1.5;">Текст је приређен на основу светоотачких и званичних црквених извора:</p>
           <div class="vaskrs-sources">
-            <a class="vaskrs-source" href="https://svetosavlje.rs/vaskrs/" target="_blank" rel="noopener">
-              <span class="vaskrs-source__title">Svetosavlje — “Vaskrs”</span>
-              <span class="vaskrs-source__meta muted">svetosavlje.rs</span>
+            <a class="vaskrs-source" href="https://svetosavlje.rs/vaskrs/" target="_blank" rel="noopener" style="display: block; padding: 10px 12px; background: rgba(255,255,255,0.03); border: 1px solid rgba(197,162,74,0.2); border-radius: 12px; margin-bottom: 8px; text-decoration: none;">
+              <span class="vaskrs-source__title" style="display: block; font-weight: 700; color: #fff; font-size: 0.86rem;">Светосавље — „Васкрс”</span>
+              <span class="vaskrs-source__meta muted" style="font-size: 0.75rem; color: #c5a24a;">svetosavlje.rs ↗</span>
             </a>
-            <a class="vaskrs-source" href="https://www.tvhram.rs/vesti/praznici/4030/vaskrsenje-gospoda-naseg-isusa-hrista" target="_blank" rel="noopener">
-              <span class="vaskrs-source__title">TV Hram — “Vaskrsenje Gospoda našeg Isusa Hrista”</span>
-              <span class="vaskrs-source__meta muted">tvhram.rs</span>
+            <a class="vaskrs-source" href="https://www.tvhram.rs/vesti/praznici/4030/vaskrsenje-gospoda-naseg-isusa-hrista" target="_blank" rel="noopener" style="display: block; padding: 10px 12px; background: rgba(255,255,255,0.03); border: 1px solid rgba(197,162,74,0.2); border-radius: 12px; margin-bottom: 8px; text-decoration: none;">
+              <span class="vaskrs-source__title" style="display: block; font-weight: 700; color: #fff; font-size: 0.86rem;">ТВ Храм — „Васкрсење Господа Исуса Христа”</span>
+              <span class="vaskrs-source__meta muted" style="font-size: 0.75rem; color: #c5a24a;">tvhram.rs ↗</span>
             </a>
+            <div style="padding: 8px 10px; font-size: 0.8rem; color: rgba(255,255,255,0.7); line-height: 1.4; border-top: 1px dashed rgba(197,162,74,0.2); margin-top: 8px;">
+              ❧ Др Лазар Мирковић: <em>„Православна Литургика”</em>, Београд
+            </div>
           </div>
         </div>
       </aside>

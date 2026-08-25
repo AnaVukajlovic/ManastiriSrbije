@@ -427,22 +427,33 @@
 
       .resultcard{
         display:grid;
-        grid-template-columns:72px minmax(0,1fr);
-        gap:12px;
-        align-items:center;
-        padding:12px;
-        border-radius:18px;
-        border:1px solid var(--map-line-soft);
-        background:rgba(255,255,255,.018);
+        grid-template-columns:100px minmax(0,1fr);
+        gap:14px;
+        align-items:stretch;
+        padding:14px;
+        border-radius:20px;
+        border:1px solid rgba(197,162,74,.18);
+        background:linear-gradient(135deg, rgba(255,255,255,.035), rgba(18,12,13,.78));
+        box-shadow:0 10px 24px rgba(0,0,0,.28);
+        transition:transform .22s ease, border-color .22s ease, box-shadow .22s ease;
+      }
+
+      .resultcard:hover{
+        transform:translateY(-2px);
+        border-color:rgba(197,162,74,.48);
+        box-shadow:0 16px 36px rgba(0,0,0,.45), 0 0 18px rgba(197,162,74,.12);
       }
 
       .resultcard__media{
-        width:72px;
-        height:72px;
-        border-radius:16px;
+        width:100px;
+        min-height:100px;
+        height:100%;
+        border-radius:15px;
         overflow:hidden;
-        background:rgba(255,255,255,.04);
+        border:1px solid rgba(197,162,74,.25);
+        background:rgba(0,0,0,.35);
         flex-shrink:0;
+        position:relative;
       }
 
       .resultcard__media img{
@@ -450,25 +461,52 @@
         height:100%;
         object-fit:cover;
         display:block;
+        transition:transform .35s ease;
       }
 
-      .resultcard__placeholder{
-        width:100%;
-        height:100%;
-        background:
-          radial-gradient(circle at top left, rgba(197,162,74,.10), transparent 32%),
-          rgba(255,255,255,.03);
+      .resultcard:hover .resultcard__media img{
+        transform:scale(1.08);
+      }
+
+      .resultcard__content{
+        display:flex;
+        flex-direction:column;
+        justify-content:space-between;
       }
 
       .resultcard__title{
         margin:0 0 4px;
-        font-size:1.05rem;
+        font-size:1.12rem;
         font-weight:800;
         color:#fff;
+        line-height:1.2;
+      }
+
+      .resultcard__badge-row{
+        display:flex;
+        align-items:center;
+        gap:6px;
+        flex-wrap:wrap;
+        margin-bottom:6px;
+      }
+
+      .resultcard__dist{
+        display:inline-flex;
+        align-items:center;
+        gap:4px;
+        padding:2px 8px;
+        border-radius:8px;
+        background:rgba(197,162,74,.15);
+        color:#f3dc9b;
+        font-size:.82rem;
+        font-weight:700;
+        border:1px solid rgba(197,162,74,.30);
       }
 
       .resultcard__meta{
-        font-size:.92rem;
+        font-size:.90rem;
+        color:var(--map-muted);
+        line-height:1.35;
       }
 
       .resultcard__actions{
@@ -476,10 +514,14 @@
         flex-wrap:wrap;
         gap:8px;
         margin-top:10px;
+        align-items:center;
       }
 
       .resultcard__actions .btn{
         border-radius:12px;
+        font-size:.88rem;
+        padding:6px 12px;
+        font-weight:700;
       }
 
       .empty{
@@ -709,10 +751,11 @@
                 </div>
 
                 <div class="resultcard__content">
-                  <h4 class="resultcard__title">{{ $name }}</h4>
-
-                  <div class="resultcard__meta muted">
-                    {{ collect([$city, $reg])->filter()->join(' • ') ?: 'Nepoznato' }}
+                  <div>
+                    <h4 class="resultcard__title">{{ $name }}</h4>
+                    <div class="resultcard__badge-row">
+                      <span class="resultcard__meta">📍 {{ collect([$city, $reg])->filter()->join(' • ') ?: 'Nepoznato' }}</span>
+                    </div>
                   </div>
 
                   <div class="resultcard__actions">
@@ -724,7 +767,7 @@
                       $gmUrl = 'https://www.google.com/maps?q=' . urlencode($gmQuery);
                     @endphp
 
-                    <a class="btn btn--soft btn--sm" href="{{ $gmUrl }}" target="_blank" rel="noopener">Google Maps</a>
+                    <a class="btn btn--soft btn--sm" href="{{ $gmUrl }}" target="_blank" rel="noopener">🗺️ Google Maps</a>
 
                     @if($hasGeo)
                       <button
@@ -735,14 +778,14 @@
                         data-lng="{{ (float)$lng }}"
                         data-title="{{ $name }}"
                       >
-                        Prikaži na mapi
+                        📍 Prikaži na mapi
                       </button>
                     @else
-                      <span class="muted">Nema koordinate</span>
+                      <span class="muted" style="font-size:0.8em;">Nema koordinate</span>
                     @endif
 
                     @if($slug)
-                      <a class="btn btn--ghost btn--sm" href="{{ route('monasteries.show', $slug) }}">Detalji</a>
+                      <a class="btn btn--ghost btn--sm" href="{{ route('monasteries.show', $slug) }}">Detalji ➔</a>
                     @endif
                   </div>
                 </div>
@@ -836,10 +879,17 @@ document.addEventListener('DOMContentLoaded', () => {
           }
 
           const placeholderImg = "{{ asset('images/monasteries/placeholder.jpg') }}";
-          const imgSrc = item.image ? (item.image.startsWith('http') ? item.image : `/${item.image}`) : placeholderImg;
+          let imgSrc = placeholderImg;
+          if (item.image && typeof item.image === 'string' && item.image.trim() !== '') {
+            imgSrc = item.image.startsWith('http') || item.image.startsWith('/') ? item.image : `/${item.image}`;
+          }
           
           const gmQuery = hasCoord ? `${lat},${lng}` : encodeURIComponent(item.name + ' ' + (item.city ?? 'Srbija'));
           const gmUrl = `https://www.google.com/maps/search/?api=1&query=${gmQuery}`;
+
+          const distBadge = (item.distance_km !== null && item.distance_km !== undefined)
+            ? `<span class="resultcard__dist">🚗 ~${item.distance_km} km</span>` 
+            : '';
 
           const card = document.createElement('article');
           card.className = 'resultcard';
@@ -849,18 +899,23 @@ document.addEventListener('DOMContentLoaded', () => {
               <img src="${imgSrc}" alt="${item.name}" loading="lazy" onerror="this.onerror=null; this.src='${placeholderImg}';">
             </div>
             <div class="resultcard__content">
-              <h4 class="resultcard__title">${item.name}</h4>
-              <div class="resultcard__meta muted">${item.city ?? ''}${item.region ? ' • ' + item.region : ''}</div>
-              <div class="resultcard__actions" style="margin-top: 10px; display: flex; gap: 8px; align-items: center;">
-                <a class="btn btn--soft btn--sm" href="${gmUrl}" target="_blank" rel="noopener">Google Maps</a>
+              <div>
+                <h4 class="resultcard__title">${item.name}</h4>
+                <div class="resultcard__badge-row">
+                  ${distBadge}
+                  <span class="resultcard__meta">📍 ${item.city ?? ''}${item.region ? ' • ' + item.region : ''}</span>
+                </div>
+              </div>
+              <div class="resultcard__actions">
+                <a class="btn btn--soft btn--sm" href="${gmUrl}" target="_blank" rel="noopener">🗺️ Google Maps</a>
                 
                 ${hasCoord ? `
                   <button type="button" class="btn btn--soft btn--sm" data-map-action="focus" data-lat="${lat}" data-lng="${lng}" data-title="${item.name}">
-                    Prikaži na mapi
+                    📍 Prikaži na mapi
                   </button>
                 ` : `<span class="muted" style="font-size:0.8em;">Nema koordinate</span>`}
                 
-                <a class="btn btn--ghost btn--sm" href="${item.url}">Detalji</a>
+                <a class="btn btn--ghost btn--sm" href="${item.url}">Detalji ➔</a>
               </div>
             </div>
           `;

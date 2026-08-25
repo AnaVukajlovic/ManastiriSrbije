@@ -31,10 +31,13 @@ class MapController extends Controller
             ]);
 
         if ($q !== '') {
-            $query->where(function ($w) use ($q) {
-                $w->where('name', 'like', "%{$q}%")
-                  ->orWhere('city', 'like', "%{$q}%")
-                  ->orWhere('region', 'like', "%{$q}%");
+            $terms = \App\Services\SearchService::getSearchTerms($q);
+            $query->where(function ($w) use ($terms) {
+                foreach ($terms as $term) {
+                    $w->orWhere('name', 'like', "%{$term}%")
+                      ->orWhere('city', 'like', "%{$term}%")
+                      ->orWhere('region', 'like', "%{$term}%");
+                }
             });
         }
 

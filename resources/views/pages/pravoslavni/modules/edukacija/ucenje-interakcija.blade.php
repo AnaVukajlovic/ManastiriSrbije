@@ -512,6 +512,8 @@
         <a href="{{ route('edukacija.quiz-orthodox') }}" class="ui-btn">Otvori</a>
       </article>
 
+      
+
       <article class="ui-module-card ui-module-card--wide">
         <div class="ui-module-card__icon">🤖</div>
         <h3>AI vodič</h3>
@@ -528,6 +530,7 @@
       </article>
 
     </div>
+
   </div>
 </section>
 @endsection

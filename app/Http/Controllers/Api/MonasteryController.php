@@ -90,11 +90,14 @@ class MonasteryController extends Controller
             // aliasi da frontend i map.js rade bez menjanja:
             ->selectRaw('latitude as lat, longitude as lng')
             ->when($q !== '', function ($qq) use ($q) {
-                $qq->where(function ($w) use ($q) {
-                    $w->where('name', 'like', "%{$q}%")
-                        ->orWhere('city', 'like', "%{$q}%")
-                        ->orWhere('region', 'like', "%{$q}%")
-                        ->orWhere('eparchy', 'like', "%{$q}%");
+                $terms = \App\Services\SearchService::getSearchTerms($q);
+                $qq->where(function ($w) use ($terms) {
+                    foreach ($terms as $term) {
+                        $w->orWhere('name', 'like', "%{$term}%")
+                            ->orWhere('city', 'like', "%{$term}%")
+                            ->orWhere('region', 'like', "%{$term}%")
+                            ->orWhere('eparchy', 'like', "%{$term}%");
+                    }
                 });
             })
             ->when($eparchy !== '', fn ($qq) => $qq->where('eparchy', $eparchy))
