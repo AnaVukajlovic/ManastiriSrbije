@@ -37,3 +37,27 @@ Thumbs.db
 /storage/framework/sessions
 /storage/*.key
 /storage/pail
+
+# --------- Dependency direktorijumi ----------
+/vendor/
+/node_modules/
+# --------- Build artefakti (generišu se) ----------
+/public/build/
+/public/css/
+/public/js/
+# --------- Laravel runtime podaci ----------
+/storage/framework/
+/storage/logs/
+# --------- IDE / editor fajlovi ----------
+/.idea/
+/.vscode/
+/*.sublime-*
+/*.code-workspace
+# --------- Drugi nepotrebni fajlovi ----------
+*.log
+.DS_Store
+Thumbs.db
+
+!database/*.sqlite
+!storage/app/import/
+!storage/app/import/*.csv
