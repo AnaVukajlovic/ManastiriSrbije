@@ -331,7 +331,7 @@
           </div>
         </div>
 
-        <form class="filters monFiltersCard" method="GET" action="{{ route('monasteries.index') }}">
+            <form class="filters monFiltersCard" method="GET" action="">
           <div class="filters__row">
             <div class="filters__field mon-field">
               <label class="sr-only" for="q2">Pretraga</label>
