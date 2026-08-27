@@ -283,6 +283,19 @@ class EducationalMedia
                 'ktitors' => ['kralj-milutin', 'kralj-dragutin', 'jelena-anzujska', 'simonida'],
                 'modules' => ['istorija-kultura'],
             ],
+            'OTG-dQ28M-4' => [
+                'id' => 'OTG-dQ28M-4',
+                'title' => 'Kralj Dragutin | HistoryCast, ep.153',
+                'author' => 'HistoryCast',
+                'url' => 'https://www.youtube.com/watch?v=OTG-dQ28M-4',
+                'embed_url' => 'https://www.youtube-nocookie.com/embed/OTG-dQ28M-4',
+                'description' => 'Detaljna priča o burnom životu, vladavini i nasleđu kralja Stefana Dragutina Nemanjića (monaha Teoktista), vladara Srema i zadužbinara crkve u Arilju.',
+                'tag' => 'Kralj Dragutin',
+                'badge' => '🎙️ HistoryCast',
+                'monasteries' => ['djurdjevi-stupovi', 'arilje', 'gradac', 'tronosa'],
+                'ktitors' => ['kralj-dragutin', 'kralj-milutin', 'jelena-anzujska'],
+                'modules' => ['istorija-kultura'],
+            ],
         ];
     }
 
@@ -347,6 +360,7 @@ class EducationalMedia
             'c537nsIMJO8', // Stefan Prvovenčani (HistoryCast)
             '_UIkKAFKqpk', // Žiča (HistoryCast)
             'FIabk7w6erc', // Kralj Uroš Veliki (HistoryCast)
+            'OTG-dQ28M-4', // Kralj Dragutin (HistoryCast)
             'pbJQh7G1UQ4', // Srpski dug Hristu - Milutin, Dragutin, Jelena (TV Hram)
             'pJRlulXe3lI', // Borbe Milutina - Uspon Dragutina (Srpske Bitke)
             '5e7-GpgcwFw', // Kralj Milutin (HistoryCast)
