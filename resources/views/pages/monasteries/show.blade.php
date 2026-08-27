@@ -497,7 +497,7 @@
     box-shadow: 0 0 10px rgba(197, 162, 74, 0.45);
 }
 
-/* LIGHTBOX MODAL SA ZUMOM I LUPOM - CENTRIRANO I IZNAD SVIH ELEMENATA */
+/* LIGHTBOX MODAL SA ZUMOM I LUPOM - POZICIONIRANO ISPOD NAVBARA */
 .mon-lightbox {
     position: fixed !important;
     inset: 0 !important;
@@ -505,13 +505,14 @@
     height: 100vh !important;
     z-index: 2000000 !important; /* Znatno iznad fiksnog navbara */
     display: flex !important;
-    align-items: center !important;
+    align-items: flex-start !important; /* Poravnanje na vrh */
     justify-content: center !important;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s ease;
-    padding: 30px 20px !important;
+    padding: 100px 20px 40px !important; /* 100px gornji padding da prozor bude ispod navbara */
     box-sizing: border-box !important;
+    overflow-y: auto !important; /* Skrolovanje ako dijalog premaši ekran */
 }
 .mon-lightbox.active {
     opacity: 1 !important;
@@ -528,7 +529,7 @@
     position: relative !important;
     z-index: 2 !important;
     width: min(1180px, 92vw) !important;
-    max-height: 88vh !important;
+    max-height: calc(100vh - 140px) !important; /* Prilagođena visina da stane u preostali prostor */
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
@@ -538,7 +539,7 @@
     box-shadow: 0 30px 80px rgba(0,0,0,0.9), 0 0 50px rgba(197, 162, 74, 0.2) !important;
     padding: 18px 24px 20px 24px !important;
     box-sizing: border-box !important;
-    margin: auto !important;
+    margin: 0 auto !important; /* Nema auto gornje/donje margine */
 }
 
 .mon-lightbox__header {

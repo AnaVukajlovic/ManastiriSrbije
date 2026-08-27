@@ -409,9 +409,10 @@
     inset: 0;
     z-index: 9999999;
     display: flex;
-    align-items: center;
+    align-items: flex-start; /* Poravnanje na vrh */
     justify-content: center;
-    padding: 20px;
+    padding: 100px 20px 40px; /* 100px gornji padding da prozor bude ispod navbara */
+    overflow-y: auto; /* Skrolovanje ako prozor premaši visinu ekrana */
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s ease;
@@ -433,7 +434,7 @@
     position: relative;
     z-index: 2;
     width: min(840px, 94vw);
-    max-height: 90vh;
+    max-height: calc(100vh - 140px); /* Prilagođena visina da stane u viewport */
     background: linear-gradient(180deg, #201412, #120b0a);
     border: 1.5px solid rgba(197, 162, 74, 0.45);
     border-radius: 24px;
@@ -494,12 +495,12 @@
     justify-content: center;
     background: #080404;
     overflow: auto;
-    max-height: 60vh;
+    max-height: 50vh; /* Smanjeno sa 60vh da stane u smanjeni dijalog */
 }
 
 .kt-gal-lightbox__stage img {
     max-width: 100%;
-    max-height: 56vh;
+    max-height: 46vh; /* Smanjeno sa 56vh da stane u smanjeni dijalog */
     object-fit: contain;
     border-radius: 12px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.6);

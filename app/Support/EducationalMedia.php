@@ -231,6 +231,58 @@ class EducationalMedia
                 'ktitors' => ['stefan-nemanja', 'ana-zena-stefana-nemanje', 'vukan-nemanjic'],
                 'modules' => ['istorija-kultura', 'timeline', 'legendarijum-price'],
             ],
+            'pJRlulXe3lI' => [
+                'id' => 'pJRlulXe3lI',
+                'title' => 'Borbe Milutina sa Bugarima i Tatarima - Uspon Dragutina',
+                'author' => 'Srpske Bitke',
+                'url' => 'https://www.youtube.com/watch?v=pJRlulXe3lI',
+                'embed_url' => 'https://www.youtube-nocookie.com/embed/pJRlulXe3lI',
+                'description' => 'Istorijska i strateška analiza sukoba na kraju 13. veka, borbe kralja Milutina sa Bugarima i Tatarima, i vladavine kralja Dragutina.',
+                'tag' => 'Srpske Bitke',
+                'badge' => '⚔️ Srpske Bitke',
+                'monasteries' => ['djurdjevi-stupovi', 'banjska', 'gracanica'],
+                'ktitors' => ['kralj-dragutin', 'kralj-milutin', 'stefan-uros-i'],
+                'modules' => ['istorija-kultura'],
+            ],
+            '_W6g0DQAjBE' => [
+                'id' => '_W6g0DQAjBE',
+                'title' => 'Serbian King Milutin Destroys Tatars - Battle of River Drim',
+                'author' => 'Srpske Bitke',
+                'url' => 'https://www.youtube.com/watch?v=_W6g0DQAjBE',
+                'embed_url' => 'https://www.youtube-nocookie.com/embed/_W6g0DQAjBE',
+                'description' => 'Istorijska rekonstrukcija bitke na reci Drim i vojnih uspeha kraljeva Milutina i Dragutina u odbrani srpskih zemalja.',
+                'tag' => 'Srpske Bitke',
+                'badge' => '⚔️ Srpske Bitke',
+                'monasteries' => ['banjska', 'gracanica', 'hilandar'],
+                'ktitors' => ['kralj-milutin', 'kralj-dragutin'],
+                'modules' => ['istorija-kultura'],
+            ],
+            'pbJQh7G1UQ4' => [
+                'id' => 'pbJQh7G1UQ4',
+                'title' => 'Srpski dug Hristu - Sv. Milutin, Sv. Dragutin, Sv. Jelena',
+                'author' => 'TV Hram',
+                'url' => 'https://www.youtube.com/watch?v=pbJQh7G1UQ4',
+                'embed_url' => 'https://www.youtube-nocookie.com/embed/pbJQh7G1UQ4',
+                'description' => 'Duhovna i istorijska emisija TV Hram o svetoj porodici Nemanjića: kralju Milutinu, kralju Dragutinu i njihovoj majci kraljici Jeleni Anžujskoj.',
+                'tag' => 'Sveti Nemanjići',
+                'badge' => '🕊️ TV Hram',
+                'monasteries' => ['gradac', 'djurdjevi-stupovi', 'arilje', 'banjska', 'gracanica'],
+                'ktitors' => ['kralj-dragutin', 'kralj-milutin', 'jelena-anzujska'],
+                'modules' => ['istorija-kultura', 'srpska-crkva'],
+            ],
+            'ztCa-CRig08' => [
+                'id' => 'ztCa-CRig08',
+                'title' => 'Čas istorije - Kralj Stefan Uroš II Milutin',
+                'author' => 'TV Hram',
+                'url' => 'https://www.youtube.com/watch?v=ztCa-CRig08&t=425s',
+                'embed_url' => 'https://www.youtube-nocookie.com/embed/ztCa-CRig08?start=425',
+                'description' => 'Predavanje o dugoj i uspešnoj vladavini kralja Milutina, njegovim zadužbinama, odnosima sa bratom Dragutinom i majkom Jelenom.',
+                'tag' => 'Kralj Milutin',
+                'badge' => '🕊️ TV Hram',
+                'monasteries' => ['banjska', 'gracanica', 'djurdjevi-stupovi', 'studenica'],
+                'ktitors' => ['kralj-milutin', 'kralj-dragutin', 'jelena-anzujska', 'simonida'],
+                'modules' => ['istorija-kultura'],
+            ],
         ];
     }
 
@@ -295,7 +347,11 @@ class EducationalMedia
             'c537nsIMJO8', // Stefan Prvovenčani (HistoryCast)
             '_UIkKAFKqpk', // Žiča (HistoryCast)
             'FIabk7w6erc', // Kralj Uroš Veliki (HistoryCast)
+            'pbJQh7G1UQ4', // Srpski dug Hristu - Milutin, Dragutin, Jelena (TV Hram)
+            'pJRlulXe3lI', // Borbe Milutina - Uspon Dragutina (Srpske Bitke)
             '5e7-GpgcwFw', // Kralj Milutin (HistoryCast)
+            '_W6g0DQAjBE', // Serbian King Milutin Destroys Tatars (Srpske Bitke)
+            'ztCa-CRig08', // Čas istorije - Kralj Milutin (TV Hram)
             'esbOKOPuecU', // Kralj Milutin i Kraljica Simonida (RTS)
             'W5uSGweGQ_0', // Stefan Dečanski (HistoryCast)
             '2H5EUauYV3s', // Visoki Dečani (HistoryCast)

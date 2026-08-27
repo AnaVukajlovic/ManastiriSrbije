@@ -67,6 +67,17 @@ class KtitorsCsvSeeder extends Seeder
                 'updated_at' => now()
             ]);
 
+            if ($slug === 'car-dusan') {
+                DB::table('ktitor_images')->insert([
+                    'ktitor_id'  => $ktitorId,
+                    'path'       => "images/ktitors/dusanova_srbija.jpg",
+                    'caption'    => "Карта Српског царства у време цара Душана (XIV век)",
+                    'source'     => 'Local',
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ]);
+            }
+
             $inserted++;
         }
 
